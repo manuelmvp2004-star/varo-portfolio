@@ -1,23 +1,31 @@
 import Header from '../components/layout/Header';
 import Hero from '../sections/Hero';
-import Now from '../sections/Now';
-import QuickContact from '../sections/QuickContact';
-import FeaturedProject from '../sections/FeaturedProject';
-import TopSkills from '../sections/TopSkills';
+import Projects from '../sections/Projects';
+import Skills from '../sections/Skills';
+import Experience from '../sections/Experience';
+import Education from '../sections/Education';
+import Contact from '../sections/Contact';
+import Footer from '../components/layout/Footer';
+import Preloader from '../components/ui/Preloader';
 import '../styles/globals.css';
 
 function App() {
   return (
-    <div className="app">
-      <Header />
-      <div className="dashboard-grid">
-        <Hero className="div1" />
-        <Now className="div2" />
-        <FeaturedProject className="div3" />
-        <TopSkills className="div4" />
-        <QuickContact className="div5" />
+    <>
+      <Preloader />
+      <div className="app">
+        <Header />
+        <main className="main-content">
+          <section id="hero"><Hero /></section>
+          <section id="projects"><Projects /></section>
+          <section id="skills"><Skills /></section>
+          <section id="experience"><Experience /></section>
+          <section id="education"><Education /></section>
+          <section id="contact"><Contact /></section>
+          <Footer />
+        </main>
       </div>
-    </div>
+    </>
   );
 }
 

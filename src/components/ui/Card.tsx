@@ -11,9 +11,13 @@ interface CardProps {
 
 const Card = ({ title, description, image, tech, links, className = "", style }: CardProps) => {
     return (
-        <div className={`card-base ${className}`} style={style}>
-            {image && <img src={image.src} alt={image.alt} style={{ width: '100%', borderRadius: '8px', marginBottom: '1rem' }} />}
-            <div className="card-content">
+        <div className={`card-base ${className}`} style={{ ...style, display: 'flex', flexDirection: 'column' }}>
+            {image && (
+                <div style={{ width: '100%', aspectRatio: '16/9', overflow: 'hidden', borderRadius: '8px', marginBottom: '1.5rem' }}>
+                    <img src={image.src} alt={image.alt} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }} />
+                </div>
+            )}
+            <div className="card-content" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <h3 style={{ marginBottom: '0.5rem' }}>{title}</h3>
                 <p style={{ fontSize: '0.9rem', marginBottom: '1rem' }}>{description}</p>
                 <div className="card-tags" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
