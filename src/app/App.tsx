@@ -1,21 +1,22 @@
-
 import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import Hero from '../sections/Hero';
-import Projects from '../sections/Projects';
-import Skills from '../sections/Skills';
+import Now from '../sections/Now';
+import QuickContact from '../sections/QuickContact';
+import FeaturedProject from '../sections/FeaturedProject';
+import TopSkills from '../sections/TopSkills';
 import '../styles/globals.css';
 
 function App() {
   return (
     <div className="app">
       <Header />
-      <main>
-        <Hero />
-        <Projects />
-        <Skills />
-      </main>
-      <Footer />
+      <div className="dashboard-grid">
+        <Hero className="div1" />
+        <Now className="div2" />
+        <FeaturedProject className="div3" />
+        <TopSkills className="div4" />
+        <QuickContact className="div5" />
+      </div>
     </div>
   );
 }

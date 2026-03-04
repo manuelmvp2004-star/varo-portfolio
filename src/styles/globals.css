@@ -1,68 +1,180 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #000000;
+  --bg-card: rgba(26, 26, 26, 0.6);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --accent: #ffffff;
+  --spacing-unit: 8px;
+  --card-padding: 24px;
+  --card-gap: 8px;
+  /* User spec gap */
+  --sidebar-width: 80px;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-round: 50%;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Inter', system-ui, sans-serif;
+  color-scheme: dark;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+.app {
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  gap: 16px;
+  padding: 16px;
   min-height: 100vh;
 }
 
+.dashboard-grid {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: var(--card-gap);
+  height: calc(100vh - 32px);
+}
+
+/* Precise div mapping according to user spec */
+.div1 {
+  grid-column: span 4 / span 4;
+  grid-row: span 4 / span 4;
+}
+
+.div2 {
+  grid-row: span 4 / span 4;
+  grid-column-start: 5;
+}
+
+.div3 {
+  grid-column: span 2 / span 2;
+  grid-row: span 3 / span 3;
+  grid-row-start: 5;
+}
+
+.div4 {
+  grid-column: span 2 / span 2;
+  grid-row: span 3 / span 3;
+  grid-column-start: 3;
+  grid-row-start: 5;
+}
+
+.div5 {
+  grid-row: span 3 / span 3;
+  grid-column-start: 5;
+  grid-row-start: 5;
+}
+
+/* Base Card Style (Glassmorphism) */
+.card-base {
+  background-color: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--card-padding);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.card-base:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Slim Sidebar Styling */
+.sidebar {
+  width: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 0;
+  background: rgba(15, 15, 15, 0.8);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  height: calc(100vh - 32px);
+}
+
+.nav-link-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-round);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--border-color);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav-link-circle:hover,
+.nav-link-circle.active {
+  background: white;
+  color: black;
+}
+
+/* Typography */
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -2px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Mobile Stack */
+@media (max-width: 1023px) {
+  .app {
+    flex-direction: column;
   }
-  a:hover {
-    color: #747bff;
+
+  .dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    height: auto;
   }
-  button {
-    background-color: #f9f9f9;
+
+  .sidebar {
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    justify-content: space-around;
+    padding: 12px;
+  }
+
+  .div1,
+  .div2,
+  .div3,
+  .div4,
+  .div5 {
+    grid-column: auto !important;
+    grid-row: auto !important;
   }
 }

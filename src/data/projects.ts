@@ -2,18 +2,22 @@ export interface Project {
     id: string;
     title: string;
     description: string;
-    image: string;
-    tags: string[];
-    link: string;
+    tech: string[];
+    role: string;
+    image: { src: string, alt: string };
+    links: { code?: string, demo?: string };
+    featured: boolean;
 }
 
 export const projects: Project[] = [
     {
-        id: '1',
-        title: 'Example Project',
-        description: 'A brief description of the project.',
-        image: 'https://via.placeholder.com/300',
-        tags: ['React', 'TypeScript', 'Vite'],
-        link: '#'
+        id: 'AutomAI Gym',
+        title: 'AutomAI Gym',
+        description: 'Web para la gestión de gimnasios con el uso de IA para la creación de rutinas de entrenamiento y planes de alimentación.',
+        tech: ["PHP", "MySQL", "HTML", "CSS", "JavaScript"],
+        role: 'Front-end + Accesibilidad + módulos específicos',
+        image: { src: 'https://via.placeholder.com/300', alt: 'AutomAI Gym' },
+        links: { code: '#', demo: '#' },
+        featured: true
     }
 ];
