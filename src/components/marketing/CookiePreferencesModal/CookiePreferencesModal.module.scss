@@ -1,0 +1,179 @@
+@use '@/styles/abstracts/index' as *;
+
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: var(--color-overlay-dark);
+    z-index: $z-modal;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.modal {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg-white);
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    z-index: calc(#{$z-modal} + 1);
+    max-height: 90vh;
+    @include flex-col;
+    animation: slideUp 0.4s var(--ease-out) forwards;
+
+    @include bp-md {
+        top: 50%;
+        left: 50%;
+        bottom: auto;
+        right: auto;
+        width: 600px;
+        transform: translate(-50%, -50%);
+        border-radius: var(--radius-xl);
+        animation: popIn 0.3s var(--ease-out) forwards;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -45%) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.header {
+    @include flex-between;
+    padding: var(--space-6);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--color-text-dark);
+}
+
+.closeBtn {
+    color: var(--color-text-medium);
+    padding: var(--space-2);
+    margin: calc(var(--space-2) * -1);
+    border-radius: var(--radius-md);
+    transition: all $transition-fast;
+
+    &:hover {
+        color: var(--color-text-primary);
+        background-color: var(--color-bg-light);
+    }
+}
+
+.content {
+    padding: var(--space-6);
+    overflow-y: auto;
+}
+
+.description {
+    font-size: var(--text-sm);
+    color: var(--color-text-medium);
+    line-height: var(--lh-relaxed);
+    margin-bottom: var(--space-6);
+}
+
+.options {
+    @include flex-col;
+    gap: var(--space-4);
+}
+
+.option {
+    @include flex-between;
+    align-items: flex-start;
+    gap: var(--space-6);
+    padding: var(--space-4);
+    background-color: var(--color-bg-light);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border-light);
+}
+
+.optionText {
+    @include flex-col;
+    gap: var(--space-1);
+}
+
+.optionTitle {
+    font-size: var(--text-base);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-dark);
+}
+
+.optionDesc {
+    font-size: var(--text-sm);
+    color: var(--color-text-medium);
+    line-height: var(--lh-relaxed);
+}
+
+// iOS style toggle
+.toggle {
+    width: 48px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-border-dark);
+    position: relative;
+    transition: background-color $transition-fast;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.toggleActive {
+    background-color: var(--color-success);
+}
+
+.toggleDisabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--color-success);
+}
+
+.knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--color-bg-white);
+    border-radius: 50%;
+    transition: transform $transition-fast;
+    box-shadow: var(--shadow-sm);
+}
+
+.knobOn {
+    transform: translateX(20px);
+}
+
+.footer {
+    padding: var(--space-6);
+    border-top: 1px solid var(--color-border-light);
+    background-color: var(--color-bg-white);
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+}

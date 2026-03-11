@@ -1,0 +1,55 @@
+@use '@/styles/abstracts/index' as *;
+
+.page {
+    position: relative;
+    padding: var(--space-32) 0 var(--space-20);
+    background-color: var(--color-bg-primary);
+    min-height: calc(100vh - 80px); // account for header roughly
+}
+
+.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50vh;
+    pointer-events: none;
+    z-index: 0;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 0%,
+                rgba(201, 169, 110, 0.1) 0%,
+                transparent 70%);
+    }
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+.header {
+    margin-bottom: var(--space-12);
+}
+
+.formCard {
+    background-color: var(--color-bg-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-xl);
+
+    @include bp-sm {
+        padding: var(--space-12);
+    }
+
+    // Override dark theme variables inside the card since it's on a white background
+    --color-text-dark: #0A1628;
+    --color-text-primary: #1A273A;
+    --color-text-medium: #4A5568;
+    --color-text-muted: #718096;
+    --color-border-dark: #cbd5e1;
+    --color-border-light: #e2e8f0;
+}

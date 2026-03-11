@@ -1,0 +1,39 @@
+// ============================================================
+// SCSS ABSTRACTS — Variables
+// ============================================================
+
+// Breakpoints
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+$bp-2xl: 1536px;
+
+// Brand colors (mirrors CSS tokens for SCSS use)
+$color-navy: #0A1628;
+$color-navy-mid: #0F1E38;
+$color-navy-card: #132040;
+$color-gold: #C9A96E;
+$color-gold-light: #DFC08A;
+$color-gold-dark: #A8844A;
+$color-offwhite: #F5F3EE;
+$color-white: #FFFFFF;
+
+// Font families
+$font-display: 'Playfair Display', Georgia, serif;
+$font-body: 'Inter', system-ui, sans-serif;
+
+// Transitions
+$transition-fast: 0.2s ease;
+$transition-normal: 0.35s ease;
+$transition-slow: 0.55s ease;
+
+// Z-index scale
+$z-below: -1;
+$z-base: 0;
+$z-raised: 10;
+$z-dropdown: 100;
+$z-sticky: 200;
+$z-overlay: 300;
+$z-modal: 400;
+$z-toast: 500;

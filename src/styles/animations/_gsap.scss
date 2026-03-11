@@ -1,0 +1,32 @@
+// ============================================================
+// GSAP ANIMATION STATES
+// Initial hidden states and transition helpers
+// ============================================================
+
+// Elements start hidden for JS-driven reveals
+.gsap-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+// GSAP will set these — defined here for no-JS fallback
+[data-gsap="fade-up"],
+[data-gsap="fade-in"],
+[data-gsap="fade-left"],
+[data-gsap="fade-right"] {
+    @media (prefers-reduced-motion: reduce) {
+        opacity: 1 !important;
+        transform: none !important;
+        visibility: visible !important;
+    }
+}
+
+// Stagger parent
+.gsap-stagger-parent>* {
+    opacity: 0;
+}
+
+// After GSAP runs
+.gsap-ready [data-gsap] {
+    visibility: visible;
+}

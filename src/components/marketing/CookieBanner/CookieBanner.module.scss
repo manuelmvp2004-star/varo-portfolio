@@ -1,0 +1,109 @@
+@use '@/styles/abstracts/index' as *;
+
+.wrapper {
+    position: fixed;
+    bottom: var(--space-4);
+    left: var(--space-4);
+    right: var(--space-4);
+    z-index: var(--z-modal);
+    @include flex-center;
+    pointer-events: none; // Allow clicks through wrapper
+
+    @include bp-md {
+        bottom: var(--space-8);
+    }
+}
+
+.banner {
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    padding: var(--space-6);
+    width: 100%;
+    max-width: 900px;
+    pointer-events: auto;
+
+    @include flex-col;
+    gap: var(--space-4);
+
+    // Entrance animation
+    animation: slideUp 0.6s var(--ease-out) forwards;
+
+    @include bp-md {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-8);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(120%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.content {
+    flex: 1;
+}
+
+.text {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--lh-relaxed);
+}
+
+.link {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    transition: color $transition-fast;
+
+    &:hover {
+        color: var(--color-accent);
+    }
+}
+
+.actions {
+    @include flex-col;
+    gap: var(--space-3);
+    flex-shrink: 0;
+
+    @include bp-sm {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.btn {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--fw-medium);
+    cursor: pointer;
+    transition: color $transition-fast;
+    white-space: nowrap;
+}
+
+.btnReject {
+    color: var(--color-text-muted);
+    text-decoration: underline;
+    background: none;
+    border: none;
+    padding: var(--space-2);
+
+    &:hover {
+        color: var(--color-text-primary);
+    }
+}
+
+.btnAccept {
+    @include bp-max-sm {
+        width: 100%;
+    }
+}

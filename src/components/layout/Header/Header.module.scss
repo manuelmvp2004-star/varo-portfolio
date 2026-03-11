@@ -1,0 +1,214 @@
+@use '@/styles/abstracts/index' as *;
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: $z-sticky;
+    padding: var(--space-4) 0;
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, padding 0.3s ease;
+    background-color: transparent;
+
+    &.scrolled {
+        background-color: var(--color-bg-primary);
+        box-shadow: 0 2px 20px rgba(10, 22, 40, 0.4);
+        padding: var(--space-3) 0;
+    }
+}
+
+.inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-px);
+    @include flex-between;
+    gap: var(--space-8);
+}
+
+// Logo
+.logo {
+    @include flex-start;
+    gap: var(--space-3);
+    flex-shrink: 0;
+    text-decoration: none;
+
+    &:hover .logoMark {
+        background-color: var(--color-accent-dark);
+    }
+}
+
+.logoMark {
+    width: 38px;
+    height: 38px;
+    background-color: var(--color-accent);
+    border-radius: var(--radius-md);
+    @include flex-center;
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--text-sm);
+    color: var(--color-bg-primary);
+    transition: background-color $transition-normal;
+    flex-shrink: 0;
+}
+
+.logoText {
+    @include flex-col;
+    gap: 1px;
+}
+
+.logoMain {
+    font-family: var(--font-body);
+    font-weight: var(--fw-semibold);
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    line-height: 1;
+    letter-spacing: 0.01em;
+}
+
+.logoSub {
+    font-family: var(--font-body);
+    font-weight: var(--fw-regular);
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    line-height: 1;
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+}
+
+// Desktop Nav
+.nav {
+    @include bp-max-lg {
+        display: none;
+    }
+}
+
+.navList {
+    @include flex-start;
+    gap: var(--space-1);
+}
+
+.navItem {
+    position: relative;
+}
+
+.hasDropdown {
+    &:hover .navLink {
+        color: var(--color-accent);
+    }
+}
+
+.navLink {
+    @include flex-center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--fw-medium);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: color $transition-fast, background-color $transition-fast;
+    white-space: nowrap;
+
+    &:hover {
+        color: var(--color-accent);
+        background-color: var(--color-accent-muted);
+    }
+}
+
+.chevron {
+    transition: transform $transition-fast;
+
+    .hasDropdown:hover & {
+        transform: rotate(180deg);
+    }
+}
+
+// Dropdown
+.dropdown {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    padding: var(--space-2);
+    min-width: 220px;
+    animation: dropdownIn 0.2s var(--ease-out) forwards;
+}
+
+@keyframes dropdownIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.dropdownList {
+    @include flex-col;
+    gap: var(--space-1);
+}
+
+.dropdownLink {
+    display: block;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    border-radius: var(--radius-md);
+    transition: color $transition-fast, background-color $transition-fast;
+
+    &:hover {
+        color: var(--color-accent);
+        background-color: var(--color-accent-muted);
+    }
+}
+
+// Actions
+.actions {
+    @include flex-start;
+    gap: var(--space-4);
+    flex-shrink: 0;
+}
+
+.ctaDesktop {
+    @include bp-max-lg {
+        display: none !important;
+    }
+}
+
+// Hamburger
+.hamburger {
+    @include flex-col;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    padding: var(--space-2);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: background-color $transition-fast;
+
+    @include bp-lg {
+        display: none;
+    }
+
+    &:hover {
+        background-color: var(--color-accent-muted);
+    }
+
+    span {
+        display: block;
+        width: 18px;
+        height: 1.5px;
+        background-color: var(--color-text-primary);
+        border-radius: var(--radius-full);
+        transition: transform $transition-normal;
+    }
+}

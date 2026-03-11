@@ -1,0 +1,43 @@
+// ============================================================
+// TYPOGRAPHY TOKENS — Multiservicios Varo
+// ============================================================
+
+:root {
+    // --- Font Families ---
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    // --- Font Weights ---
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+    --fw-extrabold: 800;
+
+    // --- Type Scale (fluid-ish) ---
+    --text-xs: 0.75rem; // 12px
+    --text-sm: 0.875rem; // 14px
+    --text-base: 1rem; // 16px
+    --text-md: 1.125rem; // 18px
+    --text-lg: 1.25rem; // 20px
+    --text-xl: 1.5rem; // 24px
+    --text-2xl: 1.875rem; // 30px
+    --text-3xl: 2.25rem; // 36px
+    --text-4xl: 3rem; // 48px
+    --text-5xl: 3.75rem; // 60px
+    --text-6xl: 4.5rem; // 72px
+
+    // --- Line Heights ---
+    --lh-tight: 1.2;
+    --lh-snug: 1.35;
+    --lh-normal: 1.6;
+    --lh-relaxed: 1.75;
+
+    // --- Letter Spacing ---
+    --ls-tight: -0.02em;
+    --ls-normal: 0em;
+    --ls-wide: 0.05em;
+    --ls-wider: 0.1em;
+    --ls-widest: 0.15em;
+}

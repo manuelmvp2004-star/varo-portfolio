@@ -1,0 +1,132 @@
+@use '@/styles/abstracts/index' as *;
+
+.hero {
+    padding: var(--space-32) 0 var(--space-20);
+    background-color: var(--color-bg-primary);
+}
+
+.heroContent {
+    max-width: 800px;
+    @include flex-col;
+    gap: var(--space-6);
+}
+
+.iconWrapper {
+    width: 80px;
+    height: 80px;
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    @include flex-center;
+    margin-bottom: var(--space-2);
+}
+
+.icon {
+    font-size: var(--text-4xl);
+    line-height: 1;
+}
+
+.title {
+    @include display-heading;
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+    color: var(--color-text-primary);
+}
+
+.description {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: var(--lh-relaxed);
+    max-width: 680px;
+}
+
+.cta {
+    margin-top: var(--space-4);
+    align-self: flex-start;
+}
+
+.details {
+    padding: var(--section-py) 0;
+    background-color: var(--color-bg-white);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+
+    @include bp-lg {
+        grid-template-columns: 1fr 380px;
+        gap: var(--space-16);
+    }
+}
+
+.content {
+    @include flex-col;
+}
+
+.heading {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    color: var(--color-text-dark);
+    margin-bottom: var(--space-6);
+}
+
+.subHeading {
+    font-size: var(--text-xl);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-dark);
+    margin: var(--space-10) 0 var(--space-6);
+}
+
+.longDesc {
+    font-size: var(--text-md);
+    color: var(--color-text-medium);
+    line-height: var(--lh-relaxed);
+}
+
+.featuresList {
+    @include flex-col;
+    gap: var(--space-4);
+}
+
+.featureItem {
+    @include flex-start;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--text-md);
+    color: var(--color-text-dark);
+    line-height: var(--lh-snug);
+}
+
+.checkIcon {
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.sidebar {
+    position: sticky;
+    top: 120px; // account for header
+    align-self: flex-start;
+}
+
+.contactCard {
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    @include flex-col;
+    gap: var(--space-4);
+}
+
+.cardTitle {
+    font-size: var(--text-lg);
+    font-weight: var(--fw-bold);
+    color: var(--color-text-dark);
+}
+
+.cardText {
+    color: var(--color-text-medium);
+    line-height: var(--lh-relaxed);
+    margin-bottom: var(--space-2);
+}

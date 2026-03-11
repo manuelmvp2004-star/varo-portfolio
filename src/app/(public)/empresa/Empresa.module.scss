@@ -1,0 +1,71 @@
+@use '@/styles/abstracts/index' as *;
+
+.hero {
+    padding: var(--space-32) 0 var(--space-20);
+    background-color: var(--color-bg-primary);
+    text-align: center;
+}
+
+.heroContent {
+    max-width: 800px;
+    margin: 0 auto;
+    @include flex-col;
+    align-items: center;
+    gap: var(--space-6);
+}
+
+.eyebrow {
+    @include eyebrow;
+    color: var(--color-accent);
+}
+
+.title {
+    @include display-heading;
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+    color: var(--color-text-primary);
+}
+
+.accent {
+    color: var(--color-accent);
+}
+
+.subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: var(--lh-relaxed);
+    max-width: 600px;
+}
+
+.values {
+    padding: var(--section-py) 0;
+    background-color: var(--color-bg-white);
+}
+
+.grid {
+    @include grid-auto(300px);
+}
+
+.valueCard {
+    @include flex-col;
+    gap: var(--space-3);
+    padding: var(--space-8);
+    background-color: var(--color-bg-light);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-light);
+
+    h3 {
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        color: var(--color-text-dark);
+        margin-top: var(--space-2);
+    }
+
+    p {
+        color: var(--color-text-medium);
+        line-height: var(--lh-relaxed);
+    }
+}
+
+.icon {
+    font-size: var(--text-3xl);
+}

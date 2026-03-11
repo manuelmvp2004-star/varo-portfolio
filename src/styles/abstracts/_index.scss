@@ -1,0 +1,7 @@
+// ============================================================
+// SCSS partial: used in SCSS Modules that need shared utils
+// Import this in individual module files as needed
+// ============================================================
+// Export variables and mixins so that other files can import them easily
+@forward 'variables';
+@forward 'mixins';

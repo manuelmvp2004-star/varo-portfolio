@@ -1,0 +1,18 @@
+@use '@/styles/abstracts/index' as *;
+
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-px);
+    padding-right: var(--container-px);
+}
+
+.container--narrow {
+    max-width: 768px;
+}
+
+.container--wide {
+    max-width: 1440px;
+}

@@ -1,0 +1,74 @@
+@use '@/styles/abstracts/index' as *;
+
+.article {
+    padding-bottom: var(--section-py);
+    background-color: var(--color-bg-white);
+}
+
+.header {
+    padding: var(--space-32) 0 var(--space-12);
+    background-color: var(--color-bg-light);
+    border-bottom: 1px solid var(--color-border-light);
+    margin-bottom: var(--space-12);
+}
+
+.title {
+    @include display-heading;
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+    color: var(--color-text-dark);
+    margin-bottom: var(--space-4);
+}
+
+.meta {
+    font-size: var(--text-sm);
+    color: var(--color-text-medium);
+}
+
+// The generic prose styling applies globally but is scoped to the legal content block
+:global(.legal-prose) {
+    color: var(--color-text-dark);
+    line-height: var(--lh-relaxed);
+
+    h2 {
+        font-family: var(--font-display);
+        font-size: var(--text-2xl);
+        margin: var(--space-12) 0 var(--space-4);
+        color: var(--color-text-dark);
+    }
+
+    h3 {
+        font-size: var(--text-lg);
+        font-weight: var(--fw-semibold);
+        margin: var(--space-8) 0 var(--space-3);
+    }
+
+    p {
+        margin-bottom: var(--space-4);
+        color: var(--color-text-medium);
+    }
+
+    ul,
+    ol {
+        margin-bottom: var(--space-6);
+        padding-left: var(--space-6);
+        color: var(--color-text-medium);
+    }
+
+    li {
+        margin-bottom: var(--space-2);
+    }
+
+    a {
+        color: var(--color-accent);
+        text-decoration: underline;
+
+        &:hover {
+            color: var(--color-accent-dark);
+        }
+    }
+
+    strong {
+        font-weight: var(--fw-semibold);
+        color: var(--color-text-dark);
+    }
+}

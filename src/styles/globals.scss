@@ -1,0 +1,118 @@
+// ============================================================
+// GLOBALS.SCSS — Root SCSS entry point
+// Multiservicios Varo
+// ============================================================
+
+// 1. Tokens (CSS custom properties)
+@use 'tokens/colors';
+@use 'tokens/typography';
+@use 'tokens/spacing';
+@use 'tokens/shadows';
+@use 'tokens/motion';
+
+// 2. Base styles
+@use 'base/reset';
+
+// 3. Animation helpers
+@use 'animations/gsap';
+
+// ============================================================
+// Global base styles
+// ============================================================
+
+html {
+    color-scheme: light dark;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--fw-regular);
+    color: var(--color-text-dark);
+    background-color: var(--color-bg-white);
+}
+
+// Selection
+::selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+}
+
+// Scrollbar (WebKit)
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border-radius: var(--radius-full);
+
+    &:hover {
+        background: var(--color-accent-light);
+    }
+}
+
+// Typography defaults
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    color: var(--color-text-inverse);
+}
+
+p {
+    line-height: var(--lh-normal);
+    color: var(--color-text-medium);
+}
+
+a {
+    transition: color 0.2s ease;
+}
+
+// Section defaults
+section {
+    position: relative;
+}
+
+// Dark section variant
+.section--dark {
+    background-color: var(--color-bg-primary);
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--color-text-primary);
+    }
+
+    p {
+        color: var(--color-text-muted);
+    }
+}
+
+// Gold accent text
+.text-accent {
+    color: var(--color-accent);
+}
+
+// Visual separator
+.divider {
+    width: 3rem;
+    height: 2px;
+    background: var(--color-accent);
+    border-radius: var(--radius-full);
+    margin: var(--space-6) 0;
+}

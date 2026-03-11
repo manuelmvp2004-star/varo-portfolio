@@ -1,0 +1,41 @@
+// ============================================================
+// COLOR TOKENS — Multiservicios Varo
+// Direction: Navy premium + Gold accent + Off-white
+// ============================================================
+
+:root {
+  // --- Backgrounds ---
+  --color-bg-primary:     #0A1628;   // Deep navy — main dark bg
+  --color-bg-secondary:  #0F1E38;   // Slightly lighter navy
+  --color-bg-card:       #132040;   // Card surface
+  --color-bg-light:      #F5F3EE;   // Off-white — section bg
+  --color-bg-white:      #FFFFFF;
+
+  // --- Brand Accent ---
+  --color-accent:        #C9A96E;   // Warm gold — primary accent
+  --color-accent-light:  #DFC08A;   // Lighter gold
+  --color-accent-dark:   #A8844A;   // Darker gold
+  --color-accent-muted:  rgba(201,169,110, 0.15); // Gold tint bg
+
+  // --- Text ---
+  --color-text-primary:  #F5F3EE;   // On dark backgrounds
+  --color-text-inverse:  #0A1628;   // On light backgrounds
+  --color-text-muted:    rgba(245,243,238, 0.60);
+  --color-text-subtle:   rgba(245,243,238, 0.40);
+  --color-text-dark:     #1A2B47;   // Body text on light bg
+  --color-text-medium:   #4A5E7A;   // Secondary text on light bg
+
+  // --- Borders ---
+  --color-border:        rgba(201,169,110, 0.20);
+  --color-border-light:  rgba(245,243,238, 0.10);
+  --color-border-dark:   rgba(10,22,40, 0.15);
+
+  // --- Status ---
+  --color-success:       #4CAF82;
+  --color-error:         #E05C5C;
+  --color-warning:       #E8A951;
+
+  // --- Overlay ---
+  --color-overlay:       rgba(10,22,40, 0.75);
+  --color-overlay-dark:  rgba(10,22,40, 0.90);
+}

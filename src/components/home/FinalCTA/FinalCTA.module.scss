@@ -1,0 +1,103 @@
+@use '@/styles/abstracts/index' as *;
+
+.section {
+    position: relative;
+    padding: clamp(6rem, 12vw, 10rem) 0;
+    background-color: var(--color-bg-primary);
+    overflow: hidden;
+    text-align: center;
+}
+
+.bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+
+    // Base subtle grid
+    background-image:
+        linear-gradient(rgba(201, 169, 110, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201, 169, 110, 0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+
+    // Gold radial fade
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%,
+                rgba(201, 169, 110, 0.08) 0%,
+                transparent 70%);
+    }
+}
+
+.inner {
+    position: relative;
+    z-index: 1;
+}
+
+.content {
+    max-width: 720px;
+    margin: 0 auto;
+    @include flex-col;
+    align-items: center;
+    gap: var(--space-6);
+}
+
+.title {
+    @include display-heading;
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+    color: var(--color-text-primary);
+}
+
+.accent {
+    color: var(--color-accent);
+}
+
+.subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: var(--lh-relaxed);
+    max-width: 600px;
+}
+
+.actions {
+    @include flex-center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    margin-top: var(--space-4);
+    width: 100%;
+
+    @include bp-max-sm {
+        flex-direction: column;
+
+        >* {
+            width: 100%;
+        }
+    }
+}
+
+.secondaryBtn {
+    background-color: rgba(255, 255, 255, 0.03); // Subtle fill to stand out from bg
+
+    &:hover {
+        background-color: var(--color-accent);
+    }
+}
+
+.contactDirect {
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-subtle);
+}
+
+.phone {
+    color: var(--color-accent);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &:hover {
+        color: var(--color-text-primary);
+    }
+}
