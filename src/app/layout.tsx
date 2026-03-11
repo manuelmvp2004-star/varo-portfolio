@@ -17,6 +17,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://multiserviciosvaro.com'),
+  applicationName: 'Multiservicios Varo',
   title: {
     default: 'Multiservicios Varo | Reformas y Servicios en Zaragoza',
     template: '%s | Multiservicios Varo',
@@ -44,6 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+  themeColor: '#102F2D',
   robots: {
     index: true,
     follow: true,
@@ -67,7 +69,7 @@ export default function RootLayout({
       lang="es"
       className={`${manrope.variable} ${playfair.variable}`}
     >
-      <body>
+      <body className="app-root">
         {children}
       </body>
     </html>

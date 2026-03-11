@@ -1,37 +1,37 @@
 // ============================================================
 // COLOR TOKENS — Multiservicios Varo
-// Direction: Controlled navy + Warm metal accent + Mineral neutrals
+// Direction: Petroleum emerald + Warm gold + Ivory marble + Graphite
 // ============================================================
 
 :root {
   // --- Backgrounds ---
-  --color-bg-primary:    #0B1525;   // Deep navy — main dark bg
-  --color-bg-secondary:  #121F34;   // Secondary dark surfaces
-  --color-bg-card:       #182742;   // Elevated dark cards
-  --color-bg-light:      #F3F0E8;   // Warm light sections
+  --color-bg-primary:    #102F2D;   // Deep petroleum
+  --color-bg-secondary:  #17413E;   // Emerald-dark surface
+  --color-bg-card:       #1D4D49;   // Elevated dark card
+  --color-bg-light:      #F3EEE3;   // Marble ivory section
   --color-bg-white:      #FFFFFF;
-  --color-bg-canvas:     #F7F4EE;   // Site canvas
+  --color-bg-canvas:     #F8F4EA;   // Site canvas
 
   // --- Brand Accent ---
-  --color-accent:        #B99660;   // Warm bronze-gold
-  --color-accent-light:  #C9AB7D;   // Lighter accent
-  --color-accent-dark:   #8F7044;   // Deeper accent
-  --color-accent-muted:  rgba(185, 150, 96, 0.16);
+  --color-accent:        #BE9659;   // Warm refined gold
+  --color-accent-light:  #D2AF79;   // Lighter accent
+  --color-accent-dark:   #937144;   // Deeper accent
+  --color-accent-muted:  rgba(190, 150, 89, 0.16);
 
   // --- Text ---
-  --color-text-primary:  #F4F1E8;   // On dark backgrounds
-  --color-text-inverse:  #0F1C30;   // Strong text on light backgrounds
-  --color-text-muted:    rgba(244, 241, 232, 0.68);
-  --color-text-subtle:   rgba(244, 241, 232, 0.48);
-  --color-text-dark:     #16253C;   // Body text on light bg
-  --color-text-medium:   #4C5E78;   // Secondary text on light bg
-  --color-text-soft:     #6B7C95;   // Long supporting copy
+  --color-text-primary:  #F7F2E6;   // On dark backgrounds
+  --color-text-inverse:  #1C2A2A;   // Strong text on light backgrounds
+  --color-text-muted:    rgba(247, 242, 230, 0.72);
+  --color-text-subtle:   rgba(247, 242, 230, 0.52);
+  --color-text-dark:     #202C2B;   // Body text on light bg
+  --color-text-medium:   #4E605F;   // Secondary text on light bg
+  --color-text-soft:     #687978;   // Long supporting copy
 
   // --- Borders ---
-  --color-border:        rgba(185, 150, 96, 0.30);
-  --color-border-light:  rgba(244, 241, 232, 0.14);
-  --color-border-dark:   rgba(15, 28, 48, 0.14);
-  --color-border-strong: rgba(15, 28, 48, 0.24);
+  --color-border:        rgba(190, 150, 89, 0.34);
+  --color-border-light:  rgba(247, 242, 230, 0.2);
+  --color-border-dark:   rgba(28, 42, 42, 0.14);
+  --color-border-strong: rgba(28, 42, 42, 0.26);
 
   // --- Status ---
   --color-success:       #4CAF82;
@@ -39,6 +39,6 @@
   --color-warning:       #E8A951;
 
   // --- Overlay ---
-  --color-overlay:       rgba(11, 21, 37, 0.74);
-  --color-overlay-dark:  rgba(11, 21, 37, 0.9);
+  --color-overlay:       rgba(16, 47, 45, 0.74);
+  --color-overlay-dark:  rgba(16, 47, 45, 0.9);
 }

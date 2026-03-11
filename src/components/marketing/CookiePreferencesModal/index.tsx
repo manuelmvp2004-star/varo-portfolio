@@ -10,23 +10,60 @@ interface CookiePreferencesModalProps {
     onClose: () => void;
 }
 
+interface CookiePreferences {
+    necessary: true;
+    analytics: boolean;
+    marketing: boolean;
+}
+
+const DEFAULT_PREFERENCES: CookiePreferences = {
+    necessary: true,
+    analytics: false,
+    marketing: false,
+};
+
+function getStoredPreferences(): CookiePreferences {
+    if (typeof window === 'undefined') {
+        return DEFAULT_PREFERENCES;
+    }
+
+    const consent = localStorage.getItem('cookieConsent');
+    if (consent === 'all') {
+        return { necessary: true, analytics: true, marketing: true };
+    }
+
+    if (consent === 'custom') {
+        const rawPreferences = localStorage.getItem('cookiePreferences');
+        if (!rawPreferences) return DEFAULT_PREFERENCES;
+
+        try {
+            const parsed = JSON.parse(rawPreferences) as Partial<CookiePreferences>;
+            return {
+                necessary: true,
+                analytics: Boolean(parsed.analytics),
+                marketing: Boolean(parsed.marketing),
+            };
+        } catch {
+            return DEFAULT_PREFERENCES;
+        }
+    }
+
+    return DEFAULT_PREFERENCES;
+}
+
 export function CookiePreferencesModal({ isOpen, onClose }: CookiePreferencesModalProps) {
-    const [preferences, setPreferences] = useState({
-        necessary: true, // Always true
-        analytics: false,
-        marketing: false,
-    });
+    const [preferences, setPreferences] = useState<CookiePreferences>(getStoredPreferences);
 
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
-            const consent = localStorage.getItem('cookieConsent');
-            if (consent === 'all') {
-                setPreferences({ necessary: true, analytics: true, marketing: true });
-            }
         } else {
             document.body.style.overflow = '';
         }
+
+        return () => {
+            document.body.style.overflow = '';
+        };
     }, [isOpen]);
 
     const handleSave = () => {

@@ -70,13 +70,13 @@ export function Hero() {
                     </span>
 
                     <h1 ref={headingRef} className={styles.heading}>
-                        Reformas interiores y servicios técnicos{' '}
-                        <span className={styles.accent}>ejecutados con precisión</span>
+                        Reformas técnicas y mantenimiento integral{' '}
+                        <span className={styles.accent}>con estándar profesional</span>
                     </h1>
 
                     <p ref={subRef} className={styles.sub}>
-                        Pintura, pladur, electricidad, mantenimiento y aislamiento para viviendas, locales y
-                        oficinas. Planificación clara, coordinación rigurosa y acabados limpios desde el primer día.
+                        Pintura, pladur, electricidad, reformas interiores y aislamiento para vivienda, local y
+                        oficina. Cada intervención se planifica con detalle, tiempos realistas y cierre limpio.
                     </p>
 
                     <div ref={ctaRef} className={styles.ctas}>
@@ -84,15 +84,19 @@ export function Hero() {
                             Solicitar presupuesto
                         </Button>
                         <Button href="/servicios" variant="secondary" size="lg">
-                            Ver servicios
+                            Conocer servicios
                         </Button>
                     </div>
 
+                    <p className={styles.note}>
+                        Un único interlocutor técnico durante todo el proyecto.
+                    </p>
+
                     <div ref={badgesRef} className={styles.badges}>
                         {[
-                            { value: '10+ años', label: 'Experiencia técnica en obra y mantenimiento' },
-                            { value: '500+ trabajos', label: 'Intervenciones finalizadas en Zaragoza y entorno' },
-                            { value: 'Proceso claro', label: 'Presupuesto detallado y seguimiento en cada fase' },
+                            { value: '10+ años', label: 'Oficio técnico en reformas y mantenimiento' },
+                            { value: '500+ intervenciones', label: 'Trabajos finalizados en Zaragoza y entorno' },
+                            { value: 'Presupuesto trazable', label: 'Detalle por partidas y seguimiento por fases' },
                         ].map(({ value, label }) => (
                             <div key={label} className={styles.badge}>
                                 <strong className={styles.badgeValue}>{value}</strong>

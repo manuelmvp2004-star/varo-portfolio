@@ -22,23 +22,23 @@
     --text-md: 1.125rem; // 18px
     --text-lg: 1.25rem; // 20px
     --text-xl: 1.5rem; // 24px
-    --text-2xl: clamp(1.75rem, 1.55rem + 0.6vw, 2rem); // 28-32px
-    --text-3xl: clamp(2rem, 1.62rem + 1.2vw, 2.625rem); // 32-42px
-    --text-4xl: clamp(2.35rem, 1.85rem + 1.8vw, 3.25rem); // 38-52px
-    --text-5xl: clamp(2.9rem, 2.15rem + 2.8vw, 4.25rem); // 46-68px
-    --text-6xl: clamp(3.45rem, 2.55rem + 3.6vw, 5.25rem); // 55-84px
-    --text-display: clamp(2.55rem, 1.95rem + 2.8vw, 4.8rem); // Hero display
+    --text-2xl: clamp(1.65rem, 1.45rem + 0.8vw, 2rem); // 26-32px
+    --text-3xl: clamp(1.95rem, 1.58rem + 1.2vw, 2.6rem); // 31-42px
+    --text-4xl: clamp(2.3rem, 1.8rem + 1.8vw, 3.2rem); // 37-51px
+    --text-5xl: clamp(2.8rem, 2.12rem + 2.6vw, 4.1rem); // 45-66px
+    --text-6xl: clamp(3.2rem, 2.45rem + 3.4vw, 4.95rem); // 51-79px
+    --text-display: clamp(2.4rem, 1.85rem + 2.7vw, 4.65rem); // Hero display
 
     // --- Line Heights ---
-    --lh-tight: 1.12;
-    --lh-snug: 1.28;
-    --lh-normal: 1.58;
-    --lh-relaxed: 1.72;
+    --lh-tight: 1.1;
+    --lh-snug: 1.26;
+    --lh-normal: 1.6;
+    --lh-relaxed: 1.74;
 
     // --- Letter Spacing ---
-    --ls-tight: -0.018em;
+    --ls-tight: -0.016em;
     --ls-normal: 0em;
-    --ls-wide: 0.05em;
-    --ls-wider: 0.1em;
-    --ls-widest: 0.14em;
+    --ls-wide: 0.045em;
+    --ls-wider: 0.095em;
+    --ls-widest: 0.135em;
 }

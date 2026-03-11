@@ -22,7 +22,7 @@
     right: -14%;
     width: min(68vw, 900px);
     height: min(68vw, 900px);
-    background: radial-gradient(circle, rgba(185, 150, 96, 0.18) 0%, rgba(185, 150, 96, 0.03) 54%, transparent 78%);
+    background: radial-gradient(circle, rgba(190, 150, 89, 0.2) 0%, rgba(190, 150, 89, 0.05) 54%, transparent 78%);
     border-radius: 50%;
 }
 
@@ -31,7 +31,7 @@
     inset: auto auto -34% -18%;
     width: min(62vw, 780px);
     height: min(62vw, 780px);
-    background: radial-gradient(circle, rgba(25, 43, 71, 0.7) 0%, rgba(11, 21, 37, 0) 75%);
+    background: radial-gradient(circle, rgba(23, 65, 62, 0.72) 0%, rgba(16, 47, 45, 0) 76%);
     border-radius: 50%;
 }
 
@@ -39,11 +39,11 @@
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(244, 241, 232, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(244, 241, 232, 0.03) 1px, transparent 1px);
+        linear-gradient(rgba(247, 242, 230, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247, 242, 230, 0.028) 1px, transparent 1px);
     background-size: 88px 88px;
     mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.88) 26%, rgba(0, 0, 0, 0.88) 80%, transparent 100%);
-    opacity: 0.34;
+    opacity: 0.28;
 }
 
 // Content
@@ -71,7 +71,7 @@
     color: var(--color-accent);
     gap: var(--space-2);
     letter-spacing: 0.17em;
-    background-color: rgba(244, 241, 232, 0.03);
+    background-color: rgba(247, 242, 230, 0.05);
 
     &::before {
         content: '';
@@ -109,6 +109,12 @@
     flex-wrap: wrap;
 }
 
+.note {
+    font-size: var(--text-sm);
+    color: var(--color-text-subtle);
+    letter-spacing: 0.02em;
+}
+
 // Trust badges
 .badges {
     display: grid;
@@ -127,7 +133,7 @@
     padding: var(--space-4);
     border-radius: var(--radius-md);
     border: 1px solid var(--color-border-light);
-    background: linear-gradient(180deg, rgba(244, 241, 232, 0.05) 0%, rgba(244, 241, 232, 0.015) 100%);
+    background: linear-gradient(180deg, rgba(247, 242, 230, 0.08) 0%, rgba(247, 242, 230, 0.03) 100%);
 }
 
 .badgeValue {

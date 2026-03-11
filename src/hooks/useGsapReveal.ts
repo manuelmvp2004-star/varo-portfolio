@@ -18,38 +18,36 @@ interface GsapRevealOptions {
 export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     options: GsapRevealOptions = {}
 ): RefObject<T | null> {
+    const {
+        y = 40,
+        x = 0,
+        opacity = 0,
+        duration = 0.8,
+        delay = 0,
+        ease = 'power3.out',
+        start = 'top 85%',
+    } = options;
+
     const ref = useRef<T | null>(null);
     const prefersReducedMotion = usePrefersReducedMotion();
 
     useEffect(() => {
         if (!ref.current || prefersReducedMotion) return;
 
-        let gsap: typeof import('gsap')['gsap'] | undefined;
-        let ScrollTrigger: typeof import('gsap/ScrollTrigger')['ScrollTrigger'] | undefined;
-        let ctx: any;
-
-        const {
-            y = 40,
-            x = 0,
-            opacity = 0,
-            duration = 0.8,
-            delay = 0,
-            ease = 'power3.out',
-            start = 'top 85%',
-        } = options;
+        let isCancelled = false;
+        let ctx: { revert: () => void } | undefined;
 
         const initAnimation = async () => {
             const gsapModule = await import('gsap');
             const ScrollTriggerModule = await import('gsap/ScrollTrigger');
+            const gsap = gsapModule.gsap;
+            const ScrollTrigger = ScrollTriggerModule.ScrollTrigger;
 
-            gsap = gsapModule.gsap;
-            ScrollTrigger = ScrollTriggerModule.ScrollTrigger;
+            if (isCancelled || !ref.current) return;
             gsap.registerPlugin(ScrollTrigger);
 
-            if (!ref.current) return;
-
             ctx = gsap.context(() => {
-                gsap!.from(ref.current!, {
+                gsap.from(ref.current!, {
                     y,
                     x,
                     opacity,
@@ -65,12 +63,13 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
             });
         };
 
-        initAnimation();
+        void initAnimation();
 
         return () => {
+            isCancelled = true;
             ctx?.revert();
         };
-    }, [prefersReducedMotion]);
+    }, [delay, duration, ease, opacity, prefersReducedMotion, start, x, y]);
 
     return ref;
 }

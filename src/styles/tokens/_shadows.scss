@@ -3,19 +3,19 @@
 // ============================================================
 
 :root {
-    --shadow-sm: 0 1px 3px rgba(10, 22, 40, 0.12), 0 1px 2px rgba(10, 22, 40, 0.08);
-    --shadow-md: 0 4px 12px rgba(10, 22, 40, 0.18), 0 2px 6px rgba(10, 22, 40, 0.10);
-    --shadow-lg: 0 10px 30px rgba(10, 22, 40, 0.22), 0 4px 12px rgba(10, 22, 40, 0.12);
-    --shadow-xl: 0 20px 50px rgba(10, 22, 40, 0.30), 0 8px 20px rgba(10, 22, 40, 0.15);
-    --shadow-gold: 0 8px 32px rgba(201, 169, 110, 0.25);
-    --shadow-card: 0 2px 20px rgba(10, 22, 40, 0.15);
-    --shadow-inset: inset 0 1px 3px rgba(10, 22, 40, 0.10);
+    --shadow-sm: 0 2px 6px rgba(16, 47, 45, 0.08), 0 1px 2px rgba(16, 47, 45, 0.06);
+    --shadow-md: 0 8px 20px rgba(16, 47, 45, 0.12), 0 3px 8px rgba(16, 47, 45, 0.08);
+    --shadow-lg: 0 16px 38px rgba(16, 47, 45, 0.16), 0 6px 14px rgba(16, 47, 45, 0.1);
+    --shadow-xl: 0 24px 60px rgba(16, 47, 45, 0.22), 0 10px 24px rgba(16, 47, 45, 0.12);
+    --shadow-gold: 0 10px 28px rgba(190, 150, 89, 0.24);
+    --shadow-card: 0 10px 28px rgba(16, 47, 45, 0.1);
+    --shadow-inset: inset 0 1px 3px rgba(16, 47, 45, 0.08);
 
     // --- Border Radius ---
     --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
     --radius-2xl: 24px;
     --radius-full: 9999px;
 }

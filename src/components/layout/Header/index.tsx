@@ -42,6 +42,11 @@ export function Header() {
                                             setActiveDropdown(null);
                                         }
                                     }}
+                                    onKeyDown={(event) => {
+                                        if (event.key === 'Escape') {
+                                            setActiveDropdown(null);
+                                        }
+                                    }}
                                 >
                                     <Link
                                         href={item.href}
@@ -81,6 +86,7 @@ export function Header() {
                             {ctaButton.label}
                         </Button>
                         <button
+                            type="button"
                             className={styles.hamburger}
                             onClick={() => setMobileOpen(true)}
                             aria-label="Abrir menú"
