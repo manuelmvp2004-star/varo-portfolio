@@ -57,7 +57,7 @@
 .textBlock {
     max-width: 860px;
     @include flex-col;
-    gap: var(--space-7, 1.75rem);
+    gap: clamp(var(--space-5), 2.4vw, var(--space-8));
 }
 
 .eyebrow {

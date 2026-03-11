@@ -61,12 +61,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, var(--color-bg-secondary) 70%, var(--color-accent) 30%);
+    background: rgba(49, 65, 90, 0.78);
     border-radius: var(--radius-full);
     border: 2px solid var(--color-bg-canvas);
 
     &:hover {
-        background: color-mix(in srgb, var(--color-bg-secondary) 52%, var(--color-accent) 48%);
+        background: rgba(75, 93, 120, 0.9);
     }
 }
 
