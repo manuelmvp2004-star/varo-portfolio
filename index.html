@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tablero de tareas | Multiservicios Varo</title>
+    <style>
+        :root {
+            --bg: #0f1115;
+            --panel: #171a21;
+            --panel-2: #1d212b;
+            --card: #232836;
+            --card-hover: #2a3040;
+            --text: #f3f5f7;
+            --muted: #a9b0bb;
+            --border: #31384a;
+            --accent: #4f8cff;
+            --danger: #ff5d5d;
+            --success: #35c56f;
+            --warning: #ffb347;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            --radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(180deg, #0c0e13 0%, #12151d 100%);
+            color: var(--text);
+            min-height: 100%;
+        }
+
+        body {
+            padding: 24px;
+        }
+
+        .app {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .topbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .title-wrap h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            line-height: 1.1;
+        }
+
+        .title-wrap p {
+            margin: 0;
+            color: var(--muted);
+            max-width: 800px;
+        }
+
+        .storage-badge {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: rgba(79, 140, 255, 0.08);
+            color: #cfe0ff;
+            font-size: 0.92rem;
+            white-space: nowrap;
+        }
+
+        .creator {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .creator h2 {
+            margin: 0 0 14px;
+            font-size: 1.15rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            gap: 12px;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            font: inherit;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            background: var(--panel-2);
+            color: var(--text);
+            border-radius: 14px;
+            padding: 12px 14px;
+            outline: none;
+            transition: 0.2s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(79, 140, 255, 0.12);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 96px;
+        }
+
+        button {
+            border: 0;
+            border-radius: 14px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: transform 0.15s ease, opacity 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+        }
+
+        .btn-secondary {
+            background: #2b3243;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            align-items: start;
+        }
+
+        .column {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .column.drag-over {
+            border-color: var(--accent);
+            background: rgba(79, 140, 255, 0.08);
+        }
+
+        .column-header {
+            padding: 18px 18px 14px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        .column-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .column-header h3 {
+            margin: 0;
+            font-size: 1.05rem;
+        }
+
+        .count {
+            min-width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            font-size: 0.92rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text);
+        }
+
+        .column small {
+            color: var(--muted);
+        }
+
+        .cards {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            min-height: 250px;
+        }
+
+        .empty {
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+            padding: 18px;
+            color: var(--muted);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .card {
+            background: linear-gradient(180deg, var(--card) 0%, #1f2430 100%);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 14px;
+            box-shadow: var(--shadow);
+            cursor: grab;
+            transition: 0.2s ease;
+        }
+
+        .card:hover {
+            background: linear-gradient(180deg, var(--card-hover) 0%, #242b39 100%);
+            border-color: #44506a;
+        }
+
+        .card.dragging {
+            opacity: 0.5;
+            transform: rotate(1deg);
+            cursor: grabbing;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+
+        .card-desc {
+            color: var(--muted);
+            font-size: 0.93rem;
+            line-height: 1.5;
+            margin: 0 0 12px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.06);
+            color: #e9edf3;
+        }
+
+        .priority-alta {
+            background: rgba(255, 93, 93, 0.14);
+            color: #ffd0d0;
+            border-color: rgba(255, 93, 93, 0.3);
+        }
+
+        .priority-media {
+            background: rgba(255, 179, 71, 0.14);
+            color: #ffe1b3;
+            border-color: rgba(255, 179, 71, 0.3);
+        }
+
+        .priority-baja {
+            background: rgba(53, 197, 111, 0.14);
+            color: #cef6dd;
+            border-color: rgba(53, 197, 111, 0.3);
+        }
+
+        .area-tag {
+            background: rgba(79, 140, 255, 0.12);
+            color: #cfe0ff;
+            border-color: rgba(79, 140, 255, 0.28);
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .move-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .icon-btn {
+            background: #2b3243;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 8px 10px;
+            min-width: 40px;
+            font-weight: 700;
+        }
+
+        .delete-btn {
+            background: rgba(255, 93, 93, 0.12);
+            color: #ffc7c7;
+            border: 1px solid rgba(255, 93, 93, 0.25);
+            padding: 8px 12px;
+            font-weight: 600;
+        }
+
+        .footer-note {
+            margin-top: 18px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 1024px) {
+            .board {
+                grid-template-columns: 1fr;
+            }
+
+            .column {
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 16px;
+            }
+
+            .form-grid,
+            .form-grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                align-items: stretch;
+            }
+
+            .storage-badge {
+                width: fit-content;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <header class="topbar">
+            <div class="title-wrap">
+                <h1>Tablero de tareas · Multiservicios Varo</h1>
+                <p>
+                    Registro central del proyecto para controlar qué falta, qué se está haciendo
+                    y qué ya está terminado. Milagros no hace, pero orden sí.
+                </p>
+            </div>
+            <div class="storage-badge">Guardado automático en este navegador</div>
+        </header>
+
+        <section class="creator">
+            <h2>Nueva tarea</h2>
+            <div class="form-grid">
+                <input id="taskTitle" type="text" placeholder="Título de la tarea" maxlength="120" />
+                <select id="taskArea">
+                    <option value="Infraestructura">Infraestructura</option>
+                    <option value="Correo corporativo">Correo corporativo</option>
+                    <option value="Desarrollo web">Desarrollo web</option>
+                    <option value="Diseño">Diseño</option>
+                    <option value="Formularios">Formularios</option>
+                    <option value="SEO">SEO</option>
+                    <option value="Seguridad">Seguridad</option>
+                    <option value="Pruebas">Pruebas</option>
+                    <option value="Publicación">Publicación</option>
+                    <option value="Contenido">Contenido</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <select id="taskPriority">
+                    <option value="Alta">Prioridad alta</option>
+                    <option value="Media" selected>Prioridad media</option>
+                    <option value="Baja">Prioridad baja</option>
+                </select>
+            </div>
+
+            <div class="form-grid-2">
+                <textarea id="taskDescription" placeholder="Descripción breve o siguiente paso..."></textarea>
+                <button id="addTaskBtn" class="btn-primary">Añadir tarea</button>
+            </div>
+
+            <div class="toolbar">
+                <button id="resetDemoBtn" class="btn-secondary">Cargar ejemplo inicial</button>
+                <button id="clearBoardBtn" class="btn-secondary">Vaciar tablero</button>
+            </div>
+        </section>
+
+        <main class="board">
+            <section class="column" data-status="todo">
+                <div class="column-header">
+                    <div class="column-header-top">
+                        <h3>Por hacer</h3>
+                        <div class="count" id="count-todo">0</div>
+                    </div>
+                    <small>Tareas pendientes o planificadas</small>
+                </div>
+                <div class="cards" id="todo"></div>
+            </section>
+
+            <section class="column" data-status="doing">
+                <div class="column-header">
+                    <div class="column-header-top">
+                        <h3>En proceso</h3>
+                        <div class="count" id="count-doing">0</div>
+                    </div>
+                    <small>Tareas en ejecución ahora mismo</small>
+                </div>
+                <div class="cards" id="doing"></div>
+            </section>
+
+            <section class="column" data-status="done">
+                <div class="column-header">
+                    <div class="column-header-top">
+                        <h3>Hecho</h3>
+                        <div class="count" id="count-done">0</div>
+                    </div>
+                    <small>Tareas completadas</small>
+                </div>
+                <div class="cards" id="done"></div>
+            </section>
+        </main>
+
+        <p class="footer-note">
+            Consejo útil por una vez: este tablero guarda los datos en <strong>localStorage</strong>,
+            así que se conserva al recargar la página en este navegador.
+        </p>
+    </div>
+
+    <script>
+        const STORAGE_KEY = "multiservicios-varo-kanban";
+
+        const columns = {
+            todo: document.getElementById("todo"),
+            doing: document.getElementById("doing"),
+            done: document.getElementById("done"),
+        };
+
+        const counts = {
+            todo: document.getElementById("count-todo"),
+            doing: document.getElementById("count-doing"),
+            done: document.getElementById("count-done"),
+        };
+
+        const titleInput = document.getElementById("taskTitle");
+        const areaInput = document.getElementById("taskArea");
+        const priorityInput = document.getElementById("taskPriority");
+        const descriptionInput = document.getElementById("taskDescription");
+        const addTaskBtn = document.getElementById("addTaskBtn");
+        const resetDemoBtn = document.getElementById("resetDemoBtn");
+        const clearBoardBtn = document.getElementById("clearBoardBtn");
+
+        let tasks = [];
+        let draggedTaskId = null;
+
+        const demoTasks = [
+            {
+                id: crypto.randomUUID(),
+                title: "Definir sitemap inicial de la web",
+                area: "Desarrollo web",
+                priority: "Alta",
+                description: "Estructurar Inicio, Servicios, Sobre nosotros, Contacto y páginas legales.",
+                status: "todo",
+            },
+            {
+                id: crypto.randomUUID(),
+                title: "Diseñar estilo visual base",
+                area: "Diseño",
+                priority: "Alta",
+                description: "Paleta, tipografías, botones, espaciados y bloques principales.",
+                status: "doing",
+            },
+            {
+                id: crypto.randomUUID(),
+                title: "Dominio y hosting configurados",
+                area: "Infraestructura",
+                priority: "Alta",
+                description: "Dominio asociado y hosting operativo en Hostinger.",
+                status: "done",
+            },
+            {
+                id: crypto.randomUUID(),
+                title: "Crear formulario de contacto funcional",
+                area: "Formularios",
+                priority: "Media",
+                description: "Con validación y envío al correo corporativo.",
+                status: "todo",
+            }
+        ];
+
+        function saveTasks() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+        }
+
+        function loadTasks() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+                try {
+                    tasks = JSON.parse(raw);
+                } catch (error) {
+                    tasks = [...demoTasks];
+                }
+            } else {
+                tasks = [...demoTasks];
+                saveTasks();
+            }
+        }
+
+        function createEmptyState(text) {
+            const div = document.createElement("div");
+            div.className = "empty";
+            div.textContent = text;
+            return div;
+        }
+
+        function priorityClass(priority) {
+            const normalized = priority.toLowerCase();
+            if (normalized === "alta") return "priority-alta";
+            if (normalized === "media") return "priority-media";
+            return "priority-baja";
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement("div");
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function renderBoard() {
+            Object.values(columns).forEach((column) => {
+                column.innerHTML = "";
+            });
+
+            const grouped = {
+                todo: tasks.filter(task => task.status === "todo"),
+                doing: tasks.filter(task => task.status === "doing"),
+                done: tasks.filter(task => task.status === "done"),
+            };
+
+            for (const [status, list] of Object.entries(grouped)) {
+                if (list.length === 0) {
+                    columns[status].appendChild(createEmptyState("No hay tareas en esta columna."));
+                } else {
+                    list.forEach(task => {
+                        columns[status].appendChild(createCard(task));
+                    });
+                }
+                counts[status].textContent = list.length;
+            }
+        }
+
+        function createCard(task) {
+            const card = document.createElement("article");
+            card.className = "card";
+            card.draggable = true;
+            card.dataset.id = task.id;
+
+            const canMoveLeft = task.status !== "todo";
+            const canMoveRight = task.status !== "done";
+
+            card.innerHTML = `
+        <div class="card-top">
+          <h4 class="card-title">${escapeHtml(task.title)}</h4>
+        </div>
+
+        <div class="tags">
+          <span class="tag area-tag">${escapeHtml(task.area)}</span>
+          <span class="tag ${priorityClass(task.priority)}">Prioridad ${escapeHtml(task.priority)}</span>
+        </div>
+
+        ${task.description?.trim()
+                    ? `<p class="card-desc">${escapeHtml(task.description)}</p>`
+                    : `<p class="card-desc">Sin descripción.</p>`
+                }
+
+        <div class="card-actions">
+          <div class="move-group">
+            <button class="icon-btn move-left" ${canMoveLeft ? "" : "disabled"} title="Mover a la izquierda">←</button>
+            <button class="icon-btn move-right" ${canMoveRight ? "" : "disabled"} title="Mover a la derecha">→</button>
+          </div>
+          <button class="delete-btn delete-task">Eliminar</button>
+        </div>
+      `;
+
+            card.addEventListener("dragstart", () => {
+                draggedTaskId = task.id;
+                card.classList.add("dragging");
+            });
+
+            card.addEventListener("dragend", () => {
+                draggedTaskId = null;
+                card.classList.remove("dragging");
+            });
+
+            card.querySelector(".move-left").addEventListener("click", () => moveTask(task.id, -1));
+            card.querySelector(".move-right").addEventListener("click", () => moveTask(task.id, 1));
+            card.querySelector(".delete-task").addEventListener("click", () => deleteTask(task.id));
+
+            return card;
+        }
+
+        function addTask() {
+            const title = titleInput.value.trim();
+            const area = areaInput.value;
+            const priority = priorityInput.value;
+            const description = descriptionInput.value.trim();
+
+            if (!title) {
+                alert("Escribe al menos el título de la tarea.");
+                titleInput.focus();
+                return;
+            }
+
+            const task = {
+                id: crypto.randomUUID(),
+                title,
+                area,
+                priority,
+                description,
+                status: "todo",
+            };
+
+            tasks.unshift(task);
+            saveTasks();
+            renderBoard();
+            clearForm();
+        }
+
+        function clearForm() {
+            titleInput.value = "";
+            areaInput.value = "Infraestructura";
+            priorityInput.value = "Media";
+            descriptionInput.value = "";
+            titleInput.focus();
+        }
+
+        function deleteTask(taskId) {
+            const confirmed = confirm("¿Eliminar esta tarea?");
+            if (!confirmed) return;
+
+            tasks = tasks.filter(task => task.id !== taskId);
+            saveTasks();
+            renderBoard();
+        }
+
+        function moveTask(taskId, direction) {
+            const order = ["todo", "doing", "done"];
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            const currentIndex = order.indexOf(task.status);
+            const nextIndex = currentIndex + direction;
+
+            if (nextIndex < 0 || nextIndex >= order.length) return;
+
+            task.status = order[nextIndex];
+            saveTasks();
+            renderBoard();
+        }
+
+        function moveTaskToColumn(taskId, newStatus) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            task.status = newStatus;
+            saveTasks();
+            renderBoard();
+        }
+
+        function setupColumnDnD() {
+            document.querySelectorAll(".column").forEach(column => {
+                const status = column.dataset.status;
+
+                column.addEventListener("dragover", (e) => {
+                    e.preventDefault();
+                    column.classList.add("drag-over");
+                });
+
+                column.addEventListener("dragleave", () => {
+                    column.classList.remove("drag-over");
+                });
+
+                column.addEventListener("drop", (e) => {
+                    e.preventDefault();
+                    column.classList.remove("drag-over");
+                    if (draggedTaskId) {
+                        moveTaskToColumn(draggedTaskId, status);
+                    }
+                });
+            });
+        }
+
+        addTaskBtn.addEventListener("click", addTask);
+
+        titleInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                addTask();
+            }
+        });
+
+        resetDemoBtn.addEventListener("click", () => {
+            const confirmed = confirm("Esto cargará el ejemplo inicial y reemplazará el tablero actual.");
+            if (!confirmed) return;
+
+            tasks = [...demoTasks].map(task => ({ ...task, id: crypto.randomUUID() }));
+            saveTasks();
+            renderBoard();
+        });
+
+        clearBoardBtn.addEventListener("click", () => {
+            const confirmed = confirm("Esto eliminará todas las tareas del tablero.");
+            if (!confirmed) return;
+
+            tasks = [];
+            saveTasks();
+            renderBoard();
+        });
+
+        loadTasks();
+        setupColumnDnD();
+        renderBoard();
+    </script>
+</body>
+
+</html>
