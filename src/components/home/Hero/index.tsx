@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Link from 'next/link';
 import { Button } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
@@ -9,6 +8,7 @@ import styles from './Hero.module.scss';
 
 export function Hero() {
     const prefersReducedMotion = usePrefersReducedMotion();
+    const eyebrowRef = useRef<HTMLSpanElement>(null);
     const headingRef = useRef<HTMLHeadingElement>(null);
     const subRef = useRef<HTMLParagraphElement>(null);
     const ctaRef = useRef<HTMLDivElement>(null);
@@ -17,27 +17,46 @@ export function Hero() {
     useEffect(() => {
         if (prefersReducedMotion) return;
 
+        let isCancelled = false;
+        let timeline: { kill: () => void } | null = null;
+
         const initAnim = async () => {
             const { gsap } = await import('gsap');
-            const tl = gsap.timeline({ delay: 0.1 });
+            if (isCancelled) return;
 
-            tl.from(headingRef.current, {
-                y: 60,
+            const tl = gsap.timeline({
+                defaults: {
+                    ease: 'power2.out',
+                },
+            });
+
+            tl.from(eyebrowRef.current, {
+                y: 18,
                 opacity: 0,
-                duration: 1,
-                ease: 'power3.out',
+                duration: 0.45,
             })
-                .from(subRef.current, { y: 30, opacity: 0, duration: 0.7, ease: 'power3.out' }, '-=0.5')
-                .from(ctaRef.current, { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
-                .from(badgesRef.current, { y: 16, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3');
+                .from(headingRef.current, {
+                    y: 34,
+                    opacity: 0,
+                    duration: 0.75,
+                }, '-=0.2')
+                .from(subRef.current, { y: 24, opacity: 0, duration: 0.6 }, '-=0.45')
+                .from(ctaRef.current, { y: 20, opacity: 0, duration: 0.48 }, '-=0.35')
+                .from(badgesRef.current, { y: 12, opacity: 0, duration: 0.44 }, '-=0.28');
+
+            timeline = tl;
         };
 
         initAnim();
+
+        return () => {
+            isCancelled = true;
+            timeline?.kill();
+        };
     }, [prefersReducedMotion]);
 
     return (
         <section className={styles.hero} aria-label="Sección principal">
-            {/* Background */}
             <div className={styles.bg} aria-hidden="true">
                 <div className={styles.bgGrad1} />
                 <div className={styles.bgGrad2} />
@@ -46,37 +65,34 @@ export function Hero() {
 
             <Container className={styles.content}>
                 <div className={styles.textBlock}>
-                    {/* Eyebrow */}
-                    <span className={styles.eyebrow}>Zaragoza · Aragón</span>
+                    <span ref={eyebrowRef} className={styles.eyebrow}>
+                        Zaragoza · Aragón
+                    </span>
 
-                    {/* Heading */}
                     <h1 ref={headingRef} className={styles.heading}>
-                        Reformas y servicios{' '}
-                        <span className={styles.accent}>con nivel profesional</span>
+                        Reformas interiores y servicios técnicos{' '}
+                        <span className={styles.accent}>ejecutados con precisión</span>
                     </h1>
 
-                    {/* Subheading */}
                     <p ref={subRef} className={styles.sub}>
-                        Pintura, pladur, electricidad, reformas interiores, mantenimiento y aislamiento.
-                        Más de 10 años ejecutando proyectos con exigencia, puntualidad y acabados que lo dicen todo.
+                        Pintura, pladur, electricidad, mantenimiento y aislamiento para viviendas, locales y
+                        oficinas. Planificación clara, coordinación rigurosa y acabados limpios desde el primer día.
                     </p>
 
-                    {/* CTAs */}
                     <div ref={ctaRef} className={styles.ctas}>
                         <Button href="/presupuesto" variant="primary" size="lg">
                             Solicitar presupuesto
                         </Button>
-                        <Button href="/proyectos" variant="secondary" size="lg">
-                            Ver proyectos
+                        <Button href="/servicios" variant="secondary" size="lg">
+                            Ver servicios
                         </Button>
                     </div>
 
-                    {/* Trust badges */}
                     <div ref={badgesRef} className={styles.badges}>
                         {[
-                            { value: '+500', label: 'Proyectos completados' },
-                            { value: '+10', label: 'Años de experiencia' },
-                            { value: '100%', label: 'Clientes satisfechos' },
+                            { value: '10+ años', label: 'Experiencia técnica en obra y mantenimiento' },
+                            { value: '500+ trabajos', label: 'Intervenciones finalizadas en Zaragoza y entorno' },
+                            { value: 'Proceso claro', label: 'Presupuesto detallado y seguimiento en cada fase' },
                         ].map(({ value, label }) => (
                             <div key={label} className={styles.badge}>
                                 <strong className={styles.badgeValue}>{value}</strong>
@@ -86,11 +102,6 @@ export function Hero() {
                     </div>
                 </div>
             </Container>
-
-            {/* Scroll indicator */}
-            <div className={styles.scrollIndicator} aria-hidden="true">
-                <span className={styles.scrollLine} />
-            </div>
         </section>
     );
 }

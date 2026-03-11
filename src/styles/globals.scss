@@ -20,40 +20,53 @@
 // Global base styles
 // ============================================================
 
+:root {
+    --header-height: clamp(4.25rem, 5vw, 5.1rem);
+}
+
 html {
-    color-scheme: light dark;
+    color-scheme: light;
+    background-color: var(--color-bg-canvas);
 }
 
 body {
     font-family: var(--font-body);
     font-size: var(--text-base);
     font-weight: var(--fw-regular);
+    line-height: var(--lh-normal);
+    letter-spacing: 0.005em;
     color: var(--color-text-dark);
-    background-color: var(--color-bg-white);
+    background-color: var(--color-bg-canvas);
+    text-rendering: optimizeLegibility;
+}
+
+.main-content {
+    min-height: 100vh;
 }
 
 // Selection
 ::selection {
-    background-color: var(--color-accent);
-    color: var(--color-bg-primary);
+    background-color: var(--color-accent-muted);
+    color: var(--color-text-inverse);
 }
 
 // Scrollbar (WebKit)
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 9px;
+    height: 9px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--color-bg-primary);
+    background: var(--color-bg-canvas);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-accent);
+    background: color-mix(in srgb, var(--color-bg-secondary) 70%, var(--color-accent) 30%);
     border-radius: var(--radius-full);
+    border: 2px solid var(--color-bg-canvas);
 
     &:hover {
-        background: var(--color-accent-light);
+        background: color-mix(in srgb, var(--color-bg-secondary) 52%, var(--color-accent) 48%);
     }
 }
 
@@ -65,7 +78,7 @@ h4,
 h5,
 h6 {
     font-family: var(--font-display);
-    font-weight: var(--fw-bold);
+    font-weight: var(--fw-semibold);
     line-height: var(--lh-tight);
     letter-spacing: var(--ls-tight);
     color: var(--color-text-inverse);
@@ -74,15 +87,17 @@ h6 {
 p {
     line-height: var(--lh-normal);
     color: var(--color-text-medium);
+    max-width: 72ch;
 }
 
 a {
-    transition: color 0.2s ease;
+    transition: color var(--duration-fast) var(--ease-out);
 }
 
 // Section defaults
 section {
     position: relative;
+    scroll-margin-top: calc(var(--header-height) + var(--space-4));
 }
 
 // Dark section variant

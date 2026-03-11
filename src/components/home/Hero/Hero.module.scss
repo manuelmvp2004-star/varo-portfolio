@@ -2,8 +2,9 @@
 
 .hero {
     position: relative;
-    min-height: 100svh;
-    @include flex-center;
+    min-height: max(92svh, 700px);
+    display: flex;
+    align-items: center;
     overflow: hidden;
     background-color: var(--color-bg-primary);
 }
@@ -17,21 +18,20 @@
 
 .bgGrad1 {
     position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 60vw;
-    height: 60vw;
-    background: radial-gradient(circle, rgba(201, 169, 110, 0.12) 0%, transparent 70%);
+    top: -24%;
+    right: -14%;
+    width: min(68vw, 900px);
+    height: min(68vw, 900px);
+    background: radial-gradient(circle, rgba(185, 150, 96, 0.18) 0%, rgba(185, 150, 96, 0.03) 54%, transparent 78%);
     border-radius: 50%;
 }
 
 .bgGrad2 {
     position: absolute;
-    bottom: -10%;
-    left: -5%;
-    width: 40vw;
-    height: 40vw;
-    background: radial-gradient(circle, rgba(19, 32, 64, 0.8) 0%, transparent 70%);
+    inset: auto auto -34% -18%;
+    width: min(62vw, 780px);
+    height: min(62vw, 780px);
+    background: radial-gradient(circle, rgba(25, 43, 71, 0.7) 0%, rgba(11, 21, 37, 0) 75%);
     border-radius: 50%;
 }
 
@@ -39,36 +39,44 @@
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(201, 169, 110, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201, 169, 110, 0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 80%);
+        linear-gradient(rgba(244, 241, 232, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 241, 232, 0.03) 1px, transparent 1px);
+    background-size: 88px 88px;
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.88) 26%, rgba(0, 0, 0, 0.88) 80%, transparent 100%);
+    opacity: 0.34;
 }
 
 // Content
 .content {
     position: relative;
     z-index: 1;
-    padding-top: clamp(7rem, 14vw, 10rem);
-    padding-bottom: clamp(5rem, 10vw, 8rem);
+    padding-top: clamp(8.4rem, 15vw, 12rem);
+    padding-bottom: clamp(5.5rem, 10vw, 8rem);
 }
 
 .textBlock {
-    max-width: 760px;
+    max-width: 860px;
     @include flex-col;
-    gap: var(--space-6);
+    gap: var(--space-7, 1.75rem);
 }
 
 .eyebrow {
     @include eyebrow;
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-full);
     color: var(--color-accent);
-    @include flex-start;
-    gap: var(--space-3);
+    gap: var(--space-2);
+    letter-spacing: 0.17em;
+    background-color: rgba(244, 241, 232, 0.03);
 
     &::before {
         content: '';
         display: block;
-        width: 2rem;
+        width: 1.2rem;
         height: 1px;
         background: var(--color-accent);
         flex-shrink: 0;
@@ -77,9 +85,11 @@
 
 .heading {
     @include display-heading;
-    font-size: clamp(var(--text-3xl), 6vw, var(--text-6xl));
+    font-size: clamp(var(--text-3xl), 5.4vw, var(--text-display));
     color: var(--color-text-primary);
-    line-height: 1.1;
+    line-height: 1.03;
+    max-width: 18ch;
+    text-wrap: balance;
 }
 
 .accent {
@@ -87,78 +97,92 @@
 }
 
 .sub {
-    font-size: clamp(var(--text-base), 2vw, var(--text-lg));
+    font-size: clamp(var(--text-base), 0.95rem + 0.55vw, var(--text-lg));
     color: var(--color-text-muted);
-    line-height: var(--lh-relaxed);
-    max-width: 580px;
+    line-height: 1.68;
+    max-width: 62ch;
 }
 
 .ctas {
     @include flex-start;
-    gap: var(--space-4);
+    gap: var(--space-3);
     flex-wrap: wrap;
 }
 
 // Trust badges
 .badges {
-    display: flex;
-    gap: var(--space-8);
-    flex-wrap: wrap;
-    padding-top: var(--space-4);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    max-width: 980px;
+    padding-top: var(--space-6);
     border-top: 1px solid var(--color-border-light);
-    margin-top: var(--space-2);
+    margin-top: var(--space-3);
 }
 
 .badge {
     @include flex-col;
-    gap: var(--space-1);
+    gap: var(--space-2);
+    min-height: 100%;
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-light);
+    background: linear-gradient(180deg, rgba(244, 241, 232, 0.05) 0%, rgba(244, 241, 232, 0.015) 100%);
 }
 
 .badgeValue {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: var(--fw-bold);
-    color: var(--color-accent);
-    line-height: 1;
+    font-family: var(--font-body);
+    font-size: clamp(var(--text-base), 0.95rem + 0.42vw, var(--text-lg));
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-primary);
+    letter-spacing: 0.01em;
+    line-height: 1.24;
 }
 
 .badgeLabel {
-    font-size: var(--text-xs);
-    color: var(--color-text-subtle);
+    font-size: 0.78rem;
+    line-height: 1.48;
+    color: var(--color-text-muted);
     font-weight: var(--fw-medium);
-    letter-spacing: var(--ls-wide);
-    text-transform: uppercase;
+    letter-spacing: 0.03em;
 }
 
-// Scroll indicator
-.scrollIndicator {
-    position: absolute;
-    bottom: var(--space-8);
-    left: 50%;
-    transform: translateX(-50%);
-    @include flex-col;
-    align-items: center;
-    gap: var(--space-2);
+@include bp-max-lg {
+    .badges {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
-.scrollLine {
-    display: block;
-    width: 1px;
-    height: 60px;
-    background: linear-gradient(to bottom, var(--color-accent), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-}
-
-@keyframes scrollPulse {
-
-    0%,
-    100% {
-        opacity: 0.4;
-        transform: scaleY(1);
+@include bp-max-md {
+    .hero {
+        min-height: auto;
     }
 
-    50% {
-        opacity: 1;
-        transform: scaleY(0.7);
+    .content {
+        padding-top: calc(var(--header-height) + var(--space-20));
+        padding-bottom: var(--space-16);
+    }
+
+    .textBlock {
+        gap: var(--space-5);
+    }
+
+    .heading {
+        max-width: 14ch;
+    }
+
+    .ctas {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ctas :global(a) {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .badges {
+        grid-template-columns: 1fr;
     }
 }

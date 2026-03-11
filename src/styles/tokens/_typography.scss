@@ -5,7 +5,7 @@
 :root {
     // --- Font Families ---
     --font-display: 'Playfair Display', Georgia, serif;
-    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-body: 'Manrope', 'Segoe UI', sans-serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
     // --- Font Weights ---
@@ -15,29 +15,30 @@
     --fw-bold: 700;
     --fw-extrabold: 800;
 
-    // --- Type Scale (fluid-ish) ---
+    // --- Type Scale ---
     --text-xs: 0.75rem; // 12px
     --text-sm: 0.875rem; // 14px
     --text-base: 1rem; // 16px
     --text-md: 1.125rem; // 18px
     --text-lg: 1.25rem; // 20px
     --text-xl: 1.5rem; // 24px
-    --text-2xl: 1.875rem; // 30px
-    --text-3xl: 2.25rem; // 36px
-    --text-4xl: 3rem; // 48px
-    --text-5xl: 3.75rem; // 60px
-    --text-6xl: 4.5rem; // 72px
+    --text-2xl: clamp(1.75rem, 1.55rem + 0.6vw, 2rem); // 28-32px
+    --text-3xl: clamp(2rem, 1.62rem + 1.2vw, 2.625rem); // 32-42px
+    --text-4xl: clamp(2.35rem, 1.85rem + 1.8vw, 3.25rem); // 38-52px
+    --text-5xl: clamp(2.9rem, 2.15rem + 2.8vw, 4.25rem); // 46-68px
+    --text-6xl: clamp(3.45rem, 2.55rem + 3.6vw, 5.25rem); // 55-84px
+    --text-display: clamp(2.55rem, 1.95rem + 2.8vw, 4.8rem); // Hero display
 
     // --- Line Heights ---
-    --lh-tight: 1.2;
-    --lh-snug: 1.35;
-    --lh-normal: 1.6;
-    --lh-relaxed: 1.75;
+    --lh-tight: 1.12;
+    --lh-snug: 1.28;
+    --lh-normal: 1.58;
+    --lh-relaxed: 1.72;
 
     // --- Letter Spacing ---
-    --ls-tight: -0.02em;
+    --ls-tight: -0.018em;
     --ls-normal: 0em;
     --ls-wide: 0.05em;
     --ls-wider: 0.1em;
-    --ls-widest: 0.15em;
+    --ls-widest: 0.14em;
 }

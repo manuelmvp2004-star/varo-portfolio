@@ -6,14 +6,24 @@
     left: 0;
     right: 0;
     z-index: $z-sticky;
-    padding: var(--space-4) 0;
-    transition: background-color 0.4s ease, box-shadow 0.4s ease, padding 0.3s ease;
-    background-color: transparent;
+    padding: clamp(0.9rem, 1.8vw, 1.25rem) 0;
+    border-bottom: 1px solid transparent;
+    background: linear-gradient(180deg,
+            rgba(11, 21, 37, 0.92) 0%,
+            rgba(11, 21, 37, 0.72) 66%,
+            rgba(11, 21, 37, 0.26) 100%);
+    backdrop-filter: blur(8px);
+    transition:
+        background-color var(--duration-normal) var(--ease-out),
+        box-shadow var(--duration-normal) var(--ease-out),
+        border-color var(--duration-normal) var(--ease-out),
+        padding var(--duration-fast) var(--ease-out);
 
     &.scrolled {
-        background-color: var(--color-bg-primary);
-        box-shadow: 0 2px 20px rgba(10, 22, 40, 0.4);
-        padding: var(--space-3) 0;
+        padding: var(--space-2) 0;
+        background: rgba(11, 21, 37, 0.95);
+        border-bottom-color: var(--color-border-light);
+        box-shadow: 0 12px 30px rgba(7, 13, 23, 0.36);
     }
 }
 
@@ -22,7 +32,8 @@
     margin: 0 auto;
     padding: 0 var(--container-px);
     @include flex-between;
-    gap: var(--space-8);
+    gap: var(--space-6);
+    min-height: calc(var(--header-height) - var(--space-4));
 }
 
 // Logo
@@ -31,47 +42,53 @@
     gap: var(--space-3);
     flex-shrink: 0;
     text-decoration: none;
+    @include focus-ring;
 
     &:hover .logoMark {
-        background-color: var(--color-accent-dark);
+        border-color: var(--color-accent);
+        background: linear-gradient(145deg, rgba(185, 150, 96, 0.3) 0%, rgba(185, 150, 96, 0.12) 100%);
     }
 }
 
 .logoMark {
-    width: 38px;
-    height: 38px;
-    background-color: var(--color-accent);
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(145deg, rgba(185, 150, 96, 0.22) 0%, rgba(185, 150, 96, 0.08) 100%);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     @include flex-center;
     font-family: var(--font-display);
-    font-weight: var(--fw-bold);
-    font-size: var(--text-sm);
-    color: var(--color-bg-primary);
-    transition: background-color $transition-normal;
+    font-weight: var(--fw-semibold);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-primary);
+    transition: border-color $transition-normal, background $transition-normal, color $transition-normal;
     flex-shrink: 0;
 }
 
 .logoText {
     @include flex-col;
-    gap: 1px;
+    gap: 2px;
 }
 
 .logoMain {
     font-family: var(--font-body);
     font-weight: var(--fw-semibold);
-    font-size: var(--text-sm);
+    font-size: 0.83rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
     color: var(--color-text-primary);
     line-height: 1;
-    letter-spacing: 0.01em;
 }
 
 .logoSub {
     font-family: var(--font-body);
-    font-weight: var(--fw-regular);
-    font-size: var(--text-xs);
+    font-weight: var(--fw-medium);
+    font-size: 0.66rem;
     color: var(--color-accent);
     line-height: 1;
-    letter-spacing: var(--ls-wide);
+    letter-spacing: 0.22em;
     text-transform: uppercase;
 }
 
@@ -84,7 +101,7 @@
 
 .navList {
     @include flex-start;
-    gap: var(--space-1);
+    gap: var(--space-2);
 }
 
 .navItem {
@@ -93,25 +110,48 @@
 
 .hasDropdown {
     &:hover .navLink {
-        color: var(--color-accent);
+        color: var(--color-text-primary);
     }
 }
 
 .navLink {
     @include flex-center;
     gap: var(--space-1);
-    padding: var(--space-2) var(--space-3);
-    font-size: var(--text-sm);
-    font-weight: var(--fw-medium);
-    color: var(--color-text-primary);
+    position: relative;
+    padding: 0.55rem 0.8rem;
+    font-size: 0.74rem;
+    font-weight: var(--fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: var(--color-text-muted);
     text-decoration: none;
-    border-radius: var(--radius-md);
-    transition: color $transition-fast, background-color $transition-fast;
+    border-radius: var(--radius-sm);
+    transition: color $transition-fast, background-color $transition-fast, opacity $transition-fast;
     white-space: nowrap;
+    @include focus-ring;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0.8rem;
+        right: 0.8rem;
+        bottom: 0.34rem;
+        height: 1px;
+        border-radius: var(--radius-full);
+        background-color: var(--color-accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform $transition-normal;
+    }
 
     &:hover {
-        color: var(--color-accent);
-        background-color: var(--color-accent-muted);
+        color: var(--color-text-primary);
+        background-color: rgba(185, 150, 96, 0.08);
+    }
+
+    &:hover::after,
+    &:focus-visible::after {
+        transform: scaleX(1);
     }
 }
 
@@ -126,16 +166,16 @@
 // Dropdown
 .dropdown {
     position: absolute;
-    top: calc(100% + var(--space-2));
+    top: calc(100% + var(--space-3));
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
+    background-color: rgba(16, 29, 48, 0.98);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-xl);
+    box-shadow: 0 18px 40px rgba(7, 13, 23, 0.42);
     padding: var(--space-2);
-    min-width: 220px;
-    animation: dropdownIn 0.2s var(--ease-out) forwards;
+    min-width: min(260px, 90vw);
+    animation: dropdownIn 0.22s var(--ease-out) forwards;
 }
 
 @keyframes dropdownIn {
@@ -157,14 +197,17 @@
 
 .dropdownLink {
     display: block;
-    padding: var(--space-2) var(--space-4);
-    font-size: var(--text-sm);
+    padding: 0.62rem var(--space-4);
+    font-size: 0.84rem;
+    font-weight: var(--fw-medium);
     color: var(--color-text-muted);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.01em;
     transition: color $transition-fast, background-color $transition-fast;
+    @include focus-ring;
 
     &:hover {
-        color: var(--color-accent);
+        color: var(--color-text-primary);
         background-color: var(--color-accent-muted);
     }
 }
@@ -172,11 +215,22 @@
 // Actions
 .actions {
     @include flex-start;
-    gap: var(--space-4);
+    gap: var(--space-3);
     flex-shrink: 0;
 }
 
 .ctaDesktop {
+    font-size: 0.74rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    border-color: var(--color-border-light) !important;
+    background-color: rgba(244, 241, 232, 0.02) !important;
+
+    &:hover {
+        border-color: var(--color-accent) !important;
+        color: var(--color-accent) !important;
+    }
+
     @include bp-max-lg {
         display: none !important;
     }
@@ -185,30 +239,34 @@
 // Hamburger
 .hamburger {
     @include flex-col;
-    gap: 5px;
-    width: 36px;
-    height: 36px;
+    gap: 4px;
+    width: 42px;
+    height: 42px;
     padding: var(--space-2);
     align-items: center;
     justify-content: center;
     cursor: pointer;
     border-radius: var(--radius-md);
-    transition: background-color $transition-fast;
+    border: 1px solid var(--color-border-light);
+    background-color: rgba(244, 241, 232, 0.02);
+    transition: border-color $transition-fast, background-color $transition-fast;
+    @include focus-ring;
 
     @include bp-lg {
         display: none;
     }
 
     &:hover {
+        border-color: var(--color-accent);
         background-color: var(--color-accent-muted);
     }
 
     span {
         display: block;
         width: 18px;
-        height: 1.5px;
+        height: 1px;
         background-color: var(--color-text-primary);
         border-radius: var(--radius-full);
-        transition: transform $transition-normal;
+        transition: transform $transition-normal, opacity $transition-fast;
     }
 }

@@ -36,8 +36,19 @@ export function Header() {
                                     className={cn(styles.navItem, item.children && styles.hasDropdown)}
                                     onMouseEnter={() => item.children && setActiveDropdown(item.href)}
                                     onMouseLeave={() => setActiveDropdown(null)}
+                                    onFocus={() => item.children && setActiveDropdown(item.href)}
+                                    onBlur={(event) => {
+                                        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                                            setActiveDropdown(null);
+                                        }
+                                    }}
                                 >
-                                    <Link href={item.href} className={styles.navLink}>
+                                    <Link
+                                        href={item.href}
+                                        className={styles.navLink}
+                                        aria-haspopup={item.children ? 'menu' : undefined}
+                                        aria-expanded={item.children ? activeDropdown === item.href : undefined}
+                                    >
                                         {item.label}
                                         {item.children && (
                                             <svg className={styles.chevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -47,11 +58,11 @@ export function Header() {
                                     </Link>
 
                                     {item.children && activeDropdown === item.href && (
-                                        <div className={styles.dropdown}>
+                                        <div className={styles.dropdown} role="menu" aria-label={`Submenú de ${item.label}`}>
                                             <ul className={styles.dropdownList}>
                                                 {item.children.map((child) => (
                                                     <li key={child.href}>
-                                                        <Link href={child.href} className={styles.dropdownLink}>
+                                                        <Link href={child.href} className={styles.dropdownLink} role="menuitem">
                                                             {child.label}
                                                         </Link>
                                                     </li>
@@ -66,7 +77,7 @@ export function Header() {
 
                     {/* CTA + Hamburger */}
                     <div className={styles.actions}>
-                        <Button href={ctaButton.href} variant="primary" size="sm" className={styles.ctaDesktop}>
+                        <Button href={ctaButton.href} variant="secondary" size="sm" className={styles.ctaDesktop}>
                             {ctaButton.label}
                         </Button>
                         <button

@@ -1,16 +1,17 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Manrope, Playfair_Display } from 'next/font/google';
 import '@/styles/globals.scss';
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-manrope',
   display: 'swap',
 });
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
+  weight: ['500', '600', '700', '800'],
   display: 'swap',
 });
 
@@ -64,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${inter.variable} ${playfair.variable}`}
+      className={`${manrope.variable} ${playfair.variable}`}
     >
       <body>
         {children}
