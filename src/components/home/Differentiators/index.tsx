@@ -3,30 +3,25 @@
 import { Container } from '@/components/common/Container';
 import { SectionHeading } from '@/components/common/SectionHeading';
 import { useGsapReveal } from '@/hooks/useGsapReveal';
-import type { Differentiator } from '@/types';
 import styles from './Differentiators.module.scss';
 import { cn } from '@/lib/utils/cn';
 
-const differentiators: Differentiator[] = [
+const differentiators = [
     {
-        icon: '🎯',
-        title: 'Precisión y detalle',
-        description: 'Trabajamos con meticulosidad obsesiva. Desde la protección del espacio hasta el último remate, el acabado siempre debe ser perfecto.',
+        title: 'Planificación técnica',
+        description: 'Definimos alcance, secuencia y materiales antes de comenzar. Menos improvisación, más control de ejecución.',
     },
     {
-        icon: '🤝',
-        title: 'Un solo interlocutor',
-        description: 'Coordinamos a todos los gremios. No tienes que preocuparte por gestionar fontaneros, electricistas o albañiles. Nosotros lo hacemos todo.',
+        title: 'Coordinación integral',
+        description: 'Un único responsable organiza todos los gremios para evitar desajustes de tiempos y acabados.',
     },
     {
-        icon: '⏳',
-        title: 'Tiempos cumplidos',
-        description: 'Establecemos fechas realistas y las cumplimos. Tu tiempo es oro, por eso planificamos al detalle antes del primer día de ejecución.',
+        title: 'Tiempos consistentes',
+        description: 'Trabajamos con hitos claros y seguimiento diario para cumplir entregas sin comprometer calidad.',
     },
     {
-        icon: '💎',
-        title: 'Materiales premium',
-        description: 'No rebajamos presupuestos a costa de la calidad. Seleccionamos materiales duraderos y profesionales que garantizan un resultado de alto nivel.',
+        title: 'Acabado profesional',
+        description: 'Cada detalle se revisa en entrega: alineaciones, juntas, pintura, limpieza y remates finales.',
     },
 ];
 
@@ -40,8 +35,8 @@ export function Differentiators() {
                 <div ref={headerRef} className={styles.left}>
                     <SectionHeading
                         eyebrow="Por qué nosotros"
-                        title="La diferencia está en la ejecución"
-                        subtitle="Hay muchas empresas de multiservicios. Nosotros aportamos tranquilidad mental, orden y resultados premium reales para proyectos donde la calidad importa."
+                        title="La diferencia está en cómo se ejecuta"
+                        subtitle="No vendemos promesas vacías: método, seguimiento y criterio técnico en cada intervención."
                         light
                         className="gsap-hidden"
                     />
@@ -49,16 +44,13 @@ export function Differentiators() {
 
                 <div ref={listRef} className={cn(styles.right, 'gsap-stagger-parent')}>
                     {differentiators.map((item, i) => (
-                        <div key={item.title} className={styles.item}>
-                            <div className={styles.iconWrapper}>
-                                <span className={styles.icon}>{item.icon}</span>
-                                <span className={styles.number}>0{i + 1}</span>
-                            </div>
+                        <article key={item.title} className={styles.item}>
+                            <span className={styles.number}>0{i + 1}</span>
                             <div className={styles.content}>
                                 <h3 className={styles.title}>{item.title}</h3>
                                 <p className={styles.description}>{item.description}</p>
                             </div>
-                        </div>
+                        </article>
                     ))}
                 </div>
             </Container>

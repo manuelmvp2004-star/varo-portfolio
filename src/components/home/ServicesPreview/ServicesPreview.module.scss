@@ -2,13 +2,13 @@
 
 .section {
     padding: var(--section-py) 0;
-    background-color: var(--color-bg-light);
+    background: linear-gradient(180deg, var(--color-bg-light) 0%, var(--color-bg-canvas) 100%);
 }
 
 .top {
     @include flex-col;
-    gap: var(--space-6);
-    margin-bottom: var(--space-12);
+    gap: var(--space-5);
+    margin-bottom: var(--space-10);
 
     @include bp-md {
         flex-direction: row;
@@ -22,23 +22,25 @@
 }
 
 .grid {
-    @include grid-auto(320px);
+    @include grid-auto(300px);
 }
 
 .card {
     display: block;
-    background-color: var(--color-bg-white);
+    background-color: rgba(255, 255, 255, 0.84);
     border-radius: var(--radius-xl);
-    padding: var(--space-8);
-    border: 1px solid var(--color-border-dark);
-    transition: transform $transition-normal, box-shadow $transition-normal, border-color $transition-normal;
+    padding: var(--space-7);
+    border: 1px solid rgba(28, 42, 42, 0.12);
+    box-shadow: var(--shadow-sm);
+    transition: transform $transition-normal, box-shadow $transition-normal, border-color $transition-normal, background-color $transition-fast;
     text-decoration: none;
     height: 100%;
 
     &:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-xl);
-        border-color: var(--color-accent);
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+        border-color: rgba(190, 150, 89, 0.45);
+        background-color: var(--color-bg-white);
 
         .arrow {
             transform: translateX(4px);
@@ -56,30 +58,61 @@
 }
 
 .icon {
-    font-size: var(--text-4xl);
-    margin-bottom: var(--space-6);
-    display: inline-block;
-    background: var(--color-accent-muted);
-    width: 64px;
-    height: 64px;
+    margin-bottom: var(--space-5);
+    display: inline-flex;
+    color: var(--color-accent-dark);
+    background: rgba(190, 150, 89, 0.18);
+    width: 58px;
+    height: 58px;
     @include flex-center;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 .title {
-    font-family: var(--font-display);
-    font-size: var(--text-xl);
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.01em;
     color: var(--color-text-dark);
     margin-bottom: var(--space-3);
-    line-height: var(--lh-tight);
+    line-height: var(--lh-snug);
 }
 
 .description {
-    font-size: var(--text-base);
+    font-size: var(--text-sm);
     color: var(--color-text-medium);
-    line-height: var(--lh-relaxed);
-    margin-bottom: var(--space-8);
-    flex-grow: 1;
+    line-height: var(--lh-normal);
+    margin-bottom: var(--space-5);
+}
+
+.features {
+    @include flex-col;
+    gap: var(--space-2);
+    margin-bottom: var(--space-7);
+
+    li {
+        position: relative;
+        padding-left: var(--space-4);
+        font-size: var(--text-sm);
+        color: var(--color-text-soft);
+        line-height: var(--lh-normal);
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0.58rem;
+            left: 0;
+            width: 7px;
+            height: 7px;
+            border-radius: var(--radius-full);
+            background-color: var(--color-accent);
+        }
+    }
 }
 
 .action {
@@ -90,10 +123,10 @@
 
 .actionText {
     font-weight: var(--fw-semibold);
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     color: var(--color-text-dark);
     text-transform: uppercase;
-    letter-spacing: var(--ls-wider);
+    letter-spacing: 0.11em;
     transition: color $transition-fast;
 }
 
