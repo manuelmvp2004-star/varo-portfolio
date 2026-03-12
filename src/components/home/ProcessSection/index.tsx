@@ -32,6 +32,7 @@ const steps = [
 export function ProcessSection() {
     const headerRef = useGsapReveal<HTMLDivElement>();
     const stepsRef = useGsapReveal<HTMLDivElement>({ stagger: 0.15 });
+    const assuranceRef = useGsapReveal<HTMLDivElement>({ stagger: 0.08, y: 14 });
 
     return (
         <section className={styles.section} id="proceso">
@@ -57,6 +58,15 @@ export function ProcessSection() {
                             <p className={styles.description}>{item.description}</p>
                         </article>
                     ))}
+                </div>
+
+                <div ref={assuranceRef} className={cn(styles.assurance, 'gsap-stagger-parent')}>
+                    <p className={styles.assuranceTitle}>Control en cada fase</p>
+                    <ul className={styles.assuranceList}>
+                        <li>Plan de trabajo compartido y seguimiento de hitos</li>
+                        <li>Protección de zonas de paso y limpieza diaria</li>
+                        <li>Comunicación continua ante cualquier ajuste técnico</li>
+                    </ul>
                 </div>
             </Container>
         </section>

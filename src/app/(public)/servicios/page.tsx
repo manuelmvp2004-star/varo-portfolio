@@ -18,12 +18,35 @@ const guarantees = [
     'Entrega con revisión final y criterios de calidad acordados',
 ];
 
+const sectors = [
+    {
+        title: 'Vivienda particular',
+        description:
+            'Reformas parciales o integrales con foco en confort, durabilidad de acabados y mínima fricción durante la obra.',
+    },
+    {
+        title: 'Locales comerciales',
+        description:
+            'Adecuaciones técnicas para apertura, actualización o mejora de espacios de venta y atención al cliente.',
+    },
+    {
+        title: 'Oficinas y despachos',
+        description:
+            'Intervenciones por fases para mejorar funcionalidad, imagen corporativa y rendimiento del entorno de trabajo.',
+    },
+    {
+        title: 'Comunidades y patrimonio',
+        description:
+            'Mantenimiento preventivo y correctivo para zonas comunes, elementos técnicos y mejoras de eficiencia.',
+    },
+];
+
 export default function ServiciosPage() {
     return (
         <>
             <section className={cn(styles.hero, 'section--dark')}>
                 <Container>
-                    <div className={styles.heroTop}>
+                    <div className={styles.heroTop} data-page-reveal data-page-y="24">
                         <SectionHeading
                             eyebrow="Servicios"
                             title="Especialidades técnicas bajo un mismo estándar de ejecución"
@@ -32,7 +55,7 @@ export default function ServiciosPage() {
                         />
                     </div>
 
-                    <ul className={styles.guarantees}>
+                    <ul className={styles.guarantees} data-page-stagger="0.08" data-page-y="14">
                         {guarantees.map((item) => (
                             <li key={item} className={styles.guaranteeItem}>
                                 <span className={styles.check} aria-hidden="true">
@@ -48,7 +71,7 @@ export default function ServiciosPage() {
             </section>
 
             <section className={styles.context}>
-                <Container className={styles.contextGrid}>
+                <Container className={styles.contextGrid} data-page-stagger="0.1">
                     <article className={styles.contextCard}>
                         <h3>Capacidad multi-gremio</h3>
                         <p>
@@ -67,7 +90,25 @@ export default function ServiciosPage() {
                 </Container>
             </section>
 
-            <ServicesPreview />
+            <ServicesPreview showHeader={false} showViewAll={false} compact />
+
+            <section className={styles.sectors}>
+                <Container>
+                    <header className={styles.sectorsHead} data-page-reveal>
+                        <p className={styles.sectionEyebrow}>Entornos de trabajo</p>
+                        <h2>Adaptamos cada servicio al contexto real del cliente</h2>
+                    </header>
+
+                    <div className={styles.sectorsGrid} data-page-stagger="0.08">
+                        {sectors.map((item) => (
+                            <article key={item.title} className={styles.sectorCard}>
+                                <h3>{item.title}</h3>
+                                <p>{item.description}</p>
+                            </article>
+                        ))}
+                    </div>
+                </Container>
+            </section>
 
             <FinalCTA />
         </>

@@ -4,9 +4,41 @@
     padding: var(--section-py) 0;
 }
 
+.summary {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+
+    @include bp-md {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.summaryItem {
+    @include flex-col;
+    gap: 2px;
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    background-color: rgba(247, 242, 230, 0.05);
+}
+
+.summaryValue {
+    color: var(--color-accent-light);
+    font-size: var(--text-md);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.02em;
+}
+
+.summaryLabel {
+    @include eyebrow;
+    color: var(--color-text-subtle);
+}
+
 .grid {
     @include grid-auto(300px);
-    margin-top: var(--space-10);
+    margin-top: var(--space-8);
     gap: var(--space-5);
 }
 

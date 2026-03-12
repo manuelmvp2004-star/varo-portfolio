@@ -76,7 +76,7 @@ export default function EmpresaPage() {
         <>
             <section className={cn(styles.hero, 'section--dark')}>
                 <Container>
-                    <div className={styles.heroContent}>
+                    <div className={styles.heroContent} data-page-reveal data-page-y="24">
                         <span className={styles.eyebrow}>Empresa</span>
                         <h1 className={styles.title}>Multiservicios Varo: ejecución técnica con estándar premium</h1>
                         <p className={styles.subtitle}>
@@ -86,7 +86,7 @@ export default function EmpresaPage() {
                         </p>
                     </div>
 
-                    <dl className={styles.metrics}>
+                    <dl className={styles.metrics} data-page-stagger="0.08" data-page-y="14">
                         <div className={styles.metric}>
                             <dt>+10 años</dt>
                             <dd>de experiencia acumulada en obra y mantenimiento</dd>
@@ -105,7 +105,7 @@ export default function EmpresaPage() {
 
             <section className={styles.principles}>
                 <Container>
-                    <header className={styles.sectionHead}>
+                    <header className={styles.sectionHead} data-page-reveal>
                         <p className={styles.sectionEyebrow}>Principios de trabajo</p>
                         <h2>Cómo protegemos la calidad en cada proyecto</h2>
                         <p>
@@ -114,7 +114,7 @@ export default function EmpresaPage() {
                         </p>
                     </header>
 
-                    <div className={styles.grid}>
+                    <div className={styles.grid} data-page-stagger="0.1">
                         {principles.map((item) => (
                             <article key={item.title} className={styles.valueCard}>
                                 <span className={styles.icon}>{item.icon}</span>
@@ -128,12 +128,12 @@ export default function EmpresaPage() {
 
             <section className={styles.process}>
                 <Container>
-                    <header className={styles.sectionHead}>
+                    <header className={styles.sectionHead} data-page-reveal>
                         <p className={styles.sectionEyebrow}>Método operativo</p>
                         <h2>Un proceso pensado para evitar improvisaciones</h2>
                     </header>
 
-                    <ol className={styles.timeline}>
+                    <ol className={styles.timeline} data-page-stagger="0.09">
                         {phases.map((phase, index) => (
                             <li key={phase.title} className={styles.timelineItem}>
                                 <span className={styles.step}>Fase {(index + 1).toString().padStart(2, '0')}</span>

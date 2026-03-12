@@ -53,14 +53,16 @@ export default function ContactoPage() {
         <>
             <section className={cn(styles.hero, 'section--dark')}>
                 <Container>
-                    <SectionHeading
-                        eyebrow="Contacto"
-                        title="Hablemos de tu proyecto con enfoque técnico"
-                        subtitle="Cuéntanos tu necesidad y te orientaremos sobre el mejor enfoque de intervención, plazos estimados y próximos pasos."
-                        light
-                    />
+                    <div data-page-reveal data-page-y="24">
+                        <SectionHeading
+                            eyebrow="Contacto"
+                            title="Hablemos de tu proyecto con enfoque técnico"
+                            subtitle="Cuéntanos tu necesidad y te orientaremos sobre el mejor enfoque de intervención, plazos estimados y próximos pasos."
+                            light
+                        />
+                    </div>
 
-                    <ul className={styles.commitments}>
+                    <ul className={styles.commitments} data-page-stagger="0.08" data-page-y="14">
                         <li>Atención por un responsable técnico, no por un call center</li>
                         <li>Respuesta clara para saber si tu caso es viable y cómo abordarlo</li>
                         <li>Comunicación directa durante todo el proceso</li>
@@ -71,7 +73,7 @@ export default function ContactoPage() {
             <div className={styles.page}>
                 <Container className={styles.container}>
                     <div className={styles.content}>
-                        <div className={styles.infoCards}>
+                        <div className={styles.infoCards} data-page-stagger="0.08">
                             {contactChannels.map((channel) => (
                                 <article key={channel.title} className={styles.card}>
                                     <span className={styles.icon}>{channel.icon}</span>
@@ -88,7 +90,7 @@ export default function ContactoPage() {
                     </div>
 
                     <div className={styles.formWrapper}>
-                        <div className={styles.formInner}>
+                        <div className={styles.formInner} data-page-reveal data-page-delay="0.08">
                             <h2 className={styles.formTitle}>Envíanos tu consulta</h2>
                             <p className={styles.formSubtitle}>
                                 Si nos aportas contexto (ubicación, tipo de trabajo, plazos y estado actual),

@@ -24,7 +24,7 @@ export default function PresupuestoPage() {
             <div className={styles.bg} aria-hidden="true" />
 
             <Container size="narrow" className={styles.container}>
-                <div className={styles.header}>
+                <div className={styles.header} data-page-reveal data-page-y="24">
                     <SectionHeading
                         eyebrow="Presupuesto"
                         title="Solicita una valoración profesional de tu proyecto"
@@ -33,7 +33,7 @@ export default function PresupuestoPage() {
                         light
                     />
 
-                    <ol className={styles.steps}>
+                    <ol className={styles.steps} data-page-stagger="0.07" data-page-y="12">
                         {nextSteps.map((step, index) => (
                             <li key={step} className={styles.step}>
                                 <span className={styles.stepIndex}>{(index + 1).toString().padStart(2, '0')}</span>
@@ -43,7 +43,7 @@ export default function PresupuestoPage() {
                     </ol>
                 </div>
 
-                <div className={styles.formCard}>
+                <div className={styles.formCard} data-page-reveal data-page-delay="0.08">
                     <BudgetForm />
                 </div>
             </Container>

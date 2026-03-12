@@ -20,14 +20,15 @@ const zones: CoverageZone[] = [
 
 interface CoverageMapProps {
     showHeading?: boolean;
+    compact?: boolean;
 }
 
-export function CoverageMap({ showHeading = true }: CoverageMapProps = {}) {
+export function CoverageMap({ showHeading = true, compact = false }: CoverageMapProps = {}) {
     const headerRef = useGsapReveal<HTMLDivElement>();
     const listRef = useGsapReveal<HTMLDivElement>({ stagger: 0.1 });
 
     return (
-        <section className={styles.section}>
+        <section className={cn(styles.section, compact && styles.sectionCompact)}>
             <Container className={styles.inner}>
                 <div ref={headerRef} className={styles.content}>
                     {showHeading && (

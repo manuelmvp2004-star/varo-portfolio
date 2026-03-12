@@ -2,6 +2,7 @@ import { Container } from '@/components/common/Container';
 import { Button } from '@/components/common/Button';
 import { buildMetadata } from '@/lib/seo/metadata';
 import styles from './Gracias.module.scss';
+import { cn } from '@/lib/utils/cn';
 
 export const metadata = buildMetadata({
     title: 'Mensaje Enviado',
@@ -14,55 +15,53 @@ metadata.robots = {
     follow: false,
 };
 
+const nextSteps = [
+    'Revisamos la información recibida y validamos viabilidad técnica.',
+    'Contactamos contigo para aclarar alcance y resolver dudas.',
+    'Si procede, agendamos visita y propuesta de ejecución.',
+];
+
 export default function GraciasPage() {
     return (
-        <section style={{
-            paddingTop: 'var(--space-32)',
-            paddingBottom: 'var(--space-32)',
-            minHeight: '80vh',
-            display: 'flex',
-            alignItems: 'center',
-            backgroundColor: 'var(--color-bg-white)'
-        }}>
+        <section className={cn(styles.section, 'section--dark')}>
+            <div className={styles.bg} aria-hidden="true" />
             <Container size="narrow" className={styles.container}>
-                <div style={{
-                    width: '80px',
-                    height: '80px',
-                    backgroundColor: 'var(--color-success)',
-                    color: 'var(--color-bg-white)',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto var(--space-8)',
-                    boxShadow: 'var(--shadow-lg)'
-                }}>
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                        <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                <div className={styles.card}>
+                    <div className={styles.iconWrap} data-page-reveal>
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </div>
+
+                    <div className={styles.header} data-page-reveal data-page-delay="0.04">
+                        <p className={styles.eyebrow}>Solicitud registrada</p>
+                        <h1>Hemos recibido tu mensaje correctamente</h1>
+                        <p className={styles.subtitle}>
+                            Gracias por contactar con Multiservicios Varo. Nuestro equipo revisará tu solicitud y
+                            te responderá en un plazo aproximado de 24 a 48 horas laborables.
+                        </p>
+                    </div>
+
+                    <ol className={styles.steps} data-page-stagger="0.08" data-page-y="14">
+                        {nextSteps.map((step) => (
+                            <li key={step}>{step}</li>
+                        ))}
+                    </ol>
+
+                    <div className={styles.actions} data-page-reveal data-page-delay="0.12">
+                        <Button href="/" variant="secondary" size="lg">
+                            Volver al inicio
+                        </Button>
+                        <Button href="/servicios" variant="primary" size="lg">
+                            Ver servicios
+                        </Button>
+                    </div>
+
+                    <p className={styles.contactNote}>
+                        Si necesitas atención inmediata puedes llamarnos al{' '}
+                        <a href="tel:+34616424271">+34 616 424 271</a>.
+                    </p>
                 </div>
-
-                <h1 style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'var(--text-4xl)',
-                    color: 'var(--color-text-dark)',
-                    marginBottom: 'var(--space-4)'
-                }}>
-                    ¡Solicitud enviada con éxito!
-                </h1>
-
-                <p style={{
-                    fontSize: 'var(--text-lg)',
-                    color: 'var(--color-text-medium)',
-                    lineHeight: 'var(--lh-relaxed)',
-                    marginBottom: 'var(--space-10)'
-                }}>
-                    Hemos recibido correctamente tus datos. Nuestro equipo revisará la información y se pondrá en contacto contigo en las próximas 48 horas laborables (generalmente antes).
-                </p>
-
-                <Button href="/" variant="primary" size="lg">
-                    Volver a la página principal
-                </Button>
             </Container>
         </section>
     );

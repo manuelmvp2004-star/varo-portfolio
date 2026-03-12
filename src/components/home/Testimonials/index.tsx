@@ -9,7 +9,11 @@ import { cn } from '@/lib/utils/cn';
 
 export function Testimonials() {
     const headerRef = useGsapReveal<HTMLDivElement>();
+    const summaryRef = useGsapReveal<HTMLDivElement>({ stagger: 0.08, y: 14 });
     const gridRef = useGsapReveal<HTMLDivElement>({ stagger: 0.1 });
+    const averageRating = (
+        testimonials.reduce((acc, item) => acc + item.rating, 0) / testimonials.length
+    ).toFixed(1);
 
     return (
         <section className={cn(styles.section, 'section--dark')} id="testimonios">
@@ -23,6 +27,21 @@ export function Testimonials() {
                         light
                         className="gsap-hidden"
                     />
+                </div>
+
+                <div ref={summaryRef} className={cn(styles.summary, 'gsap-stagger-parent')}>
+                    <div className={styles.summaryItem}>
+                        <span className={styles.summaryValue}>{averageRating}/5</span>
+                        <span className={styles.summaryLabel}>valoración media</span>
+                    </div>
+                    <div className={styles.summaryItem}>
+                        <span className={styles.summaryValue}>{testimonials.length} casos</span>
+                        <span className={styles.summaryLabel}>reseñas verificadas</span>
+                    </div>
+                    <div className={styles.summaryItem}>
+                        <span className={styles.summaryValue}>Particular + empresa</span>
+                        <span className={styles.summaryLabel}>tipologías de cliente</span>
+                    </div>
                 </div>
 
                 <div ref={gridRef} className={cn(styles.grid, 'gsap-stagger-parent')}>

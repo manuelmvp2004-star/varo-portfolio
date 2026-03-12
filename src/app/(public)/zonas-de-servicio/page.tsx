@@ -12,12 +12,30 @@ export const metadata = buildMetadata({
     path: '/zonas-de-servicio',
 });
 
+const logistics = [
+    {
+        title: 'Evaluación inicial',
+        description:
+            'Validamos ubicación, tipología de intervención y volumen de trabajo para confirmar alcance y calendario.',
+    },
+    {
+        title: 'Plan de desplazamiento',
+        description:
+            'Organizamos equipos y suministros en función de tiempos de traslado para mantener continuidad de obra.',
+    },
+    {
+        title: 'Seguimiento coordinado',
+        description:
+            'Mantenemos comunicación de hitos y posibles ajustes para que el cliente tenga visibilidad durante todo el proceso.',
+    },
+];
+
 export default function ZonasPage() {
     return (
         <>
             <section className={cn(styles.hero, 'section--dark')}>
                 <Container>
-                    <div className={styles.heroTop}>
+                    <div className={styles.heroTop} data-page-reveal data-page-y="24">
                         <SectionHeading
                             eyebrow="Cobertura"
                             title="Presencia operativa en Aragón con base en Zaragoza"
@@ -26,7 +44,7 @@ export default function ZonasPage() {
                         />
                     </div>
 
-                    <div className={styles.policies}>
+                    <div className={styles.policies} data-page-stagger="0.08" data-page-y="14">
                         <article className={styles.policy}>
                             <h3>Radio principal</h3>
                             <p>Zaragoza capital y área metropolitana con disponibilidad prioritaria.</p>
@@ -43,7 +61,25 @@ export default function ZonasPage() {
                 </Container>
             </section>
 
-            <CoverageMap showHeading={false} />
+            <CoverageMap showHeading={false} compact />
+
+            <section className={styles.logistics}>
+                <Container>
+                    <header className={styles.logisticsHead} data-page-reveal>
+                        <p className={styles.sectionEyebrow}>Operativa territorial</p>
+                        <h2>Cómo organizamos trabajos fuera de Zaragoza capital</h2>
+                    </header>
+
+                    <div className={styles.logisticsGrid} data-page-stagger="0.08">
+                        {logistics.map((item) => (
+                            <article key={item.title} className={styles.logisticsCard}>
+                                <h3>{item.title}</h3>
+                                <p>{item.description}</p>
+                            </article>
+                        ))}
+                    </div>
+                </Container>
+            </section>
 
             <FinalCTA />
         </>

@@ -62,3 +62,46 @@
     color: var(--color-text-medium);
     line-height: var(--lh-normal);
 }
+
+.assurance {
+    margin-top: var(--space-8);
+    padding: var(--space-6);
+    border: 1px solid rgba(28, 42, 42, 0.12);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, #f8f4ea 0%, #f4efe2 100%);
+}
+
+.assuranceTitle {
+    @include eyebrow;
+    color: var(--color-accent-dark);
+    margin-bottom: var(--space-4);
+}
+
+.assuranceList {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+
+    @include bp-md {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    li {
+        position: relative;
+        padding-left: var(--space-4);
+        color: var(--color-text-medium);
+        font-size: var(--text-sm);
+        line-height: var(--lh-relaxed);
+
+        &::before {
+            content: '';
+            width: 0.35rem;
+            height: 0.35rem;
+            border-radius: var(--radius-full);
+            background-color: var(--color-accent);
+            position: absolute;
+            left: 0;
+            top: 0.55rem;
+        }
+    }
+}

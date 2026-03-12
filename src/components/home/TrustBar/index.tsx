@@ -5,6 +5,12 @@ import { useGsapReveal } from '@/hooks/useGsapReveal';
 import styles from './TrustBar.module.scss';
 import { cn } from '@/lib/utils/cn';
 
+const trustStats = [
+    { label: 'Respuesta inicial', value: '24-48 h' },
+    { label: 'Interlocutor técnico', value: '1 responsable' },
+    { label: 'Cobertura operativa', value: 'Zaragoza · Aragón' },
+];
+
 const trustPillars = [
     {
         title: 'Calidad verificable',
@@ -24,12 +30,28 @@ const trustPillars = [
 ];
 
 export function TrustBar() {
-    const containerRef = useGsapReveal<HTMLDivElement>({ duration: 0.55, y: 18 });
+    const headingRef = useGsapReveal<HTMLDivElement>({ duration: 0.5, y: 18 });
+    const statsRef = useGsapReveal<HTMLDListElement>({ stagger: 0.08, y: 14 });
+    const cardsRef = useGsapReveal<HTMLDivElement>({ stagger: 0.08, y: 18 });
 
     return (
         <section className={styles.section} aria-label="Confianza y garantías">
             <Container>
-                <div ref={containerRef} className={cn(styles.grid, 'gsap-hidden')}>
+                <div ref={headingRef} className={cn(styles.top, 'gsap-hidden')}>
+                    <p className={styles.eyebrow}>Señales de confianza</p>
+                    <h2 className={styles.title}>Ejecución controlada, comunicación clara y resultado verificable</h2>
+                </div>
+
+                <dl ref={statsRef} className={cn(styles.stats, 'gsap-stagger-parent')}>
+                    {trustStats.map((stat) => (
+                        <div key={stat.label} className={styles.stat}>
+                            <dt>{stat.value}</dt>
+                            <dd>{stat.label}</dd>
+                        </div>
+                    ))}
+                </dl>
+
+                <div ref={cardsRef} className={cn(styles.grid, 'gsap-stagger-parent')}>
                     {trustPillars.map((pillar) => (
                         <article key={pillar.title} className={styles.card}>
                             <span className={styles.iconWrap} aria-hidden="true">

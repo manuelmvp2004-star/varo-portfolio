@@ -84,7 +84,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             {/* Hero */}
             <section className={cn(styles.hero, 'section--dark')}>
                 <Container>
-                    <div className={styles.heroContent}>
+                    <div className={styles.heroContent} data-page-reveal data-page-y="24">
                         <div className={styles.iconWrapper}>
                             <span className={styles.icon}>
                                 <ServiceIcon slug={service.slug} />
@@ -92,7 +92,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                         </div>
                         <h1 className={styles.title}>{service.title}</h1>
                         <p className={styles.description}>{service.description}</p>
-                        <ul className={styles.badges}>
+                        <ul className={styles.badges} data-page-stagger="0.08" data-page-y="12">
                             <li>Visita técnica previa</li>
                             <li>Propuesta de alcance detallada</li>
                             <li>Control de calidad en entrega</li>
@@ -106,12 +106,12 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
             <section className={styles.details}>
                 <Container className={styles.grid}>
-                    <div className={styles.content}>
+                    <div className={styles.content} data-page-reveal>
                         <h2 className={styles.heading}>Qué resolvemos con este servicio</h2>
                         <p className={styles.longDesc}>{service.longDescription}</p>
 
                         <h3 className={styles.subHeading}>Incluye habitualmente</h3>
-                        <ul className={styles.featuresList}>
+                        <ul className={styles.featuresList} data-page-stagger="0.06" data-page-y="10">
                             {service.features.map((feature) => (
                                 <li key={feature} className={styles.featureItem}>
                                     <svg className={styles.checkIcon} width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -123,7 +123,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                         </ul>
                     </div>
 
-                    <div className={styles.sidebar}>
+                    <div className={styles.sidebar} data-page-reveal data-page-delay="0.1" data-page-y="16">
                         <div className={styles.contactCard}>
                             <h3 className={styles.cardTitle}>¿Quieres una valoración real de tu caso?</h3>
                             <p className={styles.cardText}>Revisamos estado actual, objetivos y calidades para definir un presupuesto ajustado al alcance real del trabajo.</p>

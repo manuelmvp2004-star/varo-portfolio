@@ -49,19 +49,21 @@ interface FeaturedProjectsProps {
     showHeader?: boolean;
     showViewAll?: boolean;
     limit?: number;
+    compact?: boolean;
 }
 
 export function FeaturedProjects({
     showHeader = true,
     showViewAll = true,
     limit,
+    compact = false,
 }: FeaturedProjectsProps = {}) {
     const headerRef = useGsapReveal<HTMLDivElement>();
     const gridRef = useGsapReveal<HTMLDivElement>({ stagger: 0.1 });
     const visibleProjects = typeof limit === 'number' ? projects.slice(0, limit) : projects;
 
     return (
-        <section className={styles.section} id="proyectos">
+        <section className={cn(styles.section, compact && styles.sectionCompact)} id="proyectos">
             <Container>
                 {showHeader && (
                     <div ref={headerRef} className={styles.top}>

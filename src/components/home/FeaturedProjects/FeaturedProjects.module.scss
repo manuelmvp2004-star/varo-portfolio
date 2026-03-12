@@ -5,6 +5,10 @@
     background: linear-gradient(180deg, var(--color-bg-canvas) 0%, var(--color-bg-light) 100%);
 }
 
+.sectionCompact {
+    padding-top: var(--space-14);
+}
+
 .top {
     @include flex-col;
     gap: var(--space-5);

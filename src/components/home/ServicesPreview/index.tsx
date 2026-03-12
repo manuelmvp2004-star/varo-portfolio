@@ -18,24 +18,38 @@ const serviceIcons: Record<string, string[]> = {
     'aislamiento-acabados': ['M4 12h16', 'M8 8l-4 4 4 4', 'M16 8l4 4-4 4'],
 };
 
-export function ServicesPreview() {
+interface ServicesPreviewProps {
+    showHeader?: boolean;
+    showViewAll?: boolean;
+    compact?: boolean;
+}
+
+export function ServicesPreview({
+    showHeader = true,
+    showViewAll = true,
+    compact = false,
+}: ServicesPreviewProps = {}) {
     const headerRef = useGsapReveal<HTMLDivElement>();
     const gridRef = useGsapReveal<HTMLDivElement>({ stagger: 0.1 });
 
     return (
-        <section className={styles.section} id="servicios">
+        <section className={cn(styles.section, compact && styles.sectionCompact)} id="servicios">
             <Container>
-                <div className={styles.top} ref={headerRef}>
-                    <SectionHeading
-                        eyebrow="Especialidades"
-                        title="Servicios técnicos con criterio de ejecución"
-                        subtitle="Cada servicio se presta con metodología, personal cualificado y control de calidad en obra."
-                        className="gsap-hidden"
-                    />
-                    <Button href="/servicios" variant="outline" className={cn(styles.viewAllBtn, 'gsap-hidden')}>
-                        Ver catálogo completo
-                    </Button>
-                </div>
+                {showHeader && (
+                    <div className={styles.top} ref={headerRef}>
+                        <SectionHeading
+                            eyebrow="Especialidades"
+                            title="Servicios técnicos con criterio de ejecución"
+                            subtitle="Cada servicio se presta con metodología, personal cualificado y control de calidad en obra."
+                            className="gsap-hidden"
+                        />
+                        {showViewAll && (
+                            <Button href="/servicios" variant="outline" className={cn(styles.viewAllBtn, 'gsap-hidden')}>
+                                Ver catálogo completo
+                            </Button>
+                        )}
+                    </div>
+                )}
 
                 <div className={cn(styles.grid, 'gsap-stagger-parent')} ref={gridRef}>
                     {services.map((service) => (
