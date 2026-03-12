@@ -6,15 +6,28 @@ export function useHeaderScroll(threshold: number = 60): boolean {
     const [isScrolled, setIsScrolled] = useState(false);
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > threshold);
+        let frameId: number | null = null;
+
+        const updateScrollState = () => {
+            const nextValue = window.scrollY > threshold;
+            setIsScrolled((prevValue) => (prevValue === nextValue ? prevValue : nextValue));
+            frameId = null;
         };
 
-        // Check initial scroll position
-        handleScroll();
+        const handleScroll = () => {
+            if (frameId !== null) return;
+            frameId = window.requestAnimationFrame(updateScrollState);
+        };
+
+        updateScrollState();
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (frameId !== null) {
+                window.cancelAnimationFrame(frameId);
+            }
+        };
     }, [threshold]);
 
     return isScrolled;

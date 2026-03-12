@@ -24,9 +24,19 @@
 // Stagger parent
 .gsap-stagger-parent>* {
     opacity: 0;
+    visibility: hidden;
 }
 
 // After GSAP runs
 .gsap-ready [data-gsap] {
     visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gsap-hidden,
+    .gsap-stagger-parent>* {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
 }

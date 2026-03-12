@@ -34,8 +34,8 @@ export const FormField = forwardRef<HTMLElement, FormFieldProps>(
                 case 'select':
                     return (
                         <div className={styles.selectWrapper}>
-                            <select {...RootProps} ref={ref as React.Ref<HTMLSelectElement>}>
-                                <option value="" disabled selected>
+                            <select {...RootProps} ref={ref as React.Ref<HTMLSelectElement>} defaultValue="">
+                                <option value="" disabled>
                                     {placeholder || 'Selecciona una opción...'}
                                 </option>
                                 {options?.map((opt) => (

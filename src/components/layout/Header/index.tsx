@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useHeaderScroll } from '@/hooks/useHeaderScroll';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { navigation, ctaButton } from '@/data/navigation';
 import { MobileMenu } from '../MobileMenu';
 import { Button } from '@/components/common/Button';
@@ -11,15 +12,63 @@ import { cn } from '@/lib/utils/cn';
 
 export function Header() {
     const isScrolled = useHeaderScroll(60);
+    const prefersReducedMotion = usePrefersReducedMotion();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+    const headerRef = useRef<HTMLElement>(null);
+    const logoRef = useRef<HTMLAnchorElement>(null);
+    const navRef = useRef<HTMLElement>(null);
+    const actionsRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (prefersReducedMotion || !headerRef.current) return;
+
+        let isCancelled = false;
+        let timeline: { kill: () => void } | null = null;
+
+        const initAnimation = async () => {
+            const { gsap } = await import('gsap');
+            if (isCancelled) return;
+
+            const tl = gsap.timeline({
+                defaults: {
+                    ease: 'power2.out',
+                },
+            });
+
+            tl.fromTo(
+                headerRef.current,
+                { autoAlpha: 0, y: -16 },
+                { autoAlpha: 1, y: 0, duration: 0.48, clearProps: 'opacity,visibility,transform' }
+            ).from(
+                [logoRef.current, navRef.current, actionsRef.current],
+                {
+                    autoAlpha: 0,
+                    y: -10,
+                    duration: 0.34,
+                    stagger: 0.06,
+                    clearProps: 'opacity,visibility,transform',
+                },
+                '-=0.24'
+            );
+
+            timeline = tl;
+        };
+
+        void initAnimation();
+
+        return () => {
+            isCancelled = true;
+            timeline?.kill();
+        };
+    }, [prefersReducedMotion]);
 
     return (
         <>
-            <header className={cn(styles.header, isScrolled && styles.scrolled)}>
+            <header ref={headerRef} className={cn(styles.header, isScrolled && styles.scrolled)}>
                 <div className={styles.inner}>
                     {/* Logo */}
-                    <Link href="/" className={styles.logo} aria-label="Multiservicios Varo – Inicio">
+                    <Link ref={logoRef} href="/" className={styles.logo} aria-label="Multiservicios Varo – Inicio">
                         <span className={styles.logoMark}>MV</span>
                         <span className={styles.logoText}>
                             <span className={styles.logoMain}>Multiservicios</span>
@@ -28,7 +77,7 @@ export function Header() {
                     </Link>
 
                     {/* Desktop nav */}
-                    <nav className={styles.nav} aria-label="Navegación principal">
+                    <nav ref={navRef} className={styles.nav} aria-label="Navegación principal">
                         <ul className={styles.navList}>
                             {navigation.map((item) => (
                                 <li
@@ -81,7 +130,7 @@ export function Header() {
                     </nav>
 
                     {/* CTA + Hamburger */}
-                    <div className={styles.actions}>
+                    <div ref={actionsRef} className={styles.actions}>
                         <Button href={ctaButton.href} variant="secondary" size="sm" className={styles.ctaDesktop}>
                             {ctaButton.label}
                         </Button>

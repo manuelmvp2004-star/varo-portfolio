@@ -8,58 +8,96 @@ import styles from './Hero.module.scss';
 
 export function Hero() {
     const prefersReducedMotion = usePrefersReducedMotion();
+    const heroRef = useRef<HTMLElement>(null);
     const eyebrowRef = useRef<HTMLSpanElement>(null);
     const headingRef = useRef<HTMLHeadingElement>(null);
     const subRef = useRef<HTMLParagraphElement>(null);
     const ctaRef = useRef<HTMLDivElement>(null);
+    const noteRef = useRef<HTMLParagraphElement>(null);
     const badgesRef = useRef<HTMLDivElement>(null);
+    const bgGrad1Ref = useRef<HTMLDivElement>(null);
+    const bgGrad2Ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (prefersReducedMotion) return;
 
         let isCancelled = false;
-        let timeline: { kill: () => void } | null = null;
+        let ctx: { revert: () => void } | null = null;
 
         const initAnim = async () => {
-            const { gsap } = await import('gsap');
-            if (isCancelled) return;
+            const gsapModule = await import('gsap');
+            const ScrollTriggerModule = await import('gsap/ScrollTrigger');
+            if (isCancelled || !heroRef.current) return;
 
-            const tl = gsap.timeline({
-                defaults: {
-                    ease: 'power2.out',
-                },
-            });
+            const gsap = gsapModule.gsap;
+            const ScrollTrigger = ScrollTriggerModule.ScrollTrigger;
+            gsap.registerPlugin(ScrollTrigger);
 
-            tl.from(eyebrowRef.current, {
-                y: 18,
-                opacity: 0,
-                duration: 0.45,
-            })
-                .from(headingRef.current, {
-                    y: 34,
-                    opacity: 0,
-                    duration: 0.75,
-                }, '-=0.2')
-                .from(subRef.current, { y: 24, opacity: 0, duration: 0.6 }, '-=0.45')
-                .from(ctaRef.current, { y: 20, opacity: 0, duration: 0.48 }, '-=0.35')
-                .from(badgesRef.current, { y: 12, opacity: 0, duration: 0.44 }, '-=0.28');
+            ctx = gsap.context(() => {
+                const introTimeline = gsap.timeline({
+                    defaults: {
+                        ease: 'power3.out',
+                    },
+                });
 
-            timeline = tl;
+                introTimeline
+                    .from(
+                        [eyebrowRef.current, headingRef.current, subRef.current, ctaRef.current, noteRef.current],
+                        {
+                            y: 28,
+                            autoAlpha: 0,
+                            duration: 0.6,
+                            stagger: 0.1,
+                        }
+                    )
+                    .from(
+                        badgesRef.current?.querySelectorAll('[data-hero-badge]') || [],
+                        {
+                            y: 18,
+                            autoAlpha: 0,
+                            duration: 0.42,
+                            stagger: 0.08,
+                        },
+                        '-=0.28'
+                    );
+
+                gsap.to(bgGrad1Ref.current, {
+                    yPercent: 8,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: heroRef.current,
+                        start: 'top top',
+                        end: 'bottom top',
+                        scrub: 0.55,
+                    },
+                });
+
+                gsap.to(bgGrad2Ref.current, {
+                    yPercent: -6,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: heroRef.current,
+                        start: 'top top',
+                        end: 'bottom top',
+                        scrub: 0.5,
+                    },
+                });
+            }, heroRef);
         };
 
-        initAnim();
+        void initAnim();
 
         return () => {
             isCancelled = true;
-            timeline?.kill();
+            ctx?.revert();
         };
     }, [prefersReducedMotion]);
 
     return (
-        <section className={styles.hero} aria-label="Sección principal">
+        <section ref={heroRef} className={styles.hero} aria-label="Sección principal">
             <div className={styles.bg} aria-hidden="true">
-                <div className={styles.bgGrad1} />
-                <div className={styles.bgGrad2} />
+                <div ref={bgGrad1Ref} className={styles.bgGrad1} />
+                <div ref={bgGrad2Ref} className={styles.bgGrad2} />
                 <div className={styles.bgGrid} />
             </div>
 
@@ -88,7 +126,7 @@ export function Hero() {
                         </Button>
                     </div>
 
-                    <p className={styles.note}>
+                    <p ref={noteRef} className={styles.note}>
                         Un único interlocutor técnico durante todo el proyecto.
                     </p>
 
@@ -98,7 +136,7 @@ export function Hero() {
                             { value: '500+ intervenciones', label: 'Trabajos finalizados en Zaragoza y entorno' },
                             { value: 'Presupuesto trazable', label: 'Detalle por partidas y seguimiento por fases' },
                         ].map(({ value, label }) => (
-                            <div key={label} className={styles.badge}>
+                            <div key={label} className={styles.badge} data-hero-badge>
                                 <strong className={styles.badgeValue}>{value}</strong>
                                 <span className={styles.badgeLabel}>{label}</span>
                             </div>
