@@ -1,17 +1,15 @@
 @use '@/styles/abstracts/index' as *;
 
 .hero {
-    padding: var(--space-32) 0 var(--space-20);
-    background-color: var(--color-bg-primary);
-    text-align: center;
+    padding: var(--space-32) 0 var(--space-14);
+    background:
+        linear-gradient(160deg, rgba(13, 39, 37, 0.96) 0%, rgba(16, 47, 45, 0.96) 58%, rgba(24, 65, 62, 0.93) 100%);
 }
 
 .heroContent {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 54rem;
     @include flex-col;
-    align-items: center;
-    gap: var(--space-6);
+    gap: var(--space-5);
 }
 
 .eyebrow {
@@ -21,24 +19,76 @@
 
 .title {
     @include display-heading;
-    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+    font-size: clamp(var(--text-3xl), 4.2vw, var(--text-5xl));
+    line-height: var(--lh-snug);
     color: var(--color-text-primary);
 }
 
-.accent {
-    color: var(--color-accent);
-}
-
 .subtitle {
-    font-size: var(--text-lg);
-    color: var(--color-text-muted);
+    font-size: var(--text-md);
+    color: var(--color-text-soft);
     line-height: var(--lh-relaxed);
-    max-width: 600px;
+    max-width: 47rem;
 }
 
-.values {
+.metrics {
+    margin-top: var(--space-12);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+
+    @include bp-md {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.metric {
+    padding: var(--space-6);
+    border: 1px solid rgba(247, 242, 230, 0.16);
+    border-radius: var(--radius-lg);
+    background-color: rgba(247, 242, 230, 0.04);
+
+    dt {
+        font-size: var(--text-xl);
+        font-weight: var(--fw-semibold);
+        letter-spacing: var(--ls-tight);
+        color: var(--color-accent-light);
+    }
+
+    dd {
+        margin-top: var(--space-2);
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
+        line-height: var(--lh-relaxed);
+        max-width: 28ch;
+    }
+}
+
+.principles {
     padding: var(--section-py) 0;
     background-color: var(--color-bg-white);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.sectionHead {
+    @include flex-col;
+    gap: var(--space-4);
+    max-width: 46rem;
+    margin-bottom: var(--space-12);
+
+    h2 {
+        font-size: clamp(var(--text-2xl), 2.3vw, var(--text-4xl));
+        color: var(--color-text-inverse);
+    }
+
+    p {
+        color: var(--color-text-soft);
+    }
+}
+
+.sectionEyebrow {
+    @include eyebrow;
+    color: var(--color-accent-dark);
 }
 
 .grid {
@@ -47,25 +97,80 @@
 
 .valueCard {
     @include flex-col;
-    gap: var(--space-3);
-    padding: var(--space-8);
-    background-color: var(--color-bg-light);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--color-border-light);
+    gap: var(--space-4);
+    padding: var(--space-8) var(--space-7);
+    background: linear-gradient(180deg, #ffffff 0%, #faf7f0 100%);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(28, 42, 42, 0.12);
+    box-shadow: var(--shadow-sm);
 
     h3 {
-        font-family: var(--font-display);
-        font-size: var(--text-xl);
-        color: var(--color-text-dark);
-        margin-top: var(--space-2);
+        font-size: var(--text-lg);
+        color: var(--color-text-inverse);
     }
 
     p {
-        color: var(--color-text-medium);
+        color: var(--color-text-soft);
         line-height: var(--lh-relaxed);
     }
 }
 
 .icon {
-    font-size: var(--text-3xl);
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(190, 150, 89, 0.3);
+    background-color: rgba(190, 150, 89, 0.08);
+    color: var(--color-accent-dark);
+    @include flex-center;
+
+    svg {
+        width: 1.35rem;
+        height: 1.35rem;
+    }
+}
+
+.process {
+    padding: var(--section-py-sm) 0 var(--section-py);
+    background-color: var(--color-bg-light);
+    border-top: 1px solid var(--color-border-dark);
+}
+
+.timeline {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    counter-reset: steps;
+
+    @include bp-md {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.timelineItem {
+    @include flex-col;
+    gap: var(--space-3);
+    padding: var(--space-7);
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(28, 42, 42, 0.12);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.step {
+    @include eyebrow;
+    color: var(--color-accent-dark);
+}
+
+.timelineBody {
+    h3 {
+        font-size: var(--text-lg);
+        color: var(--color-text-inverse);
+    }
+
+    p {
+        margin-top: var(--space-2);
+        color: var(--color-text-soft);
+        line-height: var(--lh-relaxed);
+    }
 }

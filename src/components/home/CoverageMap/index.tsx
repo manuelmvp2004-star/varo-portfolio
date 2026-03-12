@@ -18,7 +18,11 @@ const zones: CoverageZone[] = [
     { name: 'Teruel Capital', province: 'Teruel' },
 ];
 
-export function CoverageMap() {
+interface CoverageMapProps {
+    showHeading?: boolean;
+}
+
+export function CoverageMap({ showHeading = true }: CoverageMapProps = {}) {
     const headerRef = useGsapReveal<HTMLDivElement>();
     const listRef = useGsapReveal<HTMLDivElement>({ stagger: 0.1 });
 
@@ -26,18 +30,25 @@ export function CoverageMap() {
         <section className={styles.section}>
             <Container className={styles.inner}>
                 <div ref={headerRef} className={styles.content}>
-                    <SectionHeading
-                        eyebrow="Nuestra cobertura"
-                        title="Aragón es nuestro terreno"
-                        subtitle="Tenemos nuestra base en Zaragoza, pero nuestro equipo móvil de especialistas da cobertura a proyectos en las tres provincias de Aragón."
-                        className="gsap-hidden"
-                    />
+                    {showHeading && (
+                        <SectionHeading
+                            eyebrow="Nuestra cobertura"
+                            title="Aragón es nuestro terreno operativo"
+                            subtitle="Base principal en Zaragoza y capacidad de desplazamiento para proyectos en las tres provincias, con evaluación previa de alcance y logística."
+                            className="gsap-hidden"
+                        />
+                    )}
 
                     <div className={styles.contactCard}>
-                        <div className={styles.icon}>📍</div>
+                        <div className={styles.icon} aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M12 21c4.5-4.8 6.8-8.5 6.8-11.2a6.8 6.8 0 1 0-13.6 0c0 2.7 2.3 6.4 6.8 11.2Z" stroke="currentColor" strokeWidth="1.6" />
+                                <circle cx="12" cy="10" r="2.2" stroke="currentColor" strokeWidth="1.6" />
+                            </svg>
+                        </div>
                         <div className={styles.text}>
-                            <strong>¿Tu localidad no está en la lista?</strong>
-                            <span>Dependiendo del volumen del proyecto, estudiamos desplazamientos especiales. Consúltanos.</span>
+                            <strong>¿Tu localidad no aparece en la lista?</strong>
+                            <span>Estudiamos desplazamientos especiales según tipología de obra, planificación y volumen de intervención.</span>
                         </div>
                     </div>
                 </div>

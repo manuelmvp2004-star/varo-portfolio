@@ -19,9 +19,10 @@ export function Footer() {
                                 <span className={styles.logoSub}>Varo</span>
                             </span>
                         </Link>
+                        <p className={styles.locality}>Zaragoza · Aragón</p>
                         <p className={styles.tagline}>
-                            Reformas y servicios de calidad en Zaragoza y Aragón.
-                            Trabajo serio, acabados impecables.
+                            Reformas, mantenimiento e instalaciones con enfoque técnico,
+                            planificación clara y acabados de nivel profesional.
                         </p>
                         <div className={styles.contactInfo}>
                             <a href="tel:+34616424271" className={styles.contactItem}>

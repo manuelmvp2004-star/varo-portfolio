@@ -3,92 +3,62 @@
 .section {
     padding: var(--section-py) 0;
     background-color: var(--color-bg-white);
+    border-top: 1px solid rgba(28, 42, 42, 0.08);
 }
 
 .grid {
-    @include grid-auto(250px);
-    margin-top: var(--space-12);
-    gap: var(--space-8);
-    position: relative;
-
-    @include bp-lg {
-
-        // Horizontal connecting line
-        &::before {
-            content: '';
-            position: absolute;
-            top: 52px; // Align to middle of icon
-            left: 100px;
-            right: 100px;
-            height: 1px;
-            background: linear-gradient(90deg,
-                    transparent,
-                    var(--color-border),
-                    var(--color-border),
-                    transparent);
-            z-index: 0;
-        }
-    }
+    @include grid-auto(260px);
+    margin-top: var(--space-10);
+    gap: var(--space-4);
 }
 
 .card {
     @include flex-col;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-}
+    gap: var(--space-4);
+    min-height: 100%;
+    padding: var(--space-6);
+    border: 1px solid rgba(28, 42, 42, 0.12);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--color-bg-white) 0%, var(--color-bg-light) 100%);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--duration-normal) var(--ease-out), box-shadow var(--duration-normal) var(--ease-out);
 
-.number {
-    position: absolute;
-    top: -24px;
-    right: 50%;
-    transform: translateX(120%);
-    font-family: var(--font-display);
-    font-weight: var(--fw-bold);
-    font-size: var(--text-5xl);
-    color: var(--color-bg-light); // Very light grey
-    z-index: -1;
-    pointer-events: none;
-}
-
-.iconWrapper {
-    width: 104px;
-    height: 104px;
-    @include flex-center;
-    background-color: var(--color-bg-white);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-full);
-    margin-bottom: var(--space-6);
-    position: relative;
-
-    // Inner ring
-    &::after {
-        content: '';
-        position: absolute;
-        inset: 6px;
-        border: 1px dashed var(--color-border-dark);
-        border-radius: var(--radius-full);
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
     }
 }
 
-.icon {
-    font-size: var(--text-2xl);
-    color: var(--color-accent);
-    position: relative;
-    z-index: 2;
+.stepTop {
+    @include flex-between;
+    gap: var(--space-3);
+}
+
+.number {
+    font-family: var(--font-body);
+    font-weight: var(--fw-bold);
+    font-size: var(--text-base);
+    color: var(--color-accent-dark);
+    letter-spacing: 0.08em;
+}
+
+.stepLabel {
+    font-size: var(--text-xs);
+    color: var(--color-text-soft);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
 }
 
 .title {
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
+    font-family: var(--font-body);
+    font-size: var(--text-md);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-snug);
     color: var(--color-text-dark);
-    margin-bottom: var(--space-3);
 }
 
 .description {
     font-size: var(--text-sm);
     color: var(--color-text-medium);
-    line-height: var(--lh-relaxed);
-    max-width: 280px;
+    line-height: var(--lh-normal);
 }

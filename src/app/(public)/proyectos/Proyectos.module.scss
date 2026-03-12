@@ -1,0 +1,41 @@
+@use '@/styles/abstracts/index' as *;
+
+.hero {
+    padding: var(--space-32) 0 var(--space-14);
+    background:
+        linear-gradient(160deg, rgba(13, 39, 37, 0.96) 0%, rgba(16, 47, 45, 0.95) 54%, rgba(21, 57, 54, 0.93) 100%);
+}
+
+.heroTop {
+    max-width: 56rem;
+}
+
+.metrics {
+    margin-top: var(--space-10);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+
+    @include bp-md {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.metric {
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(247, 242, 230, 0.16);
+    background-color: rgba(247, 242, 230, 0.05);
+
+    dt {
+        @include eyebrow;
+        color: var(--color-accent-light);
+        margin-bottom: var(--space-2);
+    }
+
+    dd {
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
+        line-height: var(--lh-relaxed);
+    }
+}

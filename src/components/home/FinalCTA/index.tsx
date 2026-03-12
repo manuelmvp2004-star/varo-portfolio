@@ -15,13 +15,14 @@ export function FinalCTA() {
 
             <Container className={styles.inner}>
                 <div ref={contentRef} className={styles.content}>
+                    <span className={styles.eyebrow}>Asesoramiento técnico inicial</span>
                     <h2 className={styles.title}>
-                        ¿Tienes un proyecto en mente?<br />
-                        <span className={styles.accent}>Hagámoslo realidad.</span>
+                        ¿Listo para ejecutar tu proyecto con criterio?<br />
+                        <span className={styles.accent}>Hablemos de alcance, plazos y costes.</span>
                     </h2>
                     <p className={styles.subtitle}>
-                        Ofrecemos visitas y mediciones gratuitas para poder darte un presupuesto
-                        cerrado, transparente y sin compromiso. Contacta con nosotros hoy mismo.
+                        Realizamos visita técnica, definimos necesidades y te entregamos una propuesta clara
+                        para avanzar con seguridad desde el primer día.
                     </p>
 
                     <div className={styles.actions}>
@@ -29,7 +30,7 @@ export function FinalCTA() {
                             Solicitar presupuesto
                         </Button>
                         <Button href="/contacto" variant="outline" size="lg" className={styles.secondaryBtn}>
-                            Contactar por dudas
+                            Hablar con un técnico
                         </Button>
                     </div>
 

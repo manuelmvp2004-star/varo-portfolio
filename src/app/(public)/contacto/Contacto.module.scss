@@ -1,8 +1,34 @@
 @use '@/styles/abstracts/index' as *;
 
+.hero {
+    padding: var(--space-32) 0 var(--space-14);
+    background:
+        linear-gradient(160deg, rgba(13, 39, 37, 0.96) 0%, rgba(16, 47, 45, 0.95) 56%, rgba(23, 65, 62, 0.9) 100%);
+}
+
+.commitments {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-3);
+
+    li {
+        padding: var(--space-4) var(--space-5);
+        border: 1px solid rgba(247, 242, 230, 0.16);
+        background-color: rgba(247, 242, 230, 0.05);
+        border-radius: var(--radius-md);
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
+        line-height: var(--lh-relaxed);
+    }
+
+    @include bp-md {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
 .page {
-    padding: var(--space-32) 0 var(--space-20);
-    background-color: var(--color-bg-white);
+    padding: var(--space-16) 0 var(--space-20);
+    background-color: var(--color-bg-light);
 }
 
 .container {
@@ -23,45 +49,62 @@
 .infoCards {
     @include flex-col;
     gap: var(--space-4);
-    margin-top: var(--space-12);
 }
 
 .card {
     @include flex-col;
-    gap: var(--space-1);
-    padding: var(--space-6);
-    background-color: var(--color-bg-light);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-xl);
+    gap: var(--space-2);
+    padding: var(--space-7);
+    background: linear-gradient(180deg, #ffffff 0%, #faf7f0 100%);
+    border: 1px solid rgba(28, 42, 42, 0.12);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
 
     h3 {
-        font-size: var(--text-base);
+        font-size: var(--text-md);
         font-weight: var(--fw-semibold);
-        color: var(--color-text-dark);
+        color: var(--color-text-inverse);
         margin-top: var(--space-2);
     }
 
     a {
-        color: var(--color-accent);
-        font-size: var(--text-lg);
+        color: var(--color-accent-dark);
+        font-size: var(--text-base);
         font-weight: var(--fw-medium);
         text-decoration: none;
         transition: color $transition-fast;
 
         &:hover {
-            color: var(--color-accent-dark);
+            color: var(--color-accent);
         }
     }
 
     p {
         font-size: var(--text-sm);
-        color: var(--color-text-medium);
+        color: var(--color-text-soft);
+        line-height: var(--lh-relaxed);
     }
 }
 
 .icon {
-    font-size: var(--text-2xl);
-    line-height: 1;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid rgba(190, 150, 89, 0.35);
+    background-color: rgba(190, 150, 89, 0.12);
+    border-radius: var(--radius-md);
+    color: var(--color-accent-dark);
+    @include flex-center;
+
+    svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+}
+
+.value {
+    font-size: var(--text-base);
+    font-weight: var(--fw-medium);
+    color: var(--color-text-dark);
 }
 
 .formWrapper {
@@ -70,10 +113,10 @@
 
 .formInner {
     background-color: var(--color-bg-white);
-    border: 1px solid var(--color-border);
+    border: 1px solid rgba(28, 42, 42, 0.14);
     border-radius: var(--radius-2xl);
     padding: var(--space-8);
-    box-shadow: var(--shadow-xl);
+    box-shadow: var(--shadow-lg);
 
     @include bp-md {
         padding: var(--space-10);
@@ -81,10 +124,15 @@
 }
 
 .formTitle {
-    font-family: var(--font-display);
     font-size: var(--text-2xl);
-    color: var(--color-text-dark);
-    margin-bottom: var(--space-8);
+    color: var(--color-text-inverse);
+    margin-bottom: var(--space-4);
     padding-bottom: var(--space-4);
-    border-bottom: 1px solid var(--color-border-light);
+    border-bottom: 1px solid rgba(28, 42, 42, 0.12);
+}
+
+.formSubtitle {
+    margin-bottom: var(--space-8);
+    color: var(--color-text-soft);
+    line-height: var(--lh-relaxed);
 }

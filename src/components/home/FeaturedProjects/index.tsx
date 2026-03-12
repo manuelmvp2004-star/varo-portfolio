@@ -45,27 +45,42 @@ const projects: Project[] = [
     },
 ];
 
-export function FeaturedProjects() {
+interface FeaturedProjectsProps {
+    showHeader?: boolean;
+    showViewAll?: boolean;
+    limit?: number;
+}
+
+export function FeaturedProjects({
+    showHeader = true,
+    showViewAll = true,
+    limit,
+}: FeaturedProjectsProps = {}) {
     const headerRef = useGsapReveal<HTMLDivElement>();
     const gridRef = useGsapReveal<HTMLDivElement>({ stagger: 0.1 });
+    const visibleProjects = typeof limit === 'number' ? projects.slice(0, limit) : projects;
 
     return (
         <section className={styles.section} id="proyectos">
             <Container>
-                <div ref={headerRef} className={styles.top}>
-                    <SectionHeading
-                        eyebrow="Casos de éxito"
-                        title="Proyectos ejecutados con criterio"
-                        subtitle="Una muestra de intervenciones reales en vivienda y negocio, con foco en control técnico y acabado final."
-                        className="gsap-hidden"
-                    />
-                    <Button href="/proyectos" variant="outline" className={cn(styles.viewAllBtn, 'gsap-hidden')}>
-                        Ver proyectos
-                    </Button>
-                </div>
+                {showHeader && (
+                    <div ref={headerRef} className={styles.top}>
+                        <SectionHeading
+                            eyebrow="Casos de éxito"
+                            title="Proyectos ejecutados con criterio"
+                            subtitle="Una muestra de intervenciones reales en vivienda y negocio, con foco en control técnico y acabado final."
+                            className="gsap-hidden"
+                        />
+                        {showViewAll && (
+                            <Button href="/proyectos" variant="outline" className={cn(styles.viewAllBtn, 'gsap-hidden')}>
+                                Ver proyectos
+                            </Button>
+                        )}
+                    </div>
+                )}
 
                 <div ref={gridRef} className={cn(styles.grid, 'gsap-stagger-parent')}>
-                    {projects.map((project) => (
+                    {visibleProjects.map((project) => (
                         <Link key={project.id} href={`/proyectos#${project.id}`} id={project.id} className={styles.card}>
                             <div className={styles.imageWrapper}>
                                 {/* eslint-disable-next-line @next/next/no-img-element */}

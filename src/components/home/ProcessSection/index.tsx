@@ -3,34 +3,29 @@
 import { Container } from '@/components/common/Container';
 import { SectionHeading } from '@/components/common/SectionHeading';
 import { useGsapReveal } from '@/hooks/useGsapReveal';
-import type { ProcessStep } from '@/types';
 import styles from './ProcessSection.module.scss';
 import { cn } from '@/lib/utils/cn';
 
-const steps: ProcessStep[] = [
+const steps = [
     {
         step: 1,
-        title: 'Toma de contacto',
-        description: 'Visitamos el espacio, escuchamos tus necesidades y tomamos mediciones precisas sin ningún compromiso.',
-        icon: '📏',
+        title: 'Visita técnica inicial',
+        description: 'Analizamos el estado del espacio, tomamos medidas y validamos alcance con criterios de viabilidad.',
     },
     {
         step: 2,
-        title: 'Presupuesto cerrado',
-        description: 'En menos de 48 horas recibes un presupuesto detallado por partidas. Sin letra pequeña ni sobrecostes ocultos.',
-        icon: '📋',
+        title: 'Propuesta y presupuesto',
+        description: 'Entregamos partidas desglosadas, materiales definidos y una planificación realista de ejecución.',
     },
     {
         step: 3,
-        title: 'Ejecución y control',
-        description: 'Comenzamos en la fecha acordada. Nuestro responsable de obra supervisa a todos los gremios diariamente.',
-        icon: '🔨',
+        title: 'Ejecución coordinada',
+        description: 'Activamos gremios de forma ordenada y mantenemos seguimiento técnico continuo en cada fase.',
     },
     {
         step: 4,
-        title: 'Entrega impecable',
-        description: 'Realizamos una limpieza profesional y revisamos contigo cada detalle antes de dar el proyecto por finalizado.',
-        icon: '✨',
+        title: 'Cierre y validación',
+        description: 'Comprobamos acabados, realizamos limpieza final y cerramos contigo la entrega de obra.',
     },
 ];
 
@@ -44,8 +39,8 @@ export function ProcessSection() {
                 <div ref={headerRef}>
                     <SectionHeading
                         eyebrow="Cómo trabajamos"
-                        title="Un proceso sin estrés"
-                        subtitle="Olvídate de las obras caóticas. Nuestro método de trabajo está diseñado para darte visibilidad total y resultados garantizados."
+                        title="Proceso operativo claro de principio a fin"
+                        subtitle="Planificación, control y comunicación continua para que la obra avance con orden y previsibilidad."
                         align="center"
                         className="gsap-hidden"
                     />
@@ -53,14 +48,14 @@ export function ProcessSection() {
 
                 <div ref={stepsRef} className={cn(styles.grid, 'gsap-stagger-parent')}>
                     {steps.map((item) => (
-                        <div key={item.step} className={styles.card}>
-                            <span className={styles.number}>0{item.step}</span>
-                            <div className={styles.iconWrapper}>
-                                <span className={styles.icon}>{item.icon}</span>
+                        <article key={item.step} className={styles.card}>
+                            <div className={styles.stepTop}>
+                                <span className={styles.number}>0{item.step}</span>
+                                <span className={styles.stepLabel}>Fase {item.step}</span>
                             </div>
                             <h3 className={styles.title}>{item.title}</h3>
                             <p className={styles.description}>{item.description}</p>
-                        </div>
+                        </article>
                     ))}
                 </div>
             </Container>

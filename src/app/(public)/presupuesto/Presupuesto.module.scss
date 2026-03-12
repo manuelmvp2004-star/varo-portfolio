@@ -3,8 +3,9 @@
 .page {
     position: relative;
     padding: var(--space-32) 0 var(--space-20);
-    background-color: var(--color-bg-primary);
-    min-height: calc(100vh - 80px); // account for header roughly
+    background:
+        linear-gradient(160deg, rgba(13, 39, 37, 0.97) 0%, rgba(16, 47, 45, 0.95) 54%, rgba(23, 65, 62, 0.9) 100%);
+    min-height: calc(100vh - 80px);
 }
 
 .bg {
@@ -20,9 +21,9 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(circle at 50% 0%,
-                rgba(201, 169, 110, 0.1) 0%,
-                transparent 70%);
+        background:
+            radial-gradient(circle at 50% 0%, rgba(190, 150, 89, 0.14) 0%, transparent 70%),
+            linear-gradient(180deg, rgba(247, 242, 230, 0.06) 0%, transparent 55%);
     }
 }
 
@@ -35,17 +36,42 @@
     margin-bottom: var(--space-12);
 }
 
+.steps {
+    margin-top: var(--space-8);
+    display: grid;
+    gap: var(--space-3);
+}
+
+.step {
+    @include flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background-color: rgba(247, 242, 230, 0.06);
+    border: 1px solid rgba(247, 242, 230, 0.18);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    line-height: var(--lh-relaxed);
+}
+
+.stepIndex {
+    @include eyebrow;
+    color: var(--color-accent-light);
+    flex-shrink: 0;
+}
+
 .formCard {
     background-color: var(--color-bg-white);
-    border-radius: var(--radius-2xl);
+    border-radius: var(--radius-xl);
     padding: var(--space-8);
-    box-shadow: var(--shadow-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(28, 42, 42, 0.14);
 
     @include bp-sm {
         padding: var(--space-12);
     }
 
-    // Override dark theme variables inside the card since it's on a white background
+    // Override dark section vars inside white card
     --color-text-dark: #0A1628;
     --color-text-primary: #1A273A;
     --color-text-medium: #4A5568;

@@ -17,8 +17,8 @@ export function Testimonials() {
                 <div ref={headerRef}>
                     <SectionHeading
                         eyebrow="Reseñas reales"
-                        title="Lo que dicen nuestros clientes"
-                        subtitle="La mejor garantía de nuestro trabajo son las personas y empresas que han confiado en nosotros a lo largo de los años."
+                        title="Clientes que valoran el trabajo bien ejecutado"
+                        subtitle="Opiniones de particulares y profesionales que han trabajado con nuestro equipo en obras reales."
                         align="center"
                         light
                         className="gsap-hidden"
@@ -27,7 +27,7 @@ export function Testimonials() {
 
                 <div ref={gridRef} className={cn(styles.grid, 'gsap-stagger-parent')}>
                     {testimonials.map((testimonial) => (
-                        <div key={testimonial.id} className={styles.card}>
+                        <article key={testimonial.id} className={styles.card}>
                             <div className={styles.quoteIcon}>&ldquo;</div>
                             <div className={styles.stars}>
                                 {[...Array(testimonial.rating)].map((_, i) => (
@@ -51,7 +51,7 @@ export function Testimonials() {
                                     )}
                                 </div>
                             </div>
-                        </div>
+                        </article>
                     ))}
                 </div>
             </Container>

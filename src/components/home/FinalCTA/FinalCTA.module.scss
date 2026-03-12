@@ -2,8 +2,8 @@
 
 .section {
     position: relative;
-    padding: clamp(6rem, 12vw, 10rem) 0;
-    background-color: var(--color-bg-primary);
+    padding: clamp(6rem, 11vw, 9rem) 0;
+    background: linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
     overflow: hidden;
     text-align: center;
 }
@@ -16,8 +16,8 @@
 
     // Base subtle grid
     background-image:
-        linear-gradient(rgba(201, 169, 110, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201, 169, 110, 0.03) 1px, transparent 1px);
+        linear-gradient(rgba(190, 150, 89, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(190, 150, 89, 0.03) 1px, transparent 1px);
     background-size: 80px 80px;
 
     // Gold radial fade
@@ -26,7 +26,7 @@
         position: absolute;
         inset: 0;
         background: radial-gradient(circle at 50% 50%,
-                rgba(201, 169, 110, 0.08) 0%,
+                rgba(190, 150, 89, 0.1) 0%,
                 transparent 70%);
     }
 }
@@ -37,16 +37,26 @@
 }
 
 .content {
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto;
     @include flex-col;
     align-items: center;
-    gap: var(--space-6);
+    gap: var(--space-5);
+}
+
+.eyebrow {
+    @include eyebrow;
+    color: var(--color-accent);
+    letter-spacing: 0.16em;
+    padding: 0.45rem 0.72rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border-light);
+    background-color: rgba(247, 242, 230, 0.05);
 }
 
 .title {
     @include display-heading;
-    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+    font-size: clamp(var(--text-3xl), 4.8vw, var(--text-5xl));
     color: var(--color-text-primary);
 }
 
@@ -55,10 +65,10 @@
 }
 
 .subtitle {
-    font-size: var(--text-lg);
+    font-size: var(--text-md);
     color: var(--color-text-muted);
-    line-height: var(--lh-relaxed);
-    max-width: 600px;
+    line-height: var(--lh-normal);
+    max-width: 62ch;
 }
 
 .actions {
@@ -78,10 +88,10 @@
 }
 
 .secondaryBtn {
-    background-color: rgba(255, 255, 255, 0.03); // Subtle fill to stand out from bg
+    background-color: rgba(247, 242, 230, 0.06);
 
     &:hover {
-        background-color: var(--color-accent);
+        background-color: rgba(190, 150, 89, 0.18);
     }
 }
 

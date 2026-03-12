@@ -3,31 +3,47 @@ import { SectionHeading } from '@/components/common/SectionHeading';
 import { FeaturedProjects } from '@/components/home/FeaturedProjects';
 import { FinalCTA } from '@/components/home/FinalCTA';
 import { buildMetadata } from '@/lib/seo/metadata';
+import styles from './Proyectos.module.scss';
+import { cn } from '@/lib/utils/cn';
 
 export const metadata = buildMetadata({
     title: 'Nuestros Proyectos',
-    description: 'Galería de proyectos ejecutados por Multiservicios Varo. Reformas integrales, locales comerciales, pintura decorativa y más.',
+    description: 'Selección de proyectos ejecutados por Multiservicios Varo en Zaragoza y Aragón: reformas, adecuaciones técnicas y rehabilitación.',
     path: '/proyectos',
 });
 
 export default function ProyectosPage() {
     return (
         <>
-            <section style={{ paddingTop: 'var(--space-32)', backgroundColor: 'var(--color-bg-white)' }}>
+            <section className={cn(styles.hero, 'section--dark')}>
                 <Container>
-                    <SectionHeading
-                        eyebrow="Casos de éxito"
-                        title="Nuestro portfolio de trabajos"
-                        subtitle="Nos gusta que nuestro trabajo hable por nosotros. Explora una selección de los proyectos que hemos completado recientemente."
-                    />
+                    <div className={styles.heroTop}>
+                        <SectionHeading
+                            eyebrow="Proyectos"
+                            title="Intervenciones reales con enfoque técnico y acabado premium"
+                            subtitle="Mostramos una selección de trabajos ejecutados en vivienda y negocio. Cada proyecto refleja la misma lógica: planificación, coordinación y control final de calidad."
+                            light
+                        />
+                    </div>
+
+                    <dl className={styles.metrics}>
+                        <div className={styles.metric}>
+                            <dt>Planificación</dt>
+                            <dd>Definición previa de alcance, plazos y secuencia de oficios.</dd>
+                        </div>
+                        <div className={styles.metric}>
+                            <dt>Ejecución</dt>
+                            <dd>Seguimiento diario para mantener ritmo de obra y trazabilidad.</dd>
+                        </div>
+                        <div className={styles.metric}>
+                            <dt>Entrega</dt>
+                            <dd>Revisión de detalle y cierre documental de cada intervención.</dd>
+                        </div>
+                    </dl>
                 </Container>
             </section>
 
-            {/* For this MVP, we reuse the FeaturedProjects grid to act as the gallery. 
-          In a full implementation, this could be a dedicated grid component with filtering. */}
-            <div style={{ marginTop: 'calc(var(--space-12) * -1)' }}>
-                <FeaturedProjects />
-            </div>
+            <FeaturedProjects showHeader={false} showViewAll={false} />
 
             <FinalCTA />
         </>
