@@ -8,14 +8,14 @@ import styles from './CoverageMap.module.scss';
 import { cn } from '@/lib/utils/cn';
 
 const zones: CoverageZone[] = [
-    { name: 'Zaragoza Capital', province: 'Zaragoza', featured: true },
-    { name: 'Utebo', province: 'Zaragoza', featured: true },
-    { name: 'Cuarte de Huerva', province: 'Zaragoza', featured: true },
-    { name: 'Zuera', province: 'Zaragoza' },
-    { name: 'La Muela', province: 'Zaragoza' },
-    { name: 'Huesca Capital', province: 'Huesca', featured: true },
-    { name: 'Jaca', province: 'Huesca' },
-    { name: 'Teruel Capital', province: 'Teruel' },
+    { name: 'Lucena', province: 'Córdoba', featured: true },
+    { name: 'Córdoba Capital', province: 'Córdoba', featured: true },
+    { name: 'Cabra', province: 'Córdoba', featured: true },
+    { name: 'Puente Genil', province: 'Córdoba' },
+    { name: 'Montilla', province: 'Córdoba' },
+    { name: 'Priego de Córdoba', province: 'Córdoba' },
+    { name: 'Baena', province: 'Córdoba' },
+    { name: 'Rute', province: 'Córdoba' },
 ];
 
 interface CoverageMapProps {
@@ -34,8 +34,8 @@ export function CoverageMap({ showHeading = true, compact = false }: CoverageMap
                     {showHeading && (
                         <SectionHeading
                             eyebrow="Nuestra cobertura"
-                            title="Aragón es nuestro terreno operativo"
-                            subtitle="Base principal en Zaragoza y capacidad de desplazamiento para proyectos en las tres provincias, con evaluación previa de alcance y logística."
+                            title="Córdoba es nuestro terreno operativo"
+                            subtitle="Base principal en Lucena (Córdoba) y capacidad de desplazamiento a otros puntos de España según alcance, calendario y logística de obra."
                             className="gsap-hidden"
                         />
                     )}

@@ -60,7 +60,7 @@ export function ContactForm() {
                 <FormField
                     name="localidad"
                     label="Localidad"
-                    placeholder="Ej: Zaragoza"
+                    placeholder="Ej: Lucena"
                     required
                 />
                 <FormField

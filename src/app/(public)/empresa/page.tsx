@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils/cn';
 
 export const metadata = buildMetadata({
     title: 'Nuestra Empresa',
-    description: 'Conoce Multiservicios Varo: empresa especializada en reforma técnica, mantenimiento y acabados de alto nivel en Zaragoza y Aragón.',
+    description: 'Conoce Multiservicios Varo: empresa especializada en reforma técnica, mantenimiento y acabados de alto nivel en Lucena, Córdoba y resto de España.',
     path: '/empresa',
 });
 
@@ -80,7 +80,7 @@ export default function EmpresaPage() {
                         <span className={styles.eyebrow}>Empresa</span>
                         <h1 className={styles.title}>Multiservicios Varo: ejecución técnica con estándar premium</h1>
                         <p className={styles.subtitle}>
-                            Somos una firma especializada en reforma y mantenimiento con base en Zaragoza.
+                            Somos una firma especializada en reforma y mantenimiento con base en Lucena (Córdoba).
                             Trabajamos con método, control y oficio para entregar resultados sólidos en vivienda,
                             local comercial y activos corporativos.
                         </p>

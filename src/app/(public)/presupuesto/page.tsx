@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils/cn';
 
 export const metadata = buildMetadata({
     title: 'Solicitar Presupuesto',
-    description: 'Solicita presupuesto técnico para reformas y multiservicios en Zaragoza y Aragón con evaluación profesional y alcance claro.',
+    description: 'Solicita presupuesto técnico para reformas y multiservicios en Lucena, Córdoba y resto de España con evaluación profesional y alcance claro.',
     path: '/presupuesto',
 });
 

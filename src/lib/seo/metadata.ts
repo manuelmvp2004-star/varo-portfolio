@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 const BASE_URL = 'https://multiserviciosvaro.com';
 const SITE_NAME = 'Multiservicios Varo';
 const DEFAULT_DESCRIPTION =
-    'Empresa especializada en pintura, pladur, electricidad, reformas interiores, mantenimiento y aislamiento en Zaragoza y Aragón. Presupuesto sin compromiso.';
+    'Empresa especializada en pintura, pladur, electricidad, reformas interiores, mantenimiento y aislamiento en Lucena, Córdoba y resto de España. Presupuesto sin compromiso.';
 
 export function buildMetadata({
     title,

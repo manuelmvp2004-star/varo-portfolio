@@ -4,7 +4,7 @@ export const faqs: FAQ[] = [
     {
         id: 'faq1',
         question: '¿En qué zonas trabajáis?',
-        answer: 'Trabajamos principalmente en Zaragoza y provincia, así como Huesca y Teruel. Consúltanos si tu localidad no aparece, solemos desplazarnos para proyectos de cierta envergadura.',
+        answer: 'Trabajamos principalmente en Lucena y la provincia de Córdoba. También estudiamos desplazamientos al resto de España según alcance del proyecto y planificación.',
         category: 'general',
     },
     {

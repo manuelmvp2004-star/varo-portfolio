@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils/cn';
 
 export const metadata = buildMetadata({
     title: 'Contacto',
-    description: 'Contacta con Multiservicios Varo para resolver dudas técnicas o solicitar visita de valoración en Zaragoza y Aragón.',
+    description: 'Contacta con Multiservicios Varo para resolver dudas técnicas o solicitar visita de valoración en Lucena, Córdoba y resto de España.',
     path: '/contacto',
 });
 
@@ -37,7 +37,7 @@ const contactChannels = [
     },
     {
         title: 'Base operativa',
-        value: 'Zaragoza · Aragón',
+        value: 'Lucena · Córdoba · España',
         note: 'Cobertura presencial según alcance y planificación',
         icon: (
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">

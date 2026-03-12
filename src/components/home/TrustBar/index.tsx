@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils/cn';
 const trustStats = [
     { label: 'Respuesta inicial', value: '24-48 h' },
     { label: 'Interlocutor técnico', value: '1 responsable' },
-    { label: 'Cobertura operativa', value: 'Zaragoza · Aragón' },
+    { label: 'Cobertura operativa', value: 'Lucena · Córdoba · España' },
 ];
 
 const trustPillars = [

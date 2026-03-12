@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils/cn';
 
 export const metadata = buildMetadata({
     title: 'Nuestros Servicios',
-    description: 'Servicios técnicos de reforma, pintura, electricidad, mantenimiento y aislamiento con ejecución coordinada en Zaragoza y Aragón.',
+    description: 'Servicios técnicos de reforma, pintura, electricidad, mantenimiento y aislamiento con ejecución coordinada en Lucena, Córdoba y resto de España.',
     path: '/servicios',
 });
 

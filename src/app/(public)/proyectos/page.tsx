@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils/cn';
 
 export const metadata = buildMetadata({
     title: 'Nuestros Proyectos',
-    description: 'Selección de proyectos ejecutados por Multiservicios Varo en Zaragoza y Aragón: reformas, adecuaciones técnicas y rehabilitación.',
+    description: 'Selección de proyectos ejecutados por Multiservicios Varo en Lucena, Córdoba y otros puntos de España: reformas, adecuaciones técnicas y rehabilitación.',
     path: '/proyectos',
 });
 

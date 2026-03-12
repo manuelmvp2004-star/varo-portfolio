@@ -10,7 +10,7 @@ import { FinalCTA } from '@/components/home/FinalCTA';
 import { buildMetadata } from '@/lib/seo/metadata';
 
 export const metadata = buildMetadata({
-    title: 'Reformas y Multiservicios Premium en Zaragoza',
+    title: 'Reformas y Multiservicios Premium en Lucena',
     path: '/',
 });
 

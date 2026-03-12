@@ -7,8 +7,8 @@ import styles from './Zonas.module.scss';
 import { cn } from '@/lib/utils/cn';
 
 export const metadata = buildMetadata({
-    title: 'Zonas de Servicio en Aragón',
-    description: 'Cobertura de Multiservicios Varo en Aragón: Zaragoza, Huesca y Teruel con evaluación técnica previa de desplazamiento.',
+    title: 'Zonas de Servicio en Córdoba y España',
+    description: 'Cobertura de Multiservicios Varo con base en Lucena (Córdoba) y desplazamientos a otras zonas de España según tipología de proyecto.',
     path: '/zonas-de-servicio',
 });
 
@@ -38,8 +38,8 @@ export default function ZonasPage() {
                     <div className={styles.heroTop} data-page-reveal data-page-y="24">
                         <SectionHeading
                             eyebrow="Cobertura"
-                            title="Presencia operativa en Aragón con base en Zaragoza"
-                            subtitle="Atendemos proyectos de reforma, mantenimiento y adecuación técnica en las tres provincias, priorizando continuidad de servicio y viabilidad logística."
+                            title="Presencia operativa en Córdoba con base en Lucena"
+                            subtitle="Atendemos proyectos de reforma, mantenimiento y adecuación técnica en la provincia de Córdoba y otras zonas de España según alcance y planificación."
                             light
                         />
                     </div>
@@ -47,11 +47,11 @@ export default function ZonasPage() {
                     <div className={styles.policies} data-page-stagger="0.08" data-page-y="14">
                         <article className={styles.policy}>
                             <h3>Radio principal</h3>
-                            <p>Zaragoza capital y área metropolitana con disponibilidad prioritaria.</p>
+                            <p>Lucena, Córdoba capital y provincia con disponibilidad prioritaria.</p>
                         </article>
                         <article className={styles.policy}>
                             <h3>Desplazamientos</h3>
-                            <p>Huesca y Teruel según alcance, plazos y planificación técnica.</p>
+                            <p>Resto de Andalucía y proyectos puntuales en España según alcance, plazos y logística.</p>
                         </article>
                         <article className={styles.policy}>
                             <h3>Evaluación previa</h3>
@@ -67,7 +67,7 @@ export default function ZonasPage() {
                 <Container>
                     <header className={styles.logisticsHead} data-page-reveal>
                         <p className={styles.sectionEyebrow}>Operativa territorial</p>
-                        <h2>Cómo organizamos trabajos fuera de Zaragoza capital</h2>
+                        <h2>Cómo organizamos trabajos fuera de Lucena y Córdoba capital</h2>
                     </header>
 
                     <div className={styles.logisticsGrid} data-page-stagger="0.08">

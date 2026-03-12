@@ -19,16 +19,16 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://multiserviciosvaro.com'),
   applicationName: 'Multiservicios Varo',
   title: {
-    default: 'Multiservicios Varo | Reformas y Servicios en Zaragoza',
+    default: 'Multiservicios Varo | Reformas y Servicios en Lucena',
     template: '%s | Multiservicios Varo',
   },
   description:
-    'Empresa especializada en pintura, pladur, electricidad, reformas interiores, mantenimiento y aislamiento en Zaragoza y Aragón. Presupuesto sin compromiso.',
+    'Empresa especializada en pintura, pladur, electricidad, reformas interiores, mantenimiento y aislamiento en Lucena, Córdoba y resto de España. Presupuesto sin compromiso.',
   keywords: [
-    'reformas zaragoza',
-    'pintura zaragoza',
-    'pladur zaragoza',
-    'electricidad zaragoza',
+    'reformas lucena',
+    'pintura cordoba',
+    'pladur cordoba',
+    'electricidad cordoba',
     'reformas interiores',
     'mantenimiento hogar',
     'aislamiento térmico',

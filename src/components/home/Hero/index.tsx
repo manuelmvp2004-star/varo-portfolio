@@ -104,7 +104,7 @@ export function Hero() {
             <Container className={styles.content}>
                 <div className={styles.textBlock}>
                     <span ref={eyebrowRef} className={styles.eyebrow}>
-                        Zaragoza · Aragón
+                        Lucena · Córdoba · España
                     </span>
 
                     <h1 ref={headingRef} className={styles.heading}>
@@ -133,7 +133,7 @@ export function Hero() {
                     <div ref={badgesRef} className={styles.badges}>
                         {[
                             { value: '10+ años', label: 'Oficio técnico en reformas y mantenimiento' },
-                            { value: '500+ intervenciones', label: 'Trabajos finalizados en Zaragoza y entorno' },
+                            { value: '500+ intervenciones', label: 'Trabajos finalizados en Lucena, Córdoba y otros puntos de España' },
                             { value: 'Presupuesto trazable', label: 'Detalle por partidas y seguimiento por fases' },
                         ].map(({ value, label }) => (
                             <div key={label} className={styles.badge} data-hero-badge>

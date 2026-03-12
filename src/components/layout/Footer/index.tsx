@@ -19,7 +19,7 @@ export function Footer() {
                                 <span className={styles.logoSub}>Varo</span>
                             </span>
                         </Link>
-                        <p className={styles.locality}>Zaragoza · Aragón</p>
+                        <p className={styles.locality}>Lucena · Córdoba · España</p>
                         <p className={styles.tagline}>
                             Reformas, mantenimiento e instalaciones con enfoque técnico,
                             planificación clara y acabados de nivel profesional.

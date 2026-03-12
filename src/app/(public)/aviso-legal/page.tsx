@@ -22,7 +22,7 @@ export default function AvisoLegalPage() {
             <ul>
                 <li><strong>Titular:</strong> Empresa Ficticia S.L. (Multiservicios Varo)</li>
                 <li><strong>NIF:</strong> B-00000000</li>
-                <li><strong>Domicilio Social:</strong> Calle Ficticia 123, 50000 Zaragoza</li>
+                <li><strong>Domicilio Social:</strong> Calle Ficticia 123, 14900 Lucena (Córdoba), España</li>
                 <li><strong>Correo electrónico:</strong> info@multiserviciosvaro.es</li>
                 <li><strong>Teléfono:</strong> +34 616 424 271</li>
             </ul>
