@@ -9,9 +9,9 @@
 
 .top {
     @include flex-col;
-    gap: var(--space-3);
-    max-width: 56rem;
-    margin-bottom: var(--space-8);
+    gap: var(--space-2);
+    max-width: 52rem;
+    margin-bottom: var(--space-6);
 }
 
 .eyebrow {
@@ -29,7 +29,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-3);
-    margin-bottom: var(--space-7);
+    margin-bottom: var(--space-5);
 
     @include bp-md {
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -71,9 +71,9 @@
 
 .card {
     @include flex-start;
-    gap: var(--space-4);
+    gap: var(--space-3);
     min-height: 100%;
-    padding: var(--space-5);
+    padding: var(--space-4);
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
     background: linear-gradient(180deg, rgba(247, 242, 230, 0.07) 0%, rgba(247, 242, 230, 0.03) 100%);
@@ -117,14 +117,18 @@
 
 @include bp-max-md {
     .section {
-        padding: var(--space-12) 0 var(--space-10);
+        padding: var(--space-10) 0 var(--space-8);
     }
 
     .title {
-        font-size: clamp(var(--text-lg), 5.6vw, var(--text-2xl));
+        font-size: clamp(1.75rem, 6vw, var(--text-2xl));
     }
 
     .stat {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .card {
         padding: var(--space-4);
     }
 }
