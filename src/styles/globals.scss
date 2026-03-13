@@ -138,3 +138,8 @@ section {
     border-radius: var(--radius-full);
     margin: var(--space-6) 0;
 }
+
+html[data-intro-state='active'] [data-intro-item] {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}

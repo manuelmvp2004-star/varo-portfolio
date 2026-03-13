@@ -15,6 +15,7 @@ La web debe transmitir desde el primer segundo:
 - sensación de marca cuidada y solvente
 
 La percepción deseada es:
+
 **“Esta empresa trabaja con criterio, detalle y calidad real.”**
 
 ---
@@ -22,12 +23,16 @@ La percepción deseada es:
 ## Contexto del proyecto
 Se está construyendo una web corporativa sobria y de nivel para una empresa de multiservicios real.
 
-No se busca una web genérica del sector.
-No se busca una landing chillona.
-No se busca una plantilla evidente.
-No se busca una estética amateur ni sobrecargada.
+No se busca:
+- una web genérica del sector
+- una landing chillona
+- una plantilla evidente
+- una estética amateur
+- una interfaz sobrecargada
+- una demo experimental disfrazada de web corporativa
 
-La prioridad actual no es rehacer la arquitectura, sino **elevar la dirección visual y la calidad percibida**.
+La prioridad no es meter más cosas.
+La prioridad es **elevar la dirección visual, la calidad percibida y la coherencia de ejecución**.
 
 ---
 
@@ -77,15 +82,21 @@ Se debe trabajar **sobre la base existente**, mejorándola con criterio.
 ---
 
 ## Prioridad actual de trabajo
-Auditar y mejorar, en este orden:
+La prioridad actual es resolver y elevar la experiencia inicial de la home pública, en este orden:
 
-1. `src/app/layout.tsx`
-2. `src/styles/globals.scss`
-3. `src/styles/tokens/_colors.scss`
-4. `src/styles/tokens/_typography.scss`
-5. `src/components/layout/Header/index.tsx`
-6. `src/components/home/Hero/index.tsx`
-7. `src/components/home/Hero/Hero.module.scss`
+1. `src/app/(public)/layout.tsx`
+2. `src/app/(public)/page.tsx`
+3. `src/components/motion/IntroOverlay/index.tsx`
+4. `src/components/motion/IntroOverlay/IntroOverlay.module.scss`
+5. `src/styles/globals.scss`
+6. `src/components/layout/Header/index.tsx`
+7. `src/components/layout/Header/Header.module.scss`
+8. `src/components/home/Hero/index.tsx`
+9. `src/components/home/Hero/Hero.module.scss`
+10. `src/hooks/useGsapReveal.ts`
+11. `src/styles/animations/_gsap.scss`
+
+No dispersarse en nuevas secciones ni nuevas features mientras la intro, el hero y la percepción inicial no tengan nivel.
 
 ---
 
@@ -98,12 +109,14 @@ Antes de cambiar código:
 4. **Proponer una dirección visual corregida**
 5. **Aplicar cambios concretos y contenidos**
 6. **Evitar rehacer la arquitectura**
+7. **Mantener los cambios auditables**
 
 No hacer cambios grandes sin justificar claramente:
 
 - qué problema resuelven
 - por qué mejoran la percepción premium
 - por qué encajan con la dirección de marca
+- qué impacto tienen en el resto del proyecto
 
 ---
 
@@ -181,10 +194,58 @@ La prioridad inmediata es elevar:
 - **paleta**
 - **tipografía**
 - **espaciado principal**
+- **intro de entrada**
 - **header**
 - **hero**
 
 No dispersarse en nuevas secciones ni nuevas features mientras esta base no tenga nivel.
+
+---
+
+## Intro de la home y reveal inicial
+La intro de la home es una pieza crítica de percepción de marca.
+
+### La intro debe ser
+- estructural
+- espacial
+- cinematográfica
+- limpia
+- conectada a la página real
+- elegante
+- sobria
+- controlada
+
+### La intro NO debe ser
+- un splash screen autónomo
+- un overlay decorativo con branding encima
+- una maqueta fake de la web
+- una ventana falsa con chrome simulado
+- una pieza separada del layout real
+- una card que crece con apariencia de demo
+- una intro “bonita” pero desconectada de la página
+
+### Regla principal
+La **web real debe existir desde el inicio**.
+
+La intro debe actuar como una **capa de reveal** por encima de la home real, no como una escena independiente que luego desaparece.
+
+### Secuencia deseada
+1. fondo claro tipo marfil / mármol / mineral
+2. aparición de una línea fina central
+3. apertura arquitectónica desde esa línea
+4. revelado del shell real de la home
+5. asentamiento de la página
+6. entrada posterior y escalonada de header y contenido principal del hero
+
+### Reglas de motion para la intro
+- debe existir un único criterio de orquestación de entrada
+- evitar múltiples timelines compitiendo entre Intro, Header, Hero y reveals secundarios
+- evitar hacks globales frágiles si una solución local es más limpia
+- respetar `prefers-reduced-motion`
+- no dejar contenido oculto por error
+- evitar flashes de hidratación
+- evitar maquetas fake para sugerir la página
+- evitar repetir la intro completa en cada visita de la misma sesión si ya existe una lógica razonable para no hacerlo
 
 ---
 
@@ -197,6 +258,9 @@ No dispersarse en nuevas secciones ni nuevas features mientras esta base no teng
 - Evitar duplicación innecesaria
 - No romper componentes ya válidos por hacer refactors cosméticos
 - Si algo funciona estructuralmente, mejorar su acabado visual sin destruirlo
+- No introducir estados redundantes
+- No introducir efectos GSAP duplicados o compitiendo entre sí
+- No usar selectores globales excesivos si un alcance local resuelve mejor el problema
 
 ---
 
@@ -207,6 +271,7 @@ Al editar componentes o estilos:
 - priorizar refinamiento sobre espectacularidad
 - priorizar consistencia sobre ocurrencias
 - priorizar percepción premium sobre efectos llamativos
+- priorizar integración real sobre trucos visuales aislados
 
 Las decisiones deben parecer de **director de arte + frontend senior**, no de generador automático de secciones.
 
@@ -228,6 +293,9 @@ Evitar:
 - CTAs chillones
 - exceso de elementos
 - aspecto de plantilla estándar
+
+El header debe integrarse bien con la intro y con el hero.
+No debe entrar antes de tiempo ni competir con la secuencia inicial.
 
 ---
 
@@ -251,7 +319,12 @@ Evitar:
 - estética de landing repetida
 - exceso de adornos visuales sin sentido
 
-El hero debe sentirse más “firma seria” que “promo rápida”.
+El hero debe sentirse más **“firma seria”** que **“promo rápida”**.
+
+Además:
+- su estructura real debe poder existir antes de revelar todo su contenido
+- el contenido principal debe entrar con control, no de golpe
+- cualquier motion del hero debe subordinarse a la narrativa general de la home
 
 ---
 
@@ -304,6 +377,7 @@ No proponer por defecto:
 - microinteracciones teatrales
 
 Premium aquí significa:
+
 **precisión, control y criterio**, no decoración.
 
 ---
@@ -338,6 +412,31 @@ Cuando se pida una mejora:
 5. hacer cambios concretos
 6. revisar consistencia visual
 7. comprobar que no se ha roto la arquitectura ni el tono del proyecto
+8. validar el resultado visual y técnico
+
+---
+
+## Limpieza de lógica legacy
+Si una implementación anterior deja de tener sentido tras una mejora, no conservarla por inercia.
+
+Se puede eliminar:
+- componentes legacy
+- SCSS obsoleto
+- estados viejos
+- data-attributes antiguos
+- timelines GSAP anteriores
+- ramas de código que solo existan para sostener una solución descartada
+
+Condiciones:
+- comprobar referencias reales antes de borrar
+- no dejar imports rotos
+- no mantener archivos vacíos “por si acaso”
+- explicar siempre qué se elimina y por qué
+
+No hacer limpieza general del proyecto.  
+Solo eliminar lo claramente obsoleto y directamente relacionado con la mejora en curso.
+
+No conservar artefactos de la intro anterior solo por inercia o compatibilidad emocional con la solución vieja.
 
 ---
 
@@ -368,17 +467,57 @@ Ante varias opciones válidas, elegir la que mejor combine:
 
 ---
 
+## Validación obligatoria de cambios
+Toda mejora relevante debe validarse, como mínimo, con:
+
+### Visual
+- desktop
+- mobile
+- primera visita
+- visitas posteriores en la misma sesión
+- comportamiento con `prefers-reduced-motion`
+
+### Técnica
+- `npm run lint`
+- `npx tsc --noEmit`
+
+Si algo no puede validarse directamente, debe indicarse con claridad:
+- qué falta por comprobar
+- qué riesgo queda abierto
+- qué parte necesita validación manual adicional
+
+---
+
 ## Git y seguridad de cambios
 Antes de cambios amplios o sensibles:
 
 - sugerir checkpoint o commit intermedio
 - mantener cambios revisables
 - evitar modificaciones dispersas difíciles de auditar
+- preferir bloques de cambio pequeños y reversibles
+
+---
+
+## Política de commits
+Los cambios deben proponerse en bloques lógicos pequeños y auditables.
+
+Evitar commits vagos como:
+- `fix stuff`
+- `update home`
+- `changes`
+
+Preferir mensajes precisos del tipo:
+- `refactor(home-intro): scope reveal flow to public home only`
+- `feat(home-intro): replace fake overlay with structural page reveal`
+- `refactor(home-hero): align header and hero with shared intro phases`
+- `chore(motion): remove legacy intro hiding and sync section reveals`
+
+Cada bloque importante debe poder entenderse, revisarse y revertirse con claridad.
 
 ---
 
 ## Resumen ejecutivo
-Este proyecto no necesita más “cosas”.
+Este proyecto no necesita más “cosas”.  
 Necesita **más criterio visual**.
 
 La misión actual es transformar una base correcta pero genérica en una web que se sienta:
@@ -391,3 +530,6 @@ La misión actual es transformar una base correcta pero genérica en una web que
 - profesional de verdad
 
 Cada decisión debe acercar la experiencia a esa percepción.
+
+Si una propuesta añade ruido, teatralidad o artificio, no sirve.
+Si una propuesta mejora control, jerarquía y calidad percibida, va en la dirección correcta.

@@ -21,20 +21,28 @@ export function Header() {
     const actionsRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        const introState =
+            typeof document !== 'undefined'
+                ? document.documentElement.dataset.introState
+                : undefined;
+
+        if (introState === 'active' || introState === 'revealing') return;
         if (prefersReducedMotion || !headerRef.current) return;
 
         let isCancelled = false;
-        let timeline: { kill: () => void } | null = null;
+        let cleanupTimeline: (() => void) | null = null;
 
         const initAnimation = async () => {
             const { gsap } = await import('gsap');
-            if (isCancelled) return;
+            if (isCancelled || !headerRef.current) return;
 
             const tl = gsap.timeline({
                 defaults: {
                     ease: 'power2.out',
                 },
             });
+
+            cleanupTimeline = () => tl.kill();
 
             tl.fromTo(
                 headerRef.current,
@@ -51,23 +59,20 @@ export function Header() {
                 },
                 '-=0.24'
             );
-
-            timeline = tl;
         };
 
         void initAnimation();
 
         return () => {
             isCancelled = true;
-            timeline?.kill();
+            cleanupTimeline?.();
         };
     }, [prefersReducedMotion]);
 
     return (
         <>
             <header ref={headerRef} className={cn(styles.header, isScrolled && styles.scrolled)}>
-                <div className={styles.inner}>
-                    {/* Logo */}
+                <div className={styles.inner} data-intro-item="header">
                     <Link ref={logoRef} href="/" className={styles.logo} aria-label="Multiservicios Varo – Inicio">
                         <span className={styles.logoMark}>MV</span>
                         <span className={styles.logoText}>
@@ -76,7 +81,6 @@ export function Header() {
                         </span>
                     </Link>
 
-                    {/* Desktop nav */}
                     <nav ref={navRef} className={styles.nav} aria-label="Navegación principal">
                         <ul className={styles.navList}>
                             {navigation.map((item) => (
@@ -129,7 +133,6 @@ export function Header() {
                         </ul>
                     </nav>
 
-                    {/* CTA + Hamburger */}
                     <div ref={actionsRef} className={styles.actions}>
                         <Button href={ctaButton.href} variant="secondary" size="sm" className={styles.ctaDesktop}>
                             {ctaButton.label}
