@@ -30,7 +30,7 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
         stagger = 0,
         childSelector,
         markers = false,
-        start = 'top 85%',
+        start = 'top 90%',
         once = true,
     } = options;
 
@@ -41,24 +41,38 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
         const element = ref.current;
         if (!element) return;
 
+        const getTargets = (node: HTMLElement): HTMLElement[] => {
+            if (childSelector) {
+                return Array.from(node.querySelectorAll<HTMLElement>(childSelector));
+            }
+
+            if (node.classList.contains('gsap-stagger-parent')) {
+                return Array.from(node.children).filter(
+                    (child): child is HTMLElement => child instanceof HTMLElement
+                );
+            }
+
+            const hiddenDescendants = Array.from(
+                node.querySelectorAll<HTMLElement>('.gsap-hidden')
+            );
+
+            if (hiddenDescendants.length > 0) {
+                return hiddenDescendants;
+            }
+
+            return [];
+        };
+
+        const revealElement = (target: HTMLElement) => {
+            target.style.opacity = '1';
+            target.style.visibility = 'visible';
+            target.style.transform = 'none';
+        };
+
         const revealImmediately = () => {
-            element.style.opacity = '1';
-            element.style.visibility = 'visible';
-            element.style.transform = 'none';
-
-            const targets = childSelector
-                ? element.querySelectorAll<HTMLElement>(childSelector)
-                : element.classList.contains('gsap-stagger-parent')
-                    ? Array.from(element.children).filter(
-                        (node): node is HTMLElement => node instanceof HTMLElement
-                    )
-                    : [];
-
-            targets.forEach((target) => {
-                target.style.opacity = '1';
-                target.style.visibility = 'visible';
-                target.style.transform = 'none';
-            });
+            revealElement(element);
+            const targets = getTargets(element);
+            targets.forEach(revealElement);
         };
 
         if (prefersReducedMotion) {
@@ -76,57 +90,38 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
             const ScrollTrigger = ScrollTriggerModule.ScrollTrigger;
 
             if (isCancelled || !ref.current) return;
+
             gsap.registerPlugin(ScrollTrigger);
 
             const node = ref.current;
             if (!node) return;
 
-            const targets = childSelector
-                ? Array.from(node.querySelectorAll<HTMLElement>(childSelector))
-                : node.classList.contains('gsap-stagger-parent')
-                    ? Array.from(node.children).filter(
-                        (child): child is HTMLElement => child instanceof HTMLElement
-                    )
-                    : [];
+            const targets = getTargets(node);
+            const animatedTargets: HTMLElement[] = targets.length > 0 ? targets : [node];
 
             ctx = gsap.context(() => {
-                if (targets.length > 0) {
-                    gsap.from(targets, {
-                        y,
-                        x,
-                        autoAlpha: opacity,
-                        duration,
-                        delay,
-                        stagger,
-                        ease,
-                        onStart: () => {
-                            gsap.set(targets, { visibility: 'visible' });
-                        },
-                        scrollTrigger: {
-                            trigger: node,
-                            start,
-                            once,
-                            markers,
-                        },
-                    });
-                    return;
-                }
-
-                gsap.from(node, {
-                    y,
+                gsap.set(animatedTargets, {
                     x,
+                    y,
                     autoAlpha: opacity,
+                });
+
+                gsap.to(animatedTargets, {
+                    x: 0,
+                    y: 0,
+                    autoAlpha: 1,
                     duration,
                     delay,
+                    stagger: animatedTargets.length > 1 ? stagger : 0,
                     ease,
-                    onStart: () => {
-                        gsap.set(node, { visibility: 'visible' });
-                    },
+                    immediateRender: false,
+                    clearProps: 'transform',
                     scrollTrigger: {
                         trigger: node,
                         start,
                         once,
                         markers,
+                        invalidateOnRefresh: true,
                     },
                 });
             }, node);
@@ -138,7 +133,20 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
             isCancelled = true;
             ctx?.revert();
         };
-    }, [childSelector, delay, duration, ease, markers, once, opacity, prefersReducedMotion, stagger, start, x, y]);
+    }, [
+        childSelector,
+        delay,
+        duration,
+        ease,
+        markers,
+        once,
+        opacity,
+        prefersReducedMotion,
+        stagger,
+        start,
+        x,
+        y,
+    ]);
 
     return ref;
 }
