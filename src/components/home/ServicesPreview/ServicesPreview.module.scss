@@ -1,7 +1,7 @@
 @use '@/styles/abstracts/index' as *;
 
 .section {
-    padding: var(--section-py) 0;
+    padding: clamp(4rem, 6vw, 5.5rem) 0 clamp(3rem, 5vw, 4.5rem);
     background: linear-gradient(180deg, var(--color-bg-light) 0%, var(--color-bg-canvas) 100%);
 }
 
@@ -11,8 +11,8 @@
 
 .top {
     @include flex-col;
-    gap: var(--space-5);
-    margin-bottom: var(--space-10);
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
 
     @include bp-md {
         flex-direction: row;
@@ -27,6 +27,7 @@
 
 .grid {
     @include grid-auto(300px);
+    gap: var(--space-5);
 }
 
 .card {
@@ -137,4 +138,19 @@
 .arrow {
     color: var(--color-accent);
     transition: transform $transition-fast;
+}
+
+@include bp-max-md {
+    .section {
+        padding: var(--space-10) 0 var(--space-8);
+    }
+
+    .top {
+        gap: var(--space-3);
+        margin-bottom: var(--space-6);
+    }
+
+    .card {
+        padding: var(--space-6);
+    }
 }
