@@ -6,6 +6,7 @@ import { SectionHeading } from '@/components/common/SectionHeading';
 import { Button } from '@/components/common/Button';
 import { services } from '@/data/services';
 import { useGsapReveal } from '@/hooks/useGsapReveal';
+import { useHomeIntro } from '@/components/motion/HomeIntroContext';
 import styles from './ServicesPreview.module.scss';
 import { cn } from '@/lib/utils/cn';
 
@@ -29,8 +30,9 @@ export function ServicesPreview({
     showViewAll = true,
     compact = false,
 }: ServicesPreviewProps = {}) {
-    const headerRef = useGsapReveal<HTMLDivElement>();
-    const gridRef = useGsapReveal<HTMLDivElement>({ stagger: 0.1 });
+    const { isReadyForReveals } = useHomeIntro();
+    const headerRef = useGsapReveal<HTMLDivElement>({ enabled: isReadyForReveals });
+    const gridRef = useGsapReveal<HTMLDivElement>({ enabled: isReadyForReveals, stagger: 0.1 });
 
     return (
         <section className={cn(styles.section, compact && styles.sectionCompact)} id="servicios">

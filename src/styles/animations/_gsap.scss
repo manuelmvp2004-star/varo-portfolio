@@ -4,7 +4,7 @@
 // ============================================================
 
 // Elements start hidden for JS-driven reveals
-.gsap-hidden {
+html[data-js='1'] .gsap-hidden {
     opacity: 0;
     visibility: hidden;
 }
@@ -22,7 +22,7 @@
 }
 
 // Stagger parent
-.gsap-stagger-parent>* {
+html[data-js='1'] .gsap-stagger-parent>* {
     opacity: 0;
     visibility: hidden;
 }
@@ -33,8 +33,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .gsap-hidden,
-    .gsap-stagger-parent>* {
+    html[data-js='1'] .gsap-hidden,
+    html[data-js='1'] .gsap-stagger-parent>* {
         opacity: 1 !important;
         visibility: visible !important;
         transform: none !important;

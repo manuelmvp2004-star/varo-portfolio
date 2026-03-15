@@ -139,7 +139,23 @@ section {
     margin: var(--space-6) 0;
 }
 
-html[data-intro-state='active'] [data-intro-item] {
-    opacity: 0 !important;
-    visibility: hidden !important;
+html[data-js='1'][data-home-intro-route='home'][data-home-intro-played='0'] [data-home-intro-target='header'] {
+    opacity: 0;
+    visibility: hidden;
+    filter: blur(10px);
+    transform: translate3d(0, -1rem, 0);
+    will-change: transform, filter, opacity;
+}
+
+html[data-js='1'][data-home-intro-route='home'][data-home-intro-played='0'] [data-home-intro-target='hero-eyebrow'],
+html[data-js='1'][data-home-intro-route='home'][data-home-intro-played='0'] [data-home-intro-target='hero-heading'],
+html[data-js='1'][data-home-intro-route='home'][data-home-intro-played='0'] [data-home-intro-target='hero-sub'],
+html[data-js='1'][data-home-intro-route='home'][data-home-intro-played='0'] [data-home-intro-target='hero-ctas'],
+html[data-js='1'][data-home-intro-route='home'][data-home-intro-played='0'] [data-home-intro-target='hero-note'],
+html[data-js='1'][data-home-intro-route='home'][data-home-intro-played='0'] [data-home-intro-target='hero-badges'] {
+    opacity: 0;
+    visibility: hidden;
+    filter: blur(14px);
+    transform: translate3d(0, 1.75rem, 0);
+    will-change: transform, filter, opacity;
 }

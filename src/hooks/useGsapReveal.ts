@@ -4,6 +4,7 @@ import { useEffect, useRef, RefObject } from 'react';
 import { usePrefersReducedMotion } from './usePrefersReducedMotion';
 
 interface GsapRevealOptions {
+    enabled?: boolean;
     y?: number;
     x?: number;
     opacity?: number;
@@ -21,6 +22,7 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     options: GsapRevealOptions = {}
 ): RefObject<T | null> {
     const {
+        enabled = true,
         y = 40,
         x = 0,
         opacity = 0,
@@ -40,6 +42,8 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
     useEffect(() => {
         const element = ref.current;
         if (!element) return;
+
+        if (!enabled) return;
 
         const getTargets = (node: HTMLElement): HTMLElement[] => {
             if (childSelector) {
@@ -137,6 +141,7 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
         childSelector,
         delay,
         duration,
+        enabled,
         ease,
         markers,
         once,

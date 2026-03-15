@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Manrope, Playfair_Display } from 'next/font/google';
+import Script from 'next/script';
 import '@/styles/globals.scss';
 
 const manrope = Manrope({
@@ -64,12 +65,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
+    return (
     <html
       lang="es"
       className={`${manrope.variable} ${playfair.variable}`}
+      suppressHydrationWarning
     >
       <body className="app-root">
+        <Script id="document-js-flag" strategy="beforeInteractive">
+          {`document.documentElement.setAttribute('data-js', '1');`}
+        </Script>
         {children}
       </body>
     </html>

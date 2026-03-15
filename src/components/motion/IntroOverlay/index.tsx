@@ -2,161 +2,299 @@
 
 import { useLayoutEffect, useRef, useState } from 'react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useHomeIntro } from '../HomeIntroContext';
+import {
+    HOME_INTRO_STORAGE_KEY,
+    armHomeIntroDocument,
+    clearHomeIntroDocumentState,
+} from '../homeIntro.shared';
 import styles from './IntroOverlay.module.scss';
 
-const INTRO_KEY = 'mv-window-intro-played';
-
-const PAGE_ITEM_SELECTORS = [
-    '[data-intro-item="header"]',
-    '[data-intro-item="hero-eyebrow"]',
-    '[data-intro-item="hero-heading"]',
-    '[data-intro-item="hero-sub"]',
-    '[data-intro-item="hero-ctas"]',
-    '[data-intro-item="hero-note"]',
-    '[data-intro-item="hero-badges"]',
+const HEADER_SELECTOR = '[data-home-intro-target="header"]';
+const HERO_TARGET_SELECTORS = [
+    '[data-home-intro-target="hero-eyebrow"]',
+    '[data-home-intro-target="hero-heading"]',
+    '[data-home-intro-target="hero-sub"]',
+    '[data-home-intro-target="hero-ctas"]',
+    '[data-home-intro-target="hero-note"]',
+    '[data-home-intro-target="hero-badges"]',
 ];
+
+interface IntroWindowMetrics {
+    initialWidth: number;
+    compactWidth: number;
+    compactHeight: number;
+    zoomWidth: number;
+    zoomHeight: number;
+    compactRadius: number;
+    zoomRadius: number;
+}
+
+function collectTargets(selectors: string[]) {
+    return selectors
+        .map((selector) => document.querySelector<HTMLElement>(selector))
+        .filter((target): target is HTMLElement => target instanceof HTMLElement);
+}
+
+function getIntroWindowMetrics(viewportWidth: number, viewportHeight: number): IntroWindowMetrics {
+    const initialWidth = Math.min(Math.max(viewportWidth * 0.055, 52), 72);
+    const compactWidth = Math.min(Math.max(viewportWidth * 0.18, 148), 220);
+    const compactHeight = Math.min(Math.max(viewportHeight * 0.11, 94), 132);
+    const gutter = viewportWidth < 768 ? 8 : 14;
+
+    return {
+        initialWidth,
+        compactWidth,
+        compactHeight,
+        zoomWidth: viewportWidth - gutter * 2,
+        zoomHeight: viewportHeight - gutter * 2,
+        compactRadius: viewportWidth < 768 ? 18 : 24,
+        zoomRadius: viewportWidth < 768 ? 12 : 16,
+    };
+}
 
 export function IntroOverlay() {
     const prefersReducedMotion = usePrefersReducedMotion();
-    const [shouldRender, setShouldRender] = useState(false);
+    const { isHomeRoute, setPhase } = useHomeIntro();
+    const [shouldRender, setShouldRender] = useState(isHomeRoute);
 
     const overlayRef = useRef<HTMLDivElement>(null);
-    const windowRef = useRef<HTMLDivElement>(null);
-    const previewChromeRef = useRef<HTMLDivElement>(null);
-    const previewHeroRef = useRef<HTMLDivElement>(null);
-    const previewBodyRef = useRef<HTMLDivElement>(null);
+    const frameRef = useRef<HTMLDivElement>(null);
+    const lineRef = useRef<HTMLSpanElement>(null);
 
     useLayoutEffect(() => {
-        if (prefersReducedMotion) return;
-        if (typeof window === 'undefined') return;
-
-        const hasPlayed = window.sessionStorage.getItem(INTRO_KEY) === '1';
-        if (hasPlayed) return;
-
-        setShouldRender(true);
-    }, [prefersReducedMotion]);
+        setShouldRender(isHomeRoute);
+    }, [isHomeRoute]);
 
     useLayoutEffect(() => {
-        if (!shouldRender || prefersReducedMotion || !overlayRef.current || !windowRef.current) return;
+        if (!isHomeRoute) {
+            setPhase('complete');
+            setShouldRender(false);
+            clearHomeIntroDocumentState();
+            return;
+        }
+
+        if (
+            typeof window === 'undefined' ||
+            !overlayRef.current ||
+            !frameRef.current ||
+            !lineRef.current
+        ) {
+            return;
+        }
 
         let isCancelled = false;
         let cleanupTimeline: (() => void) | null = null;
 
         const html = document.documentElement;
         const body = document.body;
-
-        const previousBodyOverflow = body.style.overflow;
         const previousHtmlOverflow = html.style.overflow;
-
-        html.dataset.introState = 'active';
-        body.style.overflow = 'hidden';
-        html.style.overflow = 'hidden';
+        const previousBodyOverflow = body.style.overflow;
 
         const initAnimation = async () => {
+            let hasPlayed = false;
+
+            try {
+                hasPlayed = window.sessionStorage.getItem(HOME_INTRO_STORAGE_KEY) === '1';
+            } catch {
+                hasPlayed = false;
+            }
+
+            armHomeIntroDocument(hasPlayed);
+
+            if (prefersReducedMotion || hasPlayed) {
+                if (prefersReducedMotion) {
+                    try {
+                        window.sessionStorage.setItem(HOME_INTRO_STORAGE_KEY, '1');
+                    } catch {
+                        // Session storage is optional for the intro flow.
+                    }
+                }
+
+                if (isCancelled) return;
+
+                setPhase('complete');
+                setShouldRender(false);
+                clearHomeIntroDocumentState();
+                return;
+            }
+
             const { gsap } = await import('gsap');
-            if (isCancelled || !overlayRef.current || !windowRef.current) return;
+            if (
+                isCancelled ||
+                !overlayRef.current ||
+                !frameRef.current ||
+                !lineRef.current
+            ) {
+                return;
+            }
 
-            window.sessionStorage.setItem(INTRO_KEY, '1');
+            try {
+                window.sessionStorage.setItem(HOME_INTRO_STORAGE_KEY, '1');
+            } catch {
+                // Session storage is optional for the intro flow.
+            }
 
-            const pageTargets = PAGE_ITEM_SELECTORS.flatMap((selector) =>
-                Array.from(document.querySelectorAll<HTMLElement>(selector))
-            );
+            const headerTarget = document.querySelector<HTMLElement>(HEADER_SELECTOR);
+            const heroTargets = collectTargets(HERO_TARGET_SELECTORS);
+            const introTargets = headerTarget ? [headerTarget, ...heroTargets] : heroTargets;
+            const metrics = getIntroWindowMetrics(window.innerWidth, window.innerHeight);
 
-            const uniquePageTargets = Array.from(new Set(pageTargets));
+            html.style.overflow = 'hidden';
+            body.style.overflow = 'hidden';
 
-            gsap.set(overlayRef.current, { autoAlpha: 1 });
-            gsap.set(windowRef.current, {
-                width: '7rem',
-                height: 2,
-                borderRadius: 999,
+            setPhase('overlay');
+            setShouldRender(true);
+
+            gsap.set(overlayRef.current, {
                 autoAlpha: 1,
+                '--intro-window-w': `${metrics.initialWidth}px`,
+                '--intro-window-h': '1px',
+                '--intro-frame-radius': '999px',
+            });
+            gsap.set(frameRef.current, {
+                autoAlpha: 1,
+                scale: 1,
+                borderColor: 'rgba(28, 42, 42, 0.14)',
+                boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.22) inset',
+            });
+            gsap.set(lineRef.current, {
+                autoAlpha: 1,
+                scaleX: 0.02,
+                transformOrigin: '50% 50%',
             });
 
-            gsap.set([previewChromeRef.current, previewHeroRef.current, previewBodyRef.current], {
-                autoAlpha: 0,
-                y: 18,
-            });
+            if (introTargets.length > 0) {
+                gsap.set(introTargets, {
+                    autoAlpha: 0,
+                    y: (index: number) => (index === 0 ? -18 : 26),
+                    filter: (index: number) => (index === 0 ? 'blur(10px)' : 'blur(14px)'),
+                    visibility: 'hidden',
+                });
+            }
 
-            gsap.set(uniquePageTargets, {
-                autoAlpha: 0,
-                y: 26,
-                visibility: 'hidden',
-            });
+            // Hand off control from the bootstrap CSS to GSAP before the content reveal starts.
+            clearHomeIntroDocumentState();
 
             const tl = gsap.timeline({
                 defaults: {
-                    ease: 'power3.out',
+                    ease: 'power2.out',
                 },
                 onComplete: () => {
-                    body.style.overflow = previousBodyOverflow;
                     html.style.overflow = previousHtmlOverflow;
-                    html.removeAttribute('data-intro-state');
+                    body.style.overflow = previousBodyOverflow;
+                    setPhase('complete');
                     setShouldRender(false);
                 },
             });
 
             cleanupTimeline = () => tl.kill();
 
-            tl.to(windowRef.current, {
-                width: 'min(52vw, 760px)',
-                duration: 0.55,
-                ease: 'power2.out',
+            tl.to(lineRef.current, {
+                scaleX: 1,
+                duration: 0.62,
+                ease: 'power2.inOut',
             })
                 .to(
-                    windowRef.current,
+                    overlayRef.current,
                     {
-                        height: 'min(56vh, 620px)',
-                        borderRadius: 28,
+                        '--intro-window-w': `${metrics.compactWidth}px`,
+                        '--intro-window-h': `${metrics.compactHeight}px`,
+                        '--intro-frame-radius': `${metrics.compactRadius}px`,
                         duration: 0.82,
+                        ease: 'power3.out',
                     },
-                    '-=0.04'
+                    '-=0.12'
                 )
                 .to(
-                    [previewChromeRef.current, previewHeroRef.current, previewBodyRef.current],
+                    frameRef.current,
                     {
-                        autoAlpha: 1,
-                        y: 0,
-                        duration: 0.42,
-                        stagger: 0.08,
+                        borderColor: 'rgba(28, 42, 42, 0.18)',
+                        boxShadow: '0 24px 56px rgba(28, 42, 42, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.18) inset',
+                        duration: 0.52,
+                        ease: 'power2.out',
+                    },
+                    '<'
+                )
+                .to(
+                    lineRef.current,
+                    {
+                        autoAlpha: 0,
+                        duration: 0.18,
+                        ease: 'power1.out',
                     },
                     '-=0.42'
                 )
                 .to(
-                    windowRef.current,
+                    overlayRef.current,
                     {
-                        width: 'calc(100vw - 1.5rem)',
-                        height: 'calc(100vh - 1.5rem)',
-                        borderRadius: 24,
-                        duration: 0.9,
+                        '--intro-window-w': `${metrics.zoomWidth}px`,
+                        '--intro-window-h': `${metrics.zoomHeight}px`,
+                        '--intro-frame-radius': `${metrics.zoomRadius}px`,
+                        duration: 1.56,
+                        ease: 'power3.inOut',
+                        onStart: () => setPhase('settled'),
+                    },
+                    '>-0.02'
+                )
+                .to(
+                    frameRef.current,
+                    {
+                        borderColor: 'rgba(28, 42, 42, 0.06)',
+                        boxShadow: '0 16px 38px rgba(28, 42, 42, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.12) inset',
+                        duration: 1.56,
                         ease: 'power3.inOut',
                     },
-                    '-=0.05'
+                    '<'
                 )
-                .add(() => {
-                    html.dataset.introState = 'revealing';
-                    gsap.set(uniquePageTargets, { visibility: 'visible' });
-                })
                 .to(
                     overlayRef.current,
                     {
                         autoAlpha: 0,
-                        duration: 0.52,
-                        ease: 'power2.inOut',
+                        duration: 0.24,
+                        ease: 'power2.out',
                     },
-                    '-=0.18'
+                    '-=0.08'
                 )
-                .to(
-                    uniquePageTargets,
+                .add(() => {
+                    setPhase('content');
+
+                    if (introTargets.length > 0) {
+                        gsap.set(introTargets, { visibility: 'visible' });
+                    }
+                })
+                .to({}, { duration: 1 });
+
+            if (headerTarget) {
+                tl.to(
+                    headerTarget,
                     {
                         autoAlpha: 1,
                         y: 0,
-                        duration: 0.58,
-                        stagger: 0.08,
+                        filter: 'blur(0px)',
+                        duration: 0.82,
                         ease: 'power3.out',
-                        clearProps: 'opacity,visibility,transform',
+                        clearProps: 'opacity,visibility,transform,filter',
                     },
-                    '-=0.32'
+                    '>'
                 );
+            }
+
+            if (heroTargets.length > 0) {
+                tl.to(
+                    heroTargets,
+                    {
+                        autoAlpha: 1,
+                        y: 0,
+                        filter: 'blur(0px)',
+                        duration: 0.94,
+                        stagger: 0.14,
+                        ease: 'power3.out',
+                        clearProps: 'opacity,visibility,transform,filter',
+                    },
+                    '-=0.28'
+                );
+            }
         };
 
         void initAnimation();
@@ -164,50 +302,18 @@ export function IntroOverlay() {
         return () => {
             isCancelled = true;
             cleanupTimeline?.();
-            body.style.overflow = previousBodyOverflow;
             html.style.overflow = previousHtmlOverflow;
-            html.removeAttribute('data-intro-state');
+            body.style.overflow = previousBodyOverflow;
+            clearHomeIntroDocumentState();
         };
-    }, [prefersReducedMotion, shouldRender]);
+    }, [isHomeRoute, prefersReducedMotion, setPhase]);
 
     if (!shouldRender) return null;
 
     return (
         <div ref={overlayRef} className={styles.overlay} aria-hidden="true">
-            <div className={styles.marble} />
-
-            <div ref={windowRef} className={styles.window}>
-                <div className={styles.preview}>
-                    <div ref={previewChromeRef} className={styles.previewChrome}>
-                        <div className={styles.previewBrand} />
-                        <div className={styles.previewNav}>
-                            <span />
-                            <span />
-                            <span />
-                        </div>
-                    </div>
-
-                    <div ref={previewHeroRef} className={styles.previewHero}>
-                        <div className={styles.previewEyebrow} />
-                        <div className={styles.previewTitleBlock}>
-                            <span />
-                            <span />
-                        </div>
-                        <div className={styles.previewActions}>
-                            <span />
-                            <span />
-                        </div>
-                    </div>
-
-                    <div ref={previewBodyRef} className={styles.previewBody}>
-                        <div className={styles.previewCards}>
-                            <span />
-                            <span />
-                            <span />
-                        </div>
-                        <div className={styles.previewFooter} />
-                    </div>
-                </div>
+            <div ref={frameRef} className={styles.frame}>
+                <span ref={lineRef} className={styles.line} />
             </div>
         </div>
     );

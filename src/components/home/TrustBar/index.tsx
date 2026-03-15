@@ -2,6 +2,7 @@
 
 import { Container } from '@/components/common/Container';
 import { useGsapReveal } from '@/hooks/useGsapReveal';
+import { useHomeIntro } from '@/components/motion/HomeIntroContext';
 import styles from './TrustBar.module.scss';
 import { cn } from '@/lib/utils/cn';
 
@@ -30,9 +31,10 @@ const trustPillars = [
 ];
 
 export function TrustBar() {
-    const headingRef = useGsapReveal<HTMLDivElement>({ duration: 0.5, y: 18 });
-    const statsRef = useGsapReveal<HTMLDListElement>({ stagger: 0.08, y: 14 });
-    const cardsRef = useGsapReveal<HTMLDivElement>({ stagger: 0.08, y: 18 });
+    const { isReadyForReveals } = useHomeIntro();
+    const headingRef = useGsapReveal<HTMLDivElement>({ duration: 0.5, enabled: isReadyForReveals, y: 18 });
+    const statsRef = useGsapReveal<HTMLDListElement>({ stagger: 0.08, enabled: isReadyForReveals, y: 14 });
+    const cardsRef = useGsapReveal<HTMLDivElement>({ stagger: 0.08, enabled: isReadyForReveals, y: 18 });
 
     return (
         <section className={styles.section} aria-label="Confianza y garantías">

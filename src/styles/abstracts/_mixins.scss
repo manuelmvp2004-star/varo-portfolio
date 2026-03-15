@@ -1,7 +1,7 @@
 // ============================================================
 // SCSS MIXINS
 // ============================================================
-@use 'variables' as *;
+@use '@/styles/abstracts/variables' as *;
 
 // --- Responsive Breakpoints ---
 @mixin bp-sm {

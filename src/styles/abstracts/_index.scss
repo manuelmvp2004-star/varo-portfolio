@@ -3,5 +3,5 @@
 // Import this in individual module files as needed
 // ============================================================
 // Export variables and mixins so that other files can import them easily
-@forward 'variables';
-@forward 'mixins';
+@forward '@/styles/abstracts/variables';
+@forward '@/styles/abstracts/mixins';

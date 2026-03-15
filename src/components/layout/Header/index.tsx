@@ -7,12 +7,14 @@ import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { navigation, ctaButton } from '@/data/navigation';
 import { MobileMenu } from '../MobileMenu';
 import { Button } from '@/components/common/Button';
+import { useHomeIntro } from '@/components/motion/HomeIntroContext';
 import styles from './Header.module.scss';
 import { cn } from '@/lib/utils/cn';
 
 export function Header() {
     const isScrolled = useHeaderScroll(60);
     const prefersReducedMotion = usePrefersReducedMotion();
+    const { isHomeRoute } = useHomeIntro();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
     const headerRef = useRef<HTMLElement>(null);
@@ -21,12 +23,7 @@ export function Header() {
     const actionsRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const introState =
-            typeof document !== 'undefined'
-                ? document.documentElement.dataset.introState
-                : undefined;
-
-        if (introState === 'active' || introState === 'revealing') return;
+        if (isHomeRoute) return;
         if (prefersReducedMotion || !headerRef.current) return;
 
         let isCancelled = false;
@@ -67,12 +64,16 @@ export function Header() {
             isCancelled = true;
             cleanupTimeline?.();
         };
-    }, [prefersReducedMotion]);
+    }, [isHomeRoute, prefersReducedMotion]);
 
     return (
         <>
-            <header ref={headerRef} className={cn(styles.header, isScrolled && styles.scrolled)}>
-                <div className={styles.inner} data-intro-item="header">
+            <header
+                ref={headerRef}
+                className={cn(styles.header, isScrolled && styles.scrolled)}
+                data-home-intro-target="header"
+            >
+                <div className={styles.inner}>
                     <Link ref={logoRef} href="/" className={styles.logo} aria-label="Multiservicios Varo – Inicio">
                         <span className={styles.logoMark}>MV</span>
                         <span className={styles.logoText}>

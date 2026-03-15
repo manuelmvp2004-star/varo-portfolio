@@ -3,10 +3,12 @@
 import { Container } from '@/components/common/Container';
 import { Button } from '@/components/common/Button';
 import { useGsapReveal } from '@/hooks/useGsapReveal';
+import { useHomeIntro } from '@/components/motion/HomeIntroContext';
 import styles from './FinalCTA.module.scss';
 
 export function FinalCTA() {
-    const contentRef = useGsapReveal<HTMLDivElement>({ duration: 1, y: 40 });
+    const { isReadyForReveals } = useHomeIntro();
+    const contentRef = useGsapReveal<HTMLDivElement>({ duration: 1, enabled: isReadyForReveals, y: 40 });
 
     return (
         <section className={styles.section} aria-label="Llamada a la acción final">
