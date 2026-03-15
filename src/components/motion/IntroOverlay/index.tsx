@@ -22,12 +22,10 @@ const HERO_TARGET_SELECTORS = [
 
 interface IntroWindowMetrics {
     initialWidth: number;
-    compactWidth: number;
-    compactHeight: number;
+    lineWidth: number;
+    windowHeight: number;
     zoomWidth: number;
     zoomHeight: number;
-    compactRadius: number;
-    zoomRadius: number;
 }
 
 function collectTargets(selectors: string[]) {
@@ -37,19 +35,16 @@ function collectTargets(selectors: string[]) {
 }
 
 function getIntroWindowMetrics(viewportWidth: number, viewportHeight: number): IntroWindowMetrics {
-    const initialWidth = Math.min(Math.max(viewportWidth * 0.055, 52), 72);
-    const compactWidth = Math.min(Math.max(viewportWidth * 0.18, 148), 220);
-    const compactHeight = Math.min(Math.max(viewportHeight * 0.11, 94), 132);
-    const gutter = viewportWidth < 768 ? 8 : 14;
+    const initialWidth = Math.min(Math.max(viewportWidth * 0.04, 40), 56);
+    const lineWidth = Math.min(Math.max(viewportWidth * 0.44, 240), 560);
+    const windowHeight = Math.min(Math.max(viewportHeight * 0.32, 176), 320);
 
     return {
         initialWidth,
-        compactWidth,
-        compactHeight,
-        zoomWidth: viewportWidth - gutter * 2,
-        zoomHeight: viewportHeight - gutter * 2,
-        compactRadius: viewportWidth < 768 ? 18 : 24,
-        zoomRadius: viewportWidth < 768 ? 12 : 16,
+        lineWidth,
+        windowHeight,
+        zoomWidth: viewportWidth,
+        zoomHeight: viewportHeight,
     };
 }
 
@@ -150,7 +145,8 @@ export function IntroOverlay() {
                 autoAlpha: 1,
                 '--intro-window-w': `${metrics.initialWidth}px`,
                 '--intro-window-h': '1px',
-                '--intro-frame-radius': '999px',
+                '--intro-frame-radius': '0px',
+                '--intro-window-baseline': '62%',
             });
             gsap.set(frameRef.current, {
                 autoAlpha: 1,
@@ -167,7 +163,8 @@ export function IntroOverlay() {
             if (introTargets.length > 0) {
                 gsap.set(introTargets, {
                     autoAlpha: 0,
-                    y: (index: number) => (index === 0 ? -18 : 26),
+                    x: (index: number) => (index === 0 ? -40 : index % 2 === 0 ? 36 : -36),
+                    y: (index: number) => (index === 0 ? -10 : 0),
                     filter: (index: number) => (index === 0 ? 'blur(10px)' : 'blur(14px)'),
                     visibility: 'hidden',
                 });
@@ -178,7 +175,7 @@ export function IntroOverlay() {
 
             const tl = gsap.timeline({
                 defaults: {
-                    ease: 'power2.out',
+                    ease: 'sine.out',
                 },
                 onComplete: () => {
                     html.style.overflow = previousHtmlOverflow;
@@ -192,27 +189,56 @@ export function IntroOverlay() {
 
             tl.to(lineRef.current, {
                 scaleX: 1,
-                duration: 0.62,
-                ease: 'power2.inOut',
-            })
+                duration: 1.22,
+                ease: 'sine.inOut',
+            }, 0)
                 .to(
                     overlayRef.current,
                     {
-                        '--intro-window-w': `${metrics.compactWidth}px`,
-                        '--intro-window-h': `${metrics.compactHeight}px`,
-                        '--intro-frame-radius': `${metrics.compactRadius}px`,
-                        duration: 0.82,
-                        ease: 'power3.out',
+                        '--intro-window-w': `${metrics.lineWidth}px`,
+                        duration: 1.22,
+                        ease: 'sine.inOut',
                     },
-                    '-=0.12'
+                    0
+                )
+                .to(
+                    overlayRef.current,
+                    {
+                        '--intro-window-h': `${metrics.windowHeight}px`,
+                        duration: 1.08,
+                        ease: 'power2.out',
+                    },
+                    '>'
                 )
                 .to(
                     frameRef.current,
                     {
                         borderColor: 'rgba(28, 42, 42, 0.18)',
                         boxShadow: '0 24px 56px rgba(28, 42, 42, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.18) inset',
-                        duration: 0.52,
-                        ease: 'power2.out',
+                        duration: 0.9,
+                        ease: 'sine.out',
+                    },
+                    '<'
+                )
+                .to(
+                    overlayRef.current,
+                    {
+                        '--intro-window-w': `${metrics.zoomWidth}px`,
+                        '--intro-window-h': `${metrics.zoomHeight}px`,
+                        '--intro-window-baseline': '100%',
+                        duration: 2.36,
+                        ease: 'power2.inOut',
+                        onStart: () => setPhase('settled'),
+                    },
+                    '>'
+                )
+                .to(
+                    frameRef.current,
+                    {
+                        borderColor: 'rgba(28, 42, 42, 0.02)',
+                        boxShadow: '0 10px 24px rgba(28, 42, 42, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.08) inset',
+                        duration: 2.36,
+                        ease: 'power2.inOut',
                     },
                     '<'
                 )
@@ -220,41 +246,19 @@ export function IntroOverlay() {
                     lineRef.current,
                     {
                         autoAlpha: 0,
-                        duration: 0.18,
-                        ease: 'power1.out',
+                        duration: 0.28,
+                        ease: 'sine.out',
                     },
-                    '-=0.42'
-                )
-                .to(
-                    overlayRef.current,
-                    {
-                        '--intro-window-w': `${metrics.zoomWidth}px`,
-                        '--intro-window-h': `${metrics.zoomHeight}px`,
-                        '--intro-frame-radius': `${metrics.zoomRadius}px`,
-                        duration: 1.56,
-                        ease: 'power3.inOut',
-                        onStart: () => setPhase('settled'),
-                    },
-                    '>-0.02'
-                )
-                .to(
-                    frameRef.current,
-                    {
-                        borderColor: 'rgba(28, 42, 42, 0.06)',
-                        boxShadow: '0 16px 38px rgba(28, 42, 42, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.12) inset',
-                        duration: 1.56,
-                        ease: 'power3.inOut',
-                    },
-                    '<'
+                    '<+=0.18'
                 )
                 .to(
                     overlayRef.current,
                     {
                         autoAlpha: 0,
-                        duration: 0.24,
-                        ease: 'power2.out',
+                        duration: 0.38,
+                        ease: 'sine.out',
                     },
-                    '-=0.08'
+                    '-=0.16'
                 )
                 .add(() => {
                     setPhase('content');
@@ -263,17 +267,18 @@ export function IntroOverlay() {
                         gsap.set(introTargets, { visibility: 'visible' });
                     }
                 })
-                .to({}, { duration: 1 });
+                .to({}, { duration: 1.18 });
 
             if (headerTarget) {
                 tl.to(
                     headerTarget,
                     {
                         autoAlpha: 1,
+                        x: 0,
                         y: 0,
                         filter: 'blur(0px)',
-                        duration: 0.82,
-                        ease: 'power3.out',
+                        duration: 1.02,
+                        ease: 'power2.out',
                         clearProps: 'opacity,visibility,transform,filter',
                     },
                     '>'
@@ -281,19 +286,21 @@ export function IntroOverlay() {
             }
 
             if (heroTargets.length > 0) {
-                tl.to(
-                    heroTargets,
-                    {
-                        autoAlpha: 1,
-                        y: 0,
-                        filter: 'blur(0px)',
-                        duration: 0.94,
-                        stagger: 0.14,
-                        ease: 'power3.out',
-                        clearProps: 'opacity,visibility,transform,filter',
-                    },
-                    '-=0.28'
-                );
+                heroTargets.forEach((target, index) => {
+                    tl.to(
+                        target,
+                        {
+                            autoAlpha: 1,
+                            x: 0,
+                            y: 0,
+                            filter: 'blur(0px)',
+                            duration: index === 1 ? 1.12 : 0.94,
+                            ease: 'power2.out',
+                            clearProps: 'opacity,visibility,transform,filter',
+                        },
+                        index === 0 ? '-=0.22' : '-=0.62'
+                    );
+                });
             }
         };
 
