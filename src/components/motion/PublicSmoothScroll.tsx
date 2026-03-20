@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { useHomeIntro } from './HomeIntroContext';
 
@@ -8,19 +9,53 @@ const DESKTOP_POINTER_QUERY = '(hover: hover) and (pointer: fine)';
 const SMOOTH_WRAPPER_SELECTOR = '#smooth-wrapper';
 const SMOOTH_CONTENT_SELECTOR = '#smooth-content';
 
-export function HomeSmoothScroll() {
+interface SmoothScroller {
+    kill: () => void;
+    scrollTo: (target: number | string | Element, smooth?: boolean, position?: string) => void;
+}
+
+function scrollDocumentToTop() {
+    const html = document.documentElement;
+    const previousScrollBehavior = html.style.scrollBehavior;
+
+    html.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+
+    requestAnimationFrame(() => {
+        html.style.scrollBehavior = previousScrollBehavior;
+    });
+}
+
+export function PublicSmoothScroll() {
+    const pathname = usePathname();
     const prefersReducedMotion = usePrefersReducedMotion();
     const { isHomeRoute, phase } = useHomeIntro();
+    const smootherRef = useRef<SmoothScroller | null>(null);
+    const isSmoothReady = !prefersReducedMotion && (!isHomeRoute || phase === 'complete');
+
+    useLayoutEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        if (smootherRef.current) {
+            smootherRef.current.scrollTo(0, false);
+            return;
+        }
+
+        scrollDocumentToTop();
+    }, [pathname]);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        if (!isHomeRoute || phase !== 'complete' || prefersReducedMotion) return;
 
         const mediaQuery = window.matchMedia(DESKTOP_POINTER_QUERY);
-        if (!mediaQuery.matches) return;
+        if (!isSmoothReady || !mediaQuery.matches) {
+            smootherRef.current?.kill();
+            smootherRef.current = null;
+            return;
+        }
 
         let isCancelled = false;
-        let cleanupSmoother: (() => void) | null = null;
+        let currentSmoother: SmoothScroller | null = null;
 
         const initSmoother = async () => {
             const gsapModule = await import('gsap');
@@ -44,18 +79,23 @@ export function HomeSmoothScroll() {
             const smoother = ScrollSmoother.create({
                 wrapper,
                 content,
-                smooth: 1.6,
+                smooth: 1.45,
                 effects: true,
                 normalizeScroll: true,
                 smoothTouch: 0,
                 ignoreMobileResize: true,
-            });
+            }) as SmoothScroller;
 
-            cleanupSmoother = () => {
+            if (isCancelled) {
                 smoother.kill();
-            };
+                return;
+            }
+
+            currentSmoother = smoother;
+            smootherRef.current = smoother;
 
             requestAnimationFrame(() => {
+                smoother.scrollTo(0, false);
                 ScrollTrigger.refresh();
             });
         };
@@ -64,9 +104,13 @@ export function HomeSmoothScroll() {
 
         return () => {
             isCancelled = true;
-            cleanupSmoother?.();
+            currentSmoother?.kill();
+
+            if (smootherRef.current === currentSmoother) {
+                smootherRef.current = null;
+            }
         };
-    }, [isHomeRoute, phase, prefersReducedMotion]);
+    }, [pathname, isSmoothReady]);
 
     return null;
 }

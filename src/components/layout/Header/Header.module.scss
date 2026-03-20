@@ -113,6 +113,16 @@
 }
 
 .hasDropdown {
+    &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(18rem, 90vw);
+        height: var(--space-3);
+    }
+
     &:hover .navLink {
         color: var(--color-text-primary);
     }

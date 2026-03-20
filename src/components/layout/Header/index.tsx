@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useHeaderScroll } from '@/hooks/useHeaderScroll';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
@@ -12,6 +13,7 @@ import styles from './Header.module.scss';
 import { cn } from '@/lib/utils/cn';
 
 export function Header() {
+    const pathname = usePathname();
     const isScrolled = useHeaderScroll(60);
     const prefersReducedMotion = usePrefersReducedMotion();
     const { isHomeRoute } = useHomeIntro();
@@ -21,6 +23,27 @@ export function Header() {
     const logoRef = useRef<HTMLAnchorElement>(null);
     const navRef = useRef<HTMLElement>(null);
     const actionsRef = useRef<HTMLDivElement>(null);
+    const closeDropdownTimerRef = useRef<number | null>(null);
+
+    const clearCloseDropdownTimer = () => {
+        if (closeDropdownTimerRef.current !== null) {
+            window.clearTimeout(closeDropdownTimerRef.current);
+            closeDropdownTimerRef.current = null;
+        }
+    };
+
+    const openDropdown = (href: string) => {
+        clearCloseDropdownTimer();
+        setActiveDropdown(href);
+    };
+
+    const scheduleDropdownClose = () => {
+        clearCloseDropdownTimer();
+        closeDropdownTimerRef.current = window.setTimeout(() => {
+            setActiveDropdown(null);
+            closeDropdownTimerRef.current = null;
+        }, 160);
+    };
 
     useEffect(() => {
         if (isHomeRoute) return;
@@ -66,6 +89,24 @@ export function Header() {
         };
     }, [isHomeRoute, prefersReducedMotion]);
 
+    useEffect(() => {
+        setMobileOpen(false);
+        setActiveDropdown(null);
+        if (closeDropdownTimerRef.current !== null) {
+            window.clearTimeout(closeDropdownTimerRef.current);
+            closeDropdownTimerRef.current = null;
+        }
+    }, [pathname]);
+
+    useEffect(() => {
+        return () => {
+            if (closeDropdownTimerRef.current !== null) {
+                window.clearTimeout(closeDropdownTimerRef.current);
+                closeDropdownTimerRef.current = null;
+            }
+        };
+    }, []);
+
     return (
         <>
             <header
@@ -88,16 +129,17 @@ export function Header() {
                                 <li
                                     key={item.href}
                                     className={cn(styles.navItem, item.children && styles.hasDropdown)}
-                                    onMouseEnter={() => item.children && setActiveDropdown(item.href)}
-                                    onMouseLeave={() => setActiveDropdown(null)}
-                                    onFocus={() => item.children && setActiveDropdown(item.href)}
+                                    onMouseEnter={() => item.children && openDropdown(item.href)}
+                                    onMouseLeave={() => item.children && scheduleDropdownClose()}
+                                    onFocus={() => item.children && openDropdown(item.href)}
                                     onBlur={(event) => {
-                                        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-                                            setActiveDropdown(null);
+                                        if (item.children && !event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                                            scheduleDropdownClose();
                                         }
                                     }}
                                     onKeyDown={(event) => {
                                         if (event.key === 'Escape') {
+                                            clearCloseDropdownTimer();
                                             setActiveDropdown(null);
                                         }
                                     }}
@@ -117,11 +159,22 @@ export function Header() {
                                     </Link>
 
                                     {item.children && activeDropdown === item.href && (
-                                        <div className={styles.dropdown} role="menu" aria-label={`Submenú de ${item.label}`}>
+                                        <div
+                                            className={styles.dropdown}
+                                            role="menu"
+                                            aria-label={`Submenú de ${item.label}`}
+                                            onMouseEnter={clearCloseDropdownTimer}
+                                            onMouseLeave={scheduleDropdownClose}
+                                        >
                                             <ul className={styles.dropdownList}>
                                                 {item.children.map((child) => (
                                                     <li key={child.href}>
-                                                        <Link href={child.href} className={styles.dropdownLink} role="menuitem">
+                                                        <Link
+                                                            href={child.href}
+                                                            className={styles.dropdownLink}
+                                                            role="menuitem"
+                                                            onClick={() => setActiveDropdown(null)}
+                                                        >
                                                             {child.label}
                                                         </Link>
                                                     </li>

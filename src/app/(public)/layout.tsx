@@ -1,7 +1,7 @@
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { CookieBanner } from '@/components/marketing/CookieBanner';
 import { HomeIntroProvider } from '@/components/motion/HomeIntroContext';
+import { PublicSmoothScroll } from '@/components/motion/PublicSmoothScroll';
 
 export default function PublicLayout({
     children,
@@ -10,6 +10,7 @@ export default function PublicLayout({
 }) {
     return (
         <HomeIntroProvider>
+            <PublicSmoothScroll />
             <Header />
             <div id="smooth-wrapper">
                 <div id="smooth-content">
@@ -19,7 +20,6 @@ export default function PublicLayout({
                     <Footer />
                 </div>
             </div>
-            <CookieBanner />
         </HomeIntroProvider>
     );
 }

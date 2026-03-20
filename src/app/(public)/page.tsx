@@ -4,7 +4,6 @@ import { TrustBar } from '@/components/home/TrustBar';
 import { ServicesPreview } from '@/components/home/ServicesPreview';
 import { FinalCTA } from '@/components/home/FinalCTA';
 import { IntroOverlay } from '@/components/motion/IntroOverlay';
-import { HomeSmoothScroll } from '@/components/motion/HomeSmoothScroll';
 import { buildHomeIntroBootstrapScript } from '@/components/motion/homeIntro.shared';
 import { buildMetadata } from '@/lib/seo/metadata';
 
@@ -23,7 +22,6 @@ export default function Home() {
             />
 
             <IntroOverlay />
-            <HomeSmoothScroll />
 
             <div data-home-intro-root="true">
                 <Hero />
