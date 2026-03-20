@@ -11,10 +11,14 @@ export default function PublicLayout({
     return (
         <HomeIntroProvider>
             <Header />
-            <main className="main-content">
-                {children}
-            </main>
-            <Footer />
+            <div id="smooth-wrapper">
+                <div id="smooth-content">
+                    <main className="main-content">
+                        {children}
+                    </main>
+                    <Footer />
+                </div>
+            </div>
             <CookieBanner />
         </HomeIntroProvider>
     );

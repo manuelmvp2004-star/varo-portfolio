@@ -65,12 +65,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-    return (
+  return (
     <html
       lang="es"
       className={`${manrope.variable} ${playfair.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2894764728187717"
+          crossOrigin="anonymous"
+        ></script>
+      </head>
       <body className="app-root">
         <Script id="document-js-flag" strategy="beforeInteractive">
           {`document.documentElement.setAttribute('data-js', '1');`}
