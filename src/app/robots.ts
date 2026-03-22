@@ -7,8 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: [
                 '/admin/',
-                '/cliente/',
-                '/login',
                 '/gracias',
             ],
         },

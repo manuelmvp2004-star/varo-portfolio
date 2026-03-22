@@ -26,7 +26,6 @@ export const footerLinks: FooterLinkGroup[] = [
         links: [
             { label: 'Contactar', href: '/contacto' },
             { label: 'Pedir Presupuesto', href: '/presupuesto' },
-            { label: 'Área Cliente', href: '/cliente' },
         ],
     },
     {
